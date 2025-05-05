@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI jumpText;
     public float maxSpeed = 5;
     public float gravity = 10;
+    public GameObject victory;
 
     public GameObject q, w, e, r, t, y, u, i, o, p, a, s, d, f, g, 
             h, j, k, l, z, x, c, v, b, n, m, zero, one, two, three, four, 
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        victory.SetActive(false);
         GameObject[] keyImages =
         {
             a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z,
@@ -42,6 +45,9 @@ public class PlayerController : MonoBehaviour
         {
             jumpRegistered = true;
         }
+
+        if (gameObject.transform.position.y < 5) 
+            SceneManager.LoadScene("SampleScene");
     }
 
     void FixedUpdate()
@@ -53,9 +59,9 @@ public class PlayerController : MonoBehaviour
         }
         else rb.linearDamping = 0;
         if (Input.GetKey(rand.GetBack()))
-            rb.AddForce(Vector3.back * force, ForceMode.Impulse);
-        if (Input.GetKey(rand.GetForward()))
             rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
+        if (Input.GetKey(rand.GetForward()))
+            rb.AddForce(Vector3.back * force, ForceMode.Impulse);
         if (jumpRegistered && isGrounded)
             Jump();
 
@@ -89,11 +95,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("ground"))
         {
             isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            victory.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }
