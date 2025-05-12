@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float drag;
     private bool jumpRegistered;
     private Rigidbody rb;
-    private bool isGrounded = true;
+    private bool isGrounded = false;
     public InputRandomizer rand; 
     public TextMeshProUGUI backText;
     public TextMeshProUGUI forwardText;
@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 5;
     public float gravity = 10;
     public GameObject victory;
+    private RaycastHit hit;
+    public float ray;
+    public LineRenderer rayline;
 
     public GameObject q, w, e, r, t, y, u, i, o, p, a, s, d, f, g, 
             h, j, k, l, z, x, c, v, b, n, m, zero, one, two, three, four, 
@@ -41,13 +44,14 @@ public class PlayerController : MonoBehaviour
         backText.text = GetName(rand.GetBack());
         forwardText.text = GetName(rand.GetForward());
         jumpText.text = GetName(rand.GetJump());
-        if (Input.GetKeyDown(rand.GetJump()) && isGrounded)
+        if (Input.GetKeyDown(rand.GetJump()) && isGrounded) 
         {
             jumpRegistered = true;
         }
 
         if (gameObject.transform.position.y < 5) 
             SceneManager.LoadScene("SampleScene");
+        Debug.Log("Grounded: " + isGrounded);
     }
 
     void FixedUpdate()
@@ -58,22 +62,30 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = drag;
         }
         else rb.linearDamping = 0;
-        if (Input.GetKey(rand.GetBack()))
-            rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
-        if (Input.GetKey(rand.GetForward()))
+        if (Input.GetKey(rand.GetBack())) 
             rb.AddForce(Vector3.back * force, ForceMode.Impulse);
+        if (Input.GetKey(rand.GetForward()))  
+            rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
         if (jumpRegistered && isGrounded)
             Jump();
 
         HandleVelocity();
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, ray);
+
+        Vector3 startPoint = transform.position;
+        Vector3 endPoint = transform.position + Vector3.down * ray;
+
+        rayline.SetPosition(0, startPoint);
+        rayline.SetPosition(1, endPoint);
     }
 
     void Jump()
     {
         rb.linearVelocity = new Vector3(0f, 0f, rb.linearVelocity.z);
         rb.linearVelocity= new Vector3(0f,jumpForce,rb.linearVelocity.z);
-        isGrounded = false;
         jumpRegistered = false;
+        isGrounded = false;
     }
 
     string GetName(KeyCode key)
@@ -97,11 +109,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("ground"))
-        {
-            isGrounded = true;
-        }
-
         if (collision.gameObject.CompareTag("Finish"))
         {
             victory.SetActive(true);

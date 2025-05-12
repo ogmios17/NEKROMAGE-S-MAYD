@@ -7,6 +7,7 @@ public class InputRandomizer : MonoBehaviour
     public TextMeshProUGUI backText;
     public TextMeshProUGUI forwardText;
     public TextMeshProUGUI jumpText;
+    public bool randomize = true;
     private KeyCode[] keys = {
             KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
             KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J,
@@ -103,14 +104,14 @@ public class InputRandomizer : MonoBehaviour
 
     public KeyCode GetBack()
     {
-        return backInput;
+        return randomize ? backInput : KeyCode.D;
     }
     public KeyCode GetForward()
     {
-        return forwardInput;
+        return randomize ? forwardInput : KeyCode.A;
     }
     public KeyCode GetJump()
     {
-        return jumpInput;
+        return randomize ? jumpInput : KeyCode.Space;
     }
 }
