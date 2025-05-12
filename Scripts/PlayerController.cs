@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public GameObject victory;
     private RaycastHit hit;
     public float ray;
-    public LineRenderer rayline;
 
     void Start()
     {
@@ -54,13 +53,10 @@ public class PlayerController : MonoBehaviour
 
         HandleVelocity();
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, ray);
+        isGrounded = Physics.Raycast(new Vector3(transform.position.x,transform.position.y-4,transform.position.z), Vector3.down, out hit, ray);
 
-        Vector3 startPoint = transform.position;
-        Vector3 endPoint = transform.position + Vector3.down * ray;
 
-        rayline.SetPosition(0, startPoint);
-        rayline.SetPosition(1, endPoint);
+
     }
 
     void Jump()

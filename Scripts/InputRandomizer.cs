@@ -12,13 +12,13 @@ public class InputRandomizer : MonoBehaviour
 
     private KeyCode[] keys = {
             KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
-            KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, /*KeyCode.J,
+            KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J,
             KeyCode.K, KeyCode.L, KeyCode.M, KeyCode.N, KeyCode.O,
             KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T,
             KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z,
             KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4,
             KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9,
-            KeyCode.Space, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,*/
+            KeyCode.Space, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
     };
     private int index;
     private Queue<KeyCode> backQueue;
@@ -58,16 +58,19 @@ public class InputRandomizer : MonoBehaviour
         {
             backInput = Randomize(ref timeSpanBack, ref backQueue);
             backSprite.sprite = inputVisualizer.getSprite(backInput);
+            Debug.Log(backInput);
         }
         if (timeSpanForward <= 0)
         {
             forwardInput = Randomize(ref timeSpanForward, ref forwardQueue);
             forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
+            Debug.Log(forwardInput);
         }
         if (timeSpanJump <= 0)
         {
             jumpInput = Randomize(ref timeSpanJump, ref jumpQueue);
             jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
+            Debug.Log(jumpInput);
         }
     }
 
