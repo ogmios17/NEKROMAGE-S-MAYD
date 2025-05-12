@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 public class InputRandomizer : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class InputRandomizer : MonoBehaviour
     public Image forwardSprite;
     public Image jumpSprite;
     public bool randomize = true;
+    public TextMeshProUGUI fps;
 
     private KeyCode[] keys = {
             KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
@@ -47,6 +49,7 @@ public class InputRandomizer : MonoBehaviour
 
     void Update()
     {
+        fps.text = (1/Time.deltaTime).ToString();
         timeSpanBack -= Time.deltaTime;
         timeSpanForward -= Time.deltaTime;
         timeSpanJump -= Time.deltaTime;
@@ -58,19 +61,16 @@ public class InputRandomizer : MonoBehaviour
         {
             backInput = Randomize(ref timeSpanBack, ref backQueue);
             backSprite.sprite = inputVisualizer.getSprite(backInput);
-            Debug.Log(backInput);
         }
         if (timeSpanForward <= 0)
         {
             forwardInput = Randomize(ref timeSpanForward, ref forwardQueue);
             forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
-            Debug.Log(forwardInput);
         }
         if (timeSpanJump <= 0)
         {
             jumpInput = Randomize(ref timeSpanJump, ref jumpQueue);
             jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
-            Debug.Log(jumpInput);
         }
     }
 

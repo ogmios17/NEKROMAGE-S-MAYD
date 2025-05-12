@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool isTalking = false;
+    private CanvasGroup canvasGroup;
+    private string[] lines;
+    public Dialogue dialogue;
     public float force;
     public float jumpForce;
     public float drag;
@@ -20,13 +24,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        canvasGroup = dialogue.gameObject.GetComponent<CanvasGroup>();
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(rand.GetJump()) && isGrounded) 
+        if (Input.GetKeyDown(rand.GetJump()) && isGrounded && !isTalking) 
         {
             jumpRegistered = true;
         }
@@ -44,12 +49,14 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = drag;
         }
         else rb.linearDamping = 0;
-        if (Input.GetKey(rand.GetBack())) 
+        if (Input.GetKey(rand.GetBack()) && !isTalking) 
             rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
-        if (Input.GetKey(rand.GetForward()))  
+        if (Input.GetKey(rand.GetForward()) && !isTalking)  
             rb.AddForce(Vector3.back * force, ForceMode.Impulse);
         if (jumpRegistered && isGrounded)
             Jump();
+            
+            
 
         HandleVelocity();
 
@@ -93,5 +100,29 @@ public class PlayerController : MonoBehaviour
             victory.SetActive(true);
             Time.timeScale = 0;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("dialogue1"))
+        {
+            isTalking = true;
+            Destroy(other.gameObject);
+            lines = new string[3];
+    
+            lines[0] = "ciao";
+            lines[1] = "ecco volevo dirti";
+            lines[2] = "suicidati";
+
+            dialogue.setLines(lines);
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            dialogue.StartDialogue();
+        }
+    }
+
+    public void setTalkingState(bool value)
+    {
+        isTalking = value;
     }
 }
