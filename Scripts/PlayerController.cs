@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private bool isTalking = false;
-    private CanvasGroup canvasGroup;
-    private string[] lines;
-    public Dialogue dialogue;
     public float force;
     public float jumpForce;
     public float drag;
@@ -24,7 +21,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        canvasGroup = dialogue.gameObject.GetComponent<CanvasGroup>();
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -102,24 +98,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("dialogue1"))
-        {
-            isTalking = true;
-            Destroy(other.gameObject);
-            lines = new string[3];
     
-            lines[0] = "ciao";
-            lines[1] = "ecco volevo dirti";
-            lines[2] = "suicidati";
-
-            dialogue.setLines(lines);
-            canvasGroup.alpha = 1f;
-            canvasGroup.interactable = true;
-            dialogue.StartDialogue();
-        }
-    }
 
     public void setTalkingState(bool value)
     {

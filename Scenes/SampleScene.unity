@@ -4453,7 +4453,7 @@ GameObject:
   - component: {fileID: 1311514486}
   m_Layer: 0
   m_Name: Maid
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4480,10 +4480,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311514480}
-  serializedVersion: 5
+  serializedVersion: 4
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4512,7 +4512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 1416325831}
   force: 15
   jumpForce: 100
   drag: 10
@@ -4825,6 +4824,7 @@ RectTransform:
   m_Children:
   - {fileID: 924744851}
   - {fileID: 1887327907}
+  - {fileID: 1522484944}
   m_Father: {fileID: 1969387657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4859,8 +4859,8 @@ MonoBehaviour:
   player: {fileID: 1311514484}
   canvasGroup: {fileID: 1416325829}
   text: {fileID: 1887327908}
+  imagePlaceholder: {fileID: 1522484942}
   speed: 1
-  lines: []
 --- !u!1001 &1431944421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5216,6 +5216,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5981369457052489727, guid: 9364e669f3ae1d1428f93802960fd9ae, type: 3}
   m_PrefabInstance: {fileID: 322331867843084017}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1522484941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522484944}
+  - component: {fileID: 1522484943}
+  - component: {fileID: 1522484942}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1522484942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522484941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1149649805, guid: 3e7e576d475cb6d4d9d394162aede6ec, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1522484943
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522484941}
+  m_CullTransparentMesh: 1
+--- !u!224 &1522484944
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522484941}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.469696, y: 3.4855797, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416325828}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -794.49, y: -371.2353}
+  m_SizeDelta: {x: 93.376, y: 95.2747}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1522596648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5297,6 +5372,7 @@ GameObject:
   - component: {fileID: 1527611136}
   - component: {fileID: 1527611135}
   - component: {fileID: 1527611134}
+  - component: {fileID: 1527611138}
   m_Layer: 0
   m_Name: Cube
   m_TagString: dialogue1
@@ -5393,6 +5469,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1527611138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527611133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e62d09d4b8974408cafe59aa15f6a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1311514484}
+  dialogue: {fileID: 1416325831}
+  lines:
+  - hello
+  - KILL YOURSELF
+  - tosta fra...
+  images:
+  - {fileID: 21300000, guid: 2fb70910d7385e54893fd484c3222686, type: 3}
+  - {fileID: 21300000, guid: 20c4d873a38093d4bb32810454e9ddf2, type: 3}
+  - {fileID: 21300000, guid: 6a74bf48ee5f2664fb9ba7973a8ab6c1, type: 3}
 --- !u!1 &1589502353
 GameObject:
   m_ObjectHideFlags: 0

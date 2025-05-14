@@ -8,8 +8,10 @@ public class Dialogue : MonoBehaviour
     public PlayerController player;
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI text;
+    public Image imagePlaceholder;
     public float speed;
-    public string[] lines;
+    private string[] lines;
+    private Image[] images;
     private int index;
     void Start()
     {
@@ -19,7 +21,7 @@ public class Dialogue : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canvasGroup.interactable)
         {
             if (text.text == lines[index])
             {
@@ -35,6 +37,7 @@ public class Dialogue : MonoBehaviour
     public void StartDialogue()
     {
         index = 0;
+        imagePlaceholder = images[0];
         StartCoroutine(Type());
     }
 
@@ -54,6 +57,7 @@ public class Dialogue : MonoBehaviour
         {
             index++;
             text.text = "";
+            imagePlaceholder = images[index];
             StartCoroutine(Type());
         }
         else
@@ -66,5 +70,10 @@ public class Dialogue : MonoBehaviour
     public void setLines(string[] lines)
     {
         this.lines = lines;
+    }
+
+    public void setImages(Sprite[] images)
+    {
+        this.images = images;
     }
 }
