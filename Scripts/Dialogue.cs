@@ -8,13 +8,15 @@ public class Dialogue : MonoBehaviour
     public PlayerController player;
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI text;
-    public Image imagePlaceholder;
-    public float speed;
+    public GameObject imagePlaceholder;
+    private Image toInsert;
+    public float[] speeds;
     private string[] lines;
-    private Image[] images;
+    private Sprite[] images;
     private int index;
     void Start()
     {
+        toInsert = imagePlaceholder.GetComponent<Image>();
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         text.text = "";
@@ -37,7 +39,7 @@ public class Dialogue : MonoBehaviour
     public void StartDialogue()
     {
         index = 0;
-        imagePlaceholder = images[0];
+        toInsert.sprite= images[0];
         StartCoroutine(Type());
     }
 
@@ -47,7 +49,7 @@ public class Dialogue : MonoBehaviour
         foreach(char c in lines[index].ToCharArray())
         {
             text.text += c;
-            yield return new WaitForSeconds(speed);
+            yield return new WaitForSeconds(speeds[index]);
         }
     }
 
@@ -57,7 +59,7 @@ public class Dialogue : MonoBehaviour
         {
             index++;
             text.text = "";
-            imagePlaceholder = images[index];
+            toInsert.sprite = images[index];
             StartCoroutine(Type());
         }
         else
@@ -72,7 +74,7 @@ public class Dialogue : MonoBehaviour
         this.lines = lines;
     }
 
-    public void setImages(Image[] images)
+    public void setImages(Sprite[] images)
     {
         this.images = images;
     }

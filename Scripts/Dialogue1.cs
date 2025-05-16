@@ -8,7 +8,7 @@ public class Dialogue1 : MonoBehaviour
     public Dialogue dialogue;
     private CanvasGroup canvasGroup;
     public string[] lines;
-    public Image[] images;
+    public Sprite[] images;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
