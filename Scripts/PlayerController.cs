@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     private RaycastHit hit;
     private float raycastSpread = 1;
     public float ray;
+    private float coyoteTimer;
+    public float floatingTime;
+    private float groundCheckCooldown;
+    private float groundCheckDelay = 0.1f;
+    public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
 
@@ -46,15 +51,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
-        if (Input.GetKeyDown(rand.GetJump()) && isGrounded && !isTalking) 
-        {
-            jumpRegistered = true;
-        }
+        timer.text = coyoteTimer.ToString();     //DELETE AFTER DEBUG
+        if (Input.GetKeyDown(rand.GetJump()))
+            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime))&&!isTalking) jumpRegistered = true;
+        
 
         if (gameObject.transform.position.y < 5) 
             SceneManager.LoadScene("SampleScene");
         Debug.Log("Grounded: " + isGrounded);
+
+        HandleCoyote();
+        groundCheckCooldown -= Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -69,24 +76,28 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
         if (Input.GetKey(rand.GetForward()) && !isTalking)  
             rb.AddForce(Vector3.back * force, ForceMode.Impulse);
-        if (jumpRegistered && isGrounded)
+        if (jumpRegistered && (isGrounded || (coyoteTimer<floatingTime && coyoteTimer>0)))
             Jump();
             
             
 
         HandleVelocity();
-
-        for(int i = 0; i<5; i++){
-            Vector3 origin = new Vector3(transform.position.x,transform.position.y-4,transform.position.z+(i-2)-1);
-            rayLines[i].SetPosition(0, origin);
-            rayLines[i].SetPosition(1, origin + Vector3.down*ray);
-            if (Physics.Raycast(origin, Vector3.down, out hit, ray)){
-                isGrounded = true;
-                break;
+        if (groundCheckCooldown <= 0)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Vector3 origin = new Vector3(transform.position.x, transform.position.y - 4, transform.position.z + (i - 2) - 1);
+                rayLines[i].SetPosition(0, origin);
+                rayLines[i].SetPosition(1, origin + Vector3.down * ray);
+                if (Physics.Raycast(origin, Vector3.down, out hit, ray))
+                {
+                    isGrounded = true;
+                    coyoteTimer = 0;
+                    break;
+                }
+                if (i == 4) isGrounded = false;
             }
-            isGrounded = false;
         }
-        
 
 
 
@@ -98,16 +109,8 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity= new Vector3(0f,jumpForce,rb.linearVelocity.z);
         jumpRegistered = false;
         isGrounded = false;
-    }
-
-    string GetName(KeyCode key)
-    {
-        if (key >= KeyCode.Alpha0 && key <= KeyCode.Alpha9)
-        {
-            return ((int)key - (int)KeyCode.Alpha0).ToString();
-        }
-        return key.ToString();
-
+        coyoteTimer = -1;
+        groundCheckCooldown = groundCheckDelay;
     }
 
     void HandleVelocity()
@@ -133,5 +136,12 @@ public class PlayerController : MonoBehaviour
     public void setTalkingState(bool value)
     {
         isTalking = value;
+    }
+    public void HandleCoyote()
+    {
+        if(!isGrounded && coyoteTimer >=0)
+        {
+            coyoteTimer+= Time.deltaTime;
+        }
     }
 }

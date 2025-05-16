@@ -10,7 +10,6 @@ public class InputRandomizer : MonoBehaviour
     public Image forwardSprite;
     public Image jumpSprite;
     public bool randomize = true;
-    public TextMeshProUGUI fps;
 
     private KeyCode[] keys = {
             KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
@@ -49,7 +48,6 @@ public class InputRandomizer : MonoBehaviour
 
     void Update()
     {
-        fps.text = (1/Time.deltaTime).ToString();
         timeSpanBack -= Time.deltaTime;
         timeSpanForward -= Time.deltaTime;
         timeSpanJump -= Time.deltaTime;
