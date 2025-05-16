@@ -72,7 +72,7 @@ public class Dialogue : MonoBehaviour
         this.lines = lines;
     }
 
-    public void setImages(Sprite[] images)
+    public void setImages(Image[] images)
     {
         this.images = images;
     }
