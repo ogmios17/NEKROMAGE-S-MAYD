@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private float previousVelocity=0;
+    public float maxFallingSpeed;
+    public float peakBoostY;
+    public float peakBoostZ;
     private bool isTalking = false;
     public float force;
     public float jumpForce;
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float floatingTime;
     private float groundCheckCooldown;
     private float groundCheckDelay = 0.1f;
+    private bool boosted;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        timer.text = coyoteTimer.ToString();     //DELETE AFTER DEBUG
+        timer.text = previousVelocity.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime))&&!isTalking) jumpRegistered = true;
         
@@ -84,25 +89,30 @@ public class PlayerController : MonoBehaviour
         HandleVelocity();
         if (groundCheckCooldown <= 0)
         {
-            for (int i = 0; i < 5; i++)
-            {
-                Vector3 origin = new Vector3(transform.position.x, transform.position.y - 4, transform.position.z + (i - 2) - 1);
-                rayLines[i].SetPosition(0, origin);
-                rayLines[i].SetPosition(1, origin + Vector3.down * ray);
-                if (Physics.Raycast(origin, Vector3.down, out hit, ray))
-                {
-                    isGrounded = true;
-                    coyoteTimer = 0;
-                    break;
-                }
-                if (i == 4) isGrounded = false;
-            }
+            GroundCheck();
         }
 
 
 
     }
 
+    void GroundCheck()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 origin = new Vector3(transform.position.x, transform.position.y - 4, transform.position.z + (i - 2) - 1);
+            rayLines[i].SetPosition(0, origin);
+            rayLines[i].SetPosition(1, origin + Vector3.down * ray);
+            if (Physics.Raycast(origin, Vector3.down, out hit, ray))
+            {
+                isGrounded = true;
+                coyoteTimer = 0;
+                boosted = false;
+                break;
+            }
+            if (i == 4) isGrounded = false;
+        }
+    }
     void Jump()
     {
         rb.linearVelocity = new Vector3(0f, 0f, rb.linearVelocity.z);
@@ -119,7 +129,16 @@ public class PlayerController : MonoBehaviour
         {            
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, Mathf.Sign(rb.linearVelocity.z) * maxSpeed);
         }
-
+        if ((Mathf.Abs(rb.linearVelocity.y) > maxFallingSpeed))
+        {
+            rb.linearVelocity = new Vector3(0, Mathf.Sign(rb.linearVelocity.y) * maxFallingSpeed, rb.linearVelocity.z);
+        }
+        if(previousVelocity>0 && rb.linearVelocity.y<0 && coyoteTimer <0)
+        {
+            rb.AddForce(new Vector3(rb.linearVelocity.x, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
+            boosted = true;
+        }
+        previousVelocity = rb.linearVelocity.y;
     }
 
     void OnCollisionEnter(Collision collision)

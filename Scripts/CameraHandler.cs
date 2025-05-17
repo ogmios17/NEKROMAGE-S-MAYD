@@ -16,7 +16,6 @@ public class CameraHandler : MonoBehaviour
     void Update()
     {
         Vector3 pos = transform.position;
-        pos.y = player.transform.position.y + offsety;
         pos.z = player.transform.position.z + offsetz;
         pos.x = player.transform.position.x + offsetx;
         transform.position = pos;

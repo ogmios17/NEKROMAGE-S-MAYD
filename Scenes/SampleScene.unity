@@ -1660,7 +1660,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03082557, y: 0.7064346, z: -0.030825596, w: 0.7064346}
-  m_LocalPosition: {x: -16.71, y: 13.03, z: 14.56}
+  m_LocalPosition: {x: -15.2, y: 30.4, z: -102.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4572,9 +4572,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1311514481}
   - component: {fileID: 1311514485}
-  - component: {fileID: 1311514484}
   - component: {fileID: 1311514483}
   - component: {fileID: 1311514486}
+  - component: {fileID: 1311514487}
+  - component: {fileID: 1311514488}
   m_Layer: 0
   m_Name: Maid
   m_TagString: Player
@@ -4591,7 +4592,7 @@ Transform:
   m_GameObject: {fileID: 1311514480}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0.1, y: 87.4, z: -257}
+  m_LocalPosition: {x: 2.8, y: 15.4, z: -104.5}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4623,29 +4624,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 114
-  m_CollisionDetection: 0
---- !u!114 &1311514484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311514480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 30
-  jumpForce: 100
-  drag: 7
-  rand: {fileID: 768143007}
-  maxSpeed: 20
-  gravity: 10
-  victory: {fileID: 1678310812}
-  ray: 2
-  floatingTime: 0.1
-  timer: {fileID: 290495523}
+  m_CollisionDetection: 2
 --- !u!212 &1311514485
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4718,10 +4697,58 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.7693329, y: 6.143066, z: 1}
   m_Center: {x: -1.0096658, y: -0.3665328, z: -0.3}
+--- !u!114 &1311514487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311514480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFallingSpeed: 500
+  peakBoostY: 500
+  peakBoostZ: 30
+  force: 30
+  jumpForce: 80
+  drag: 7
+  rand: {fileID: 768143007}
+  maxSpeed: 20
+  gravity: 10
+  victory: {fileID: 1678310812}
+  ray: 2
+  floatingTime: 0.1
+  timer: {fileID: 290495523}
+--- !u!136 &1311514488
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311514480}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 7.16
+  m_Direction: 1
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!1 &1382396970
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,7 +5009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845eaee9ac7ae344c87be01e72a2f5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1311514484}
+  player: {fileID: 0}
   canvasGroup: {fileID: 1416325829}
   text: {fileID: 1887327908}
   imagePlaceholder: {fileID: 1522484941}
@@ -5592,7 +5619,7 @@ Transform:
   m_GameObject: {fileID: 1527611133}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -6.65, y: 30.2, z: -142.6}
+  m_LocalPosition: {x: -6.65, y: 55.8, z: -142.6}
   m_LocalScale: {x: 2.5666242, y: 8.7614, z: 2.9909}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5610,7 +5637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e62d09d4b8974408cafe59aa15f6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1311514484}
+  player: {fileID: 0}
   dialogue: {fileID: 1416325831}
   lines:
   - hello
