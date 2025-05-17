@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public float airForce;
     private float previousVelocity=0;
     public float maxFallingSpeed;
     public float peakBoostY;
@@ -77,11 +78,14 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = drag;
         }
         else rb.linearDamping = 0;
-        if (Input.GetKey(rand.GetBack()) && !isTalking) 
+
+        if (Input.GetKey(rand.GetBack()) && !isTalking)
             rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
-        if (Input.GetKey(rand.GetForward()) && !isTalking)  
+        if (Input.GetKey(rand.GetForward()) && !isTalking)
             rb.AddForce(Vector3.back * force, ForceMode.Impulse);
-        if (jumpRegistered && (isGrounded || (coyoteTimer<floatingTime && coyoteTimer>0)))
+        
+        
+        if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
             Jump();
             
             
@@ -116,7 +120,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rb.linearVelocity = new Vector3(0f, 0f, rb.linearVelocity.z);
-        rb.linearVelocity= new Vector3(0f,jumpForce,rb.linearVelocity.z);
+        rb.AddForce(new Vector3(0f, jumpForce, rb.linearVelocity.z), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
         coyoteTimer = -1;
@@ -125,6 +129,11 @@ public class PlayerController : MonoBehaviour
 
     void HandleVelocity()
     {
+
+        if (!isGrounded)
+        {
+            //rb.AddForce(new Vector3(0, 0, Mathf.Sign(rb.linearVelocity.z)*airForce),ForceMode.Impulse);
+        }
         if (Mathf.Abs(rb.linearVelocity.z) > maxSpeed)
         {            
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, Mathf.Sign(rb.linearVelocity.z) * maxSpeed);

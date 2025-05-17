@@ -4573,9 +4573,10 @@ GameObject:
   - component: {fileID: 1311514481}
   - component: {fileID: 1311514485}
   - component: {fileID: 1311514483}
-  - component: {fileID: 1311514486}
   - component: {fileID: 1311514487}
   - component: {fileID: 1311514488}
+  - component: {fileID: 1311514490}
+  - component: {fileID: 1311514489}
   m_Layer: 0
   m_Name: Maid
   m_TagString: Player
@@ -4680,27 +4681,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &1311514486
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311514480}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1.7693329, y: 6.143066, z: 1}
-  m_Center: {x: -1.0096658, y: -0.3665328, z: -0.3}
 --- !u!114 &1311514487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4713,6 +4693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  airForce: 0
   maxFallingSpeed: 500
   peakBoostY: 500
   peakBoostZ: 30
@@ -4749,6 +4730,52 @@ CapsuleCollider:
   m_Height: 7.16
   m_Direction: 1
   m_Center: {x: -1, y: 0, z: 0}
+--- !u!136 &1311514489
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311514480}
+  m_Material: {fileID: 13400000, guid: 4f89a51d9d231154fb9492b9b2cc4730, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 7.16
+  m_Direction: 1
+  m_Center: {x: 0.5, y: 0.2, z: 0}
+--- !u!136 &1311514490
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311514480}
+  m_Material: {fileID: 13400000, guid: 4f89a51d9d231154fb9492b9b2cc4730, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 7.16
+  m_Direction: 1
+  m_Center: {x: -3, y: 0.2, z: 0}
 --- !u!1 &1382396970
 GameObject:
   m_ObjectHideFlags: 0
