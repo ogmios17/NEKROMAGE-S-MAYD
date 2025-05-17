@@ -4706,6 +4706,7 @@ MonoBehaviour:
   victory: {fileID: 1678310812}
   ray: 2
   floatingTime: 0.1
+  jumpBufferTime: 0.1
   timer: {fileID: 290495523}
 --- !u!136 &1311514488
 CapsuleCollider:

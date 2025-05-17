@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private float groundCheckCooldown;
     private float groundCheckDelay = 0.1f;
     private bool boosted;
+    public float jumpBufferTime;
+    private float jumpBufferTimer = 0;
+    private bool buffered;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
@@ -57,13 +60,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        timer.text = previousVelocity.ToString();    //DELETE AFTER DEBUG
+        timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
-            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime))&&!isTalking) jumpRegistered = true;
-        
+            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && !isTalking) jumpRegistered = true;
+            else buffered = true;
 
-        if (gameObject.transform.position.y < 5) 
-            SceneManager.LoadScene("SampleScene");
+        if (buffered) jumpBufferTimer += Time.deltaTime;
+
+        if (gameObject.transform.position.y < 5)
+                SceneManager.LoadScene("SampleScene");
         Debug.Log("Grounded: " + isGrounded);
 
         HandleCoyote();
@@ -112,6 +117,18 @@ public class PlayerController : MonoBehaviour
                 isGrounded = true;
                 coyoteTimer = 0;
                 boosted = false;
+                if(jumpBufferTimer>0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
+                {
+                    Jump();
+                    jumpBufferTimer = 0;
+                    buffered = false;
+                }
+                if(rb.linearVelocity.y == 0)
+                {
+                    jumpBufferTimer = 0;
+                    buffered = false;
+                }
+                
                 break;
             }
             if (i == 4) isGrounded = false;
