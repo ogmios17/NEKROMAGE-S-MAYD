@@ -192,4 +192,9 @@ public class PlayerController : MonoBehaviour
             coyoteTimer+= Time.deltaTime;
         }
     }
+
+    public bool GetGroundedState()
+    {
+        return isGrounded;
+    }
 }
