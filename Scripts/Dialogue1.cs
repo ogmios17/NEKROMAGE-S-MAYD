@@ -49,4 +49,11 @@ public class Dialogue1 : MonoBehaviour
             dialogue.StartDialogue();
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && trigger)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

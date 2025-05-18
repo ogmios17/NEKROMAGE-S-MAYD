@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Dialogue : MonoBehaviour
 {
+    public InputRandomizer inputRandomizer;
+    public GameObject UI;
     public PlayerController player;
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI text;
@@ -38,6 +40,8 @@ public class Dialogue : MonoBehaviour
     }
     public void StartDialogue()
     {
+        UI.SetActive(false);
+        inputRandomizer.setTimer(false);
         index = 0;
         toInsert.sprite= images[0];
         StartCoroutine(Type());
@@ -67,6 +71,8 @@ public class Dialogue : MonoBehaviour
             player.setTalkingState(false);
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
+            UI.SetActive(true);
+            inputRandomizer.setTimer(true);
         }
     }
     public void setLines(string[] lines)

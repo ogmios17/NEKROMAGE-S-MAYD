@@ -5,6 +5,7 @@ using TMPro;
 
 public class InputRandomizer : MonoBehaviour
 {
+    private bool timerActive = true;
     public InputVisualizer inputVisualizer;
     public Image backSprite;
     public Image forwardSprite;
@@ -48,9 +49,12 @@ public class InputRandomizer : MonoBehaviour
 
     void Update()
     {
-        timeSpanBack -= Time.deltaTime;
-        timeSpanForward -= Time.deltaTime;
-        timeSpanJump -= Time.deltaTime;
+        if (timerActive)
+        {
+            timeSpanBack -= Time.deltaTime;
+            timeSpanForward -= Time.deltaTime;
+            timeSpanJump -= Time.deltaTime;
+        }
         
         /*backText.text = timeSpanBack.ToString()+"/////////"+backQueue.Peek();
         forwardText.text = timeSpanForward.ToString() + "/////////" + forwardQueue.Peek();
@@ -120,5 +124,10 @@ public class InputRandomizer : MonoBehaviour
     public KeyCode GetJump()
     {
         return randomize ? jumpInput : KeyCode.Space;
+    }
+
+    public void setTimer(bool timer)
+    {
+        timerActive = timer;
     }
 }
