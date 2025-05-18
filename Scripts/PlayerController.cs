@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float airForce;
+    public float airFriction;
     private float previousVelocity=0;
     public float maxFallingSpeed;
     public float peakBoostY;
@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public float jumpBufferTime;
     private float jumpBufferTimer = 0;
     private bool buffered;
+    private float actualForce;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
@@ -82,12 +83,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearDamping = drag;
         }
-        else rb.linearDamping = 0;
-
+        else
+        {
+            rb.linearDamping = 0;
+            actualForce -= airFriction;
+        }
         if (Input.GetKey(rand.GetBack()) && !isTalking)
-            rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
+            rb.AddForce(Vector3.forward * actualForce, ForceMode.Impulse);
         if (Input.GetKey(rand.GetForward()) && !isTalking)
-            rb.AddForce(Vector3.back * force, ForceMode.Impulse);
+            rb.AddForce(Vector3.back * actualForce, ForceMode.Impulse);
         
         
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
@@ -101,7 +105,7 @@ public class PlayerController : MonoBehaviour
             GroundCheck();
         }
 
-
+        actualForce = force;
 
     }
 
