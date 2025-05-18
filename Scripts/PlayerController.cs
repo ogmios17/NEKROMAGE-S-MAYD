@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     public InputRandomizer rand; 
     public float maxSpeed = 5;
-    public float gravity = 10;
     public GameObject victory;
     private RaycastHit hit;
     private float raycastSpread = 1;

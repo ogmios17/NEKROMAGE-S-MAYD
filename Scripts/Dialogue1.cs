@@ -9,6 +9,8 @@ public class Dialogue1 : MonoBehaviour
     private CanvasGroup canvasGroup;
     public string[] lines;
     public Sprite[] images;
+    public float[] speeds;
+    public bool trigger;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,16 +20,28 @@ public class Dialogue1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKey(KeyCode.LeftShift) && !trigger)
+        {
+            
+            player.setTalkingState(true);
+
+            dialogue.setSpeeds(speeds);
+            dialogue.setLines(lines);
+            dialogue.setImages(images);
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            dialogue.StartDialogue();
+            
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && trigger)
         {
             player.setTalkingState(true);
-            
 
+            dialogue.setSpeeds(speeds);
             dialogue.setLines(lines);
             dialogue.setImages(images);
             canvasGroup.alpha = 1f;

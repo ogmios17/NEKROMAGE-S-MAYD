@@ -78,4 +78,9 @@ public class Dialogue : MonoBehaviour
     {
         this.images = images;
     }
+
+    public void setSpeeds(float[] speeds)
+    {
+        this.speeds = speeds;
+    }
 }
