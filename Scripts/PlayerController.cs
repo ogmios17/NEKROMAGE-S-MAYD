@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float maxFallingSpeed;
     public float peakBoostY;
     public float peakBoostZ;
-    private bool isInteractable = false;
+    private bool isInteractable = true;
     public float force;
     public float jumpForce;
     public float drag;
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
-            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && !isInteractable) jumpRegistered = true;
+            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else buffered = true;
 
         if (buffered) jumpBufferTimer += Time.deltaTime;
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = 0;
             actualForce -= airFriction;
         }
-        if (Input.GetKey(rand.GetBack()) && !isInteractable)
+        if (Input.GetKey(rand.GetBack()) && isInteractable)
         {
             rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
             if (currentDirection != MoveDir.Forward)
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 animations.Play("SwitchSide");
             }
         }
-        else if (Input.GetKey(rand.GetForward()) && !isInteractable)
+        else if (Input.GetKey(rand.GetForward()) && isInteractable)
         {
             rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
             if (currentDirection != MoveDir.Backward)

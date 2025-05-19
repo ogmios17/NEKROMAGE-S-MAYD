@@ -39,7 +39,7 @@ public class Dialogue1 : MonoBehaviour
     {
         if (other.CompareTag("Player") && trigger)
         {
-            player.setInteractableState(true);
+            player.setInteractableState(false);
 
             dialogue.setSpeeds(speeds);
             dialogue.setLines(lines);
