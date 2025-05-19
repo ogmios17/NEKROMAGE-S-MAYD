@@ -10,15 +10,16 @@ public class ViewSnapper : MonoBehaviour
     public float angle;
     public float xOffsetModifier;
     public float zOffsetModifier;
-    private float angleAcc;
     public Vector3 front;
     public Vector3 back;
     public float movex;
     public float movez;
+    public Animation cameraSnapAnim;
+    private Vector3 velocity = Vector3.zero;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        angleAcc = angle;
+        
     }
 
     // Update is called once per frame
@@ -30,14 +31,18 @@ public class ViewSnapper : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            camera.transform.rotation = new Quaternion(camera.transform.rotation.x, 180, camera.transform.rotation.z, 1);
+            cameraHandler.enabled = false;
+
+            player.transform.rotation = Quaternion.Euler(0, angle, 0);
             player.transform.position = new Vector3(player.transform.position.x + movex, player.transform.position.y, player.transform.position.z + movez);
-            cameraHandler.offsetx += xOffsetModifier;
-            cameraHandler.offsetz += zOffsetModifier;
             playerController.setBackDirection(back);
             playerController.setFrontDirection(front);
+            cameraSnapAnim.Play();
             
+            cameraHandler.offsetx = xOffsetModifier;
+            cameraHandler.offsetz = zOffsetModifier;
+
+            cameraHandler.enabled = true;
         }
     }
-
 }

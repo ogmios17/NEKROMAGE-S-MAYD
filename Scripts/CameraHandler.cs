@@ -66,18 +66,18 @@ public class CameraHandler : MonoBehaviour
 
     float CheckForPlatforms()
     {
-        Vector3 origindx = new Vector3(player.transform.position.x, player.transform.position.y-5 , player.transform.position.z);
-        Vector3 originsx = new Vector3(player.transform.position.x, player.transform.position.y-5 , player.transform.position.z -3);
+        Vector3 origindx = new Vector3(player.transform.position.x-0.1f, player.transform.position.y-5 , player.transform.position.z-0.1f);
+        Vector3 originsx = new Vector3(player.transform.position.x+0.1f, player.transform.position.y-5 , player.transform.position.z+0.1f);
 
         // Aggiorna sempre le linee di debug - ELIMINA DOPO IL DEBUG!
         lineRendererForward.SetPosition(0, origindx); // ELIMINA DOPO IL DEBUG!
-        lineRendererForward.SetPosition(1, origindx + Vector3.forward * ray); // ELIMINA DOPO IL DEBUG!
+        lineRendererForward.SetPosition(1, origindx + playerController.getFrontDirection() * ray); // ELIMINA DOPO IL DEBUG!
 
         lineRendererBackward.SetPosition(0, originsx); // ELIMINA DOPO IL DEBUG!
-        lineRendererBackward.SetPosition(1, originsx + Vector3.back * ray); // ELIMINA DOPO IL DEBUG!
+        lineRendererBackward.SetPosition(1, originsx + playerController.getBackDirection() * ray); // ELIMINA DOPO IL DEBUG!
 
         
-        if (Physics.Raycast(origindx, Vector3.forward, out hit, ray,layerMask) || Physics.Raycast(originsx, Vector3.back, out hit, ray, layerMask))
+        if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
         {                
             targetY = hit.point.y + offsety;
             return hit.point.y + offsety;
@@ -87,6 +87,15 @@ public class CameraHandler : MonoBehaviour
         
 
         return targetY;
+    }
+
+    void SetOffsetx(float xmod)
+    {
+        offsetx = xmod;
+    }
+    void SetOffsetz(float zmod)
+    {
+        offsetz = zmod;
     }
 
 }

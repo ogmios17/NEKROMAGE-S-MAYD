@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
 
         if (gameObject.transform.position.y < 5)
                 SceneManager.LoadScene("SampleScene");
-        Debug.Log("Grounded: " + isGrounded);
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
@@ -215,5 +214,15 @@ public class PlayerController : MonoBehaviour
     public void setBackDirection(Vector3 direction)
     {
         backDirection = direction;
+    }
+
+    public Vector3 getFrontDirection()
+    {
+        return frontDirection;
+    }
+
+    public Vector3 getBackDirection()
+    {
+        return backDirection;
     }
 }
