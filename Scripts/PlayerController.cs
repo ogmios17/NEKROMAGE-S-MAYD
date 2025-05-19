@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 frontDirection;
+    private Vector3 backDirection;
     public float airFriction;
     private float previousVelocity=0;
     public float maxFallingSpeed;
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        backDirection = Vector3.back;
+        frontDirection = Vector3.forward;
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
 
@@ -88,9 +93,9 @@ public class PlayerController : MonoBehaviour
             actualForce -= airFriction;
         }
         if (Input.GetKey(rand.GetBack()) && !isTalking)
-            rb.AddForce(Vector3.forward * actualForce, ForceMode.Impulse);
+            rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
         if (Input.GetKey(rand.GetForward()) && !isTalking)
-            rb.AddForce(Vector3.back * actualForce, ForceMode.Impulse);
+            rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
         
         
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
@@ -139,8 +144,8 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
-        rb.linearVelocity = new Vector3(0f, 0f, rb.linearVelocity.z);
-        rb.AddForce(new Vector3(0f, jumpForce, rb.linearVelocity.z), ForceMode.Impulse);
+        rb.linearVelocity = new Vector3(0f, 0f, 0f);
+        rb.AddForce(new Vector3(0f, jumpForce,0f), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
         coyoteTimer = -1;
@@ -157,6 +162,10 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(rb.linearVelocity.z) > maxSpeed)
         {            
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, Mathf.Sign(rb.linearVelocity.z) * maxSpeed);
+        }
+        if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
+        {
+            rb.linearVelocity = new Vector3(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y, 0);
         }
         if ((Mathf.Abs(rb.linearVelocity.y) > maxFallingSpeed))
         {
@@ -196,5 +205,15 @@ public class PlayerController : MonoBehaviour
     public bool GetGroundedState()
     {
         return isGrounded;
+    }
+
+    public void setFrontDirection(Vector3 direction)
+    {
+        frontDirection = direction;
+    }
+
+    public void setBackDirection(Vector3 direction)
+    {
+        backDirection = direction;
     }
 }

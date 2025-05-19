@@ -27,7 +27,7 @@ public class CameraHandler : MonoBehaviour
     {
         layerMask = ~(1 << LayerMask.NameToLayer("Player"));
         targetY = transform.position.y;
-        pos = transform.position;
+        pos = player.transform.position;
         // Crea oggetto figlio per il LineRenderer forward - ELIMINA DOPO IL DEBUG!
         GameObject forwardObj = new GameObject("ForwardLine"); // ELIMINA DOPO IL DEBUG!
         forwardObj.transform.parent = this.transform; // ELIMINA DOPO IL DEBUG!
@@ -57,7 +57,7 @@ public class CameraHandler : MonoBehaviour
     {
         currentPos = transform.position;
         pos.z = player.transform.position.z + offsetz;
-        pos.x = player.transform.position.x + offsetx;
+        pos.x = player.transform.position.x + offsetx;      
         pos.y = CheckForPlatforms();
 
         transform.position = new Vector3(pos.x, currentPos.y, pos.z);
@@ -66,8 +66,8 @@ public class CameraHandler : MonoBehaviour
 
     float CheckForPlatforms()
     {
-        Vector3 origindx = new Vector3(player.transform.position.x, player.transform.position.y-4 , player.transform.position.z);
-        Vector3 originsx = new Vector3(player.transform.position.x, player.transform.position.y-4 , player.transform.position.z -3);
+        Vector3 origindx = new Vector3(player.transform.position.x, player.transform.position.y-5 , player.transform.position.z);
+        Vector3 originsx = new Vector3(player.transform.position.x, player.transform.position.y-5 , player.transform.position.z -3);
 
         // Aggiorna sempre le linee di debug - ELIMINA DOPO IL DEBUG!
         lineRendererForward.SetPosition(0, origindx); // ELIMINA DOPO IL DEBUG!
@@ -76,17 +76,17 @@ public class CameraHandler : MonoBehaviour
         lineRendererBackward.SetPosition(0, originsx); // ELIMINA DOPO IL DEBUG!
         lineRendererBackward.SetPosition(1, originsx + Vector3.back * ray); // ELIMINA DOPO IL DEBUG!
 
-        if (!playerController.GetGroundedState())
-        {
-            if (Physics.Raycast(origindx, Vector3.forward, out hit, ray,layerMask) || Physics.Raycast(originsx, Vector3.back, out hit, ray, layerMask))
-            {                
-                targetY = hit.point.y + offsety;
-                return hit.point.y + offsety;
+        
+        if (Physics.Raycast(origindx, Vector3.forward, out hit, ray,layerMask) || Physics.Raycast(originsx, Vector3.back, out hit, ray, layerMask))
+        {                
+            targetY = hit.point.y + offsety;
+            return hit.point.y + offsety;
                 
-            }
-            
         }
+           
+        
 
         return targetY;
     }
+
 }
