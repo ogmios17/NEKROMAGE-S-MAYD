@@ -68,7 +68,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            player.setTalkingState(false);
+            player.setInteractableState(false);
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
             UI.SetActive(true);

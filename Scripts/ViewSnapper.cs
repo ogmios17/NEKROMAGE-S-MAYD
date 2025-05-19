@@ -37,6 +37,7 @@ public class ViewSnapper : MonoBehaviour
             player.transform.position = new Vector3(player.transform.position.x + movex, player.transform.position.y, player.transform.position.z + movez);
             playerController.setBackDirection(back);
             playerController.setFrontDirection(front);
+            playerController.setInteractableState(false);
             cameraSnapAnim.Play();
             
             cameraHandler.offsetx = xOffsetModifier;

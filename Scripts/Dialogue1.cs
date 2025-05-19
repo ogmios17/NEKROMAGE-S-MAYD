@@ -23,7 +23,7 @@ public class Dialogue1 : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift) && !trigger)
         {
             
-            player.setTalkingState(true);
+            player.setInteractableState(true);
 
             dialogue.setSpeeds(speeds);
             dialogue.setLines(lines);
@@ -39,7 +39,7 @@ public class Dialogue1 : MonoBehaviour
     {
         if (other.CompareTag("Player") && trigger)
         {
-            player.setTalkingState(true);
+            player.setInteractableState(true);
 
             dialogue.setSpeeds(speeds);
             dialogue.setLines(lines);

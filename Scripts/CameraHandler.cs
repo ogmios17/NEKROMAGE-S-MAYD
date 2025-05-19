@@ -92,10 +92,12 @@ public class CameraHandler : MonoBehaviour
     void SetOffsetx(float xmod)
     {
         offsetx = xmod;
+        playerController.setInteractableState(true);
     }
     void SetOffsetz(float zmod)
     {
         offsetz = zmod;
+        playerController.setInteractableState(true);
     }
 
 }

@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum MoveDir { None, Forward, Backward }
+    private MoveDir currentDirection = MoveDir.Forward;
     private Vector3 frontDirection;
     private Vector3 backDirection;
     public float airFriction;
@@ -14,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float maxFallingSpeed;
     public float peakBoostY;
     public float peakBoostZ;
-    private bool isTalking = false;
+    private bool isInteractable = false;
     public float force;
     public float jumpForce;
     public float drag;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferTimer = 0;
     private bool buffered;
     private float actualForce;
+    public Animation animations;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
@@ -67,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
-            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && !isTalking) jumpRegistered = true;
+            if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && !isInteractable) jumpRegistered = true;
             else buffered = true;
 
         if (buffered) jumpBufferTimer += Time.deltaTime;
@@ -77,6 +80,14 @@ public class PlayerController : MonoBehaviour
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
+
+        if (frontDirection.z > 0)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+        }
+        else { 
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation; 
+        }
     }
 
     void FixedUpdate()
@@ -91,12 +102,27 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = 0;
             actualForce -= airFriction;
         }
-        if (Input.GetKey(rand.GetBack()) && !isTalking)
+        if (Input.GetKey(rand.GetBack()) && !isInteractable)
+        {
             rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
-        if (Input.GetKey(rand.GetForward()) && !isTalking)
+            if (currentDirection != MoveDir.Forward)
+            {
+                currentDirection = MoveDir.Forward;
+                animations.Play("SwitchSide");
+            }
+        }
+        else if (Input.GetKey(rand.GetForward()) && !isInteractable)
+        {
             rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
+            if (currentDirection != MoveDir.Backward)
+            {
+                currentDirection = MoveDir.Backward;
+                animations.Play("SwitchSideBackwards");
+            }
+        }
         
-        
+
+
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
             Jump();
             
@@ -189,9 +215,9 @@ public class PlayerController : MonoBehaviour
 
     
 
-    public void setTalkingState(bool value)
+    public void setInteractableState(bool value)
     {
-        isTalking = value;
+        isInteractable = value;
     }
     public void HandleCoyote()
     {
