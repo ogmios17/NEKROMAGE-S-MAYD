@@ -1537,6 +1537,6 @@ AnimationClip:
     functionName: SetOffsetz
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 35
+    floatParameter: 40
     intParameter: 0
     messageOptions: 0

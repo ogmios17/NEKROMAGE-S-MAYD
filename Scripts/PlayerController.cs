@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 frontDirection;
     private Vector3 backDirection;
     public float airFriction;
+    [Range(0f,100f)]
+    public float airMomentumModifier;
     private float previousVelocity=0;
     public float maxFallingSpeed;
     public float peakBoostY;
@@ -81,11 +83,11 @@ public class PlayerController : MonoBehaviour
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
 
-        if (frontDirection.z > 0)
+        if (frontDirection.z > 0 && isInteractable)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
-        else { 
+        else if(isInteractable){ 
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation; 
         }
     }
@@ -120,7 +122,8 @@ public class PlayerController : MonoBehaviour
                 animations.Play("SwitchSideBackwards");
             }
         }
-        
+        else rb.linearVelocity = new Vector3(rb.linearVelocity.x*airMomentumModifier/100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
+
 
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
@@ -218,6 +221,8 @@ public class PlayerController : MonoBehaviour
     public void setInteractableState(bool value)
     {
         isInteractable = value;
+        if(value == false)
+            rb.constraints = RigidbodyConstraints.FreezeAll;
     }
     public void HandleCoyote()
     {
