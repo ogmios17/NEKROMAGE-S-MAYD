@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private Animator animator;
     private enum MoveDir { None, Forward, Backward }
     private MoveDir currentDirection = MoveDir.Forward;
     private Vector3 frontDirection;
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         backDirection = Vector3.back;
         frontDirection = Vector3.forward;
         victory.SetActive(false);
@@ -106,24 +109,29 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(rand.GetBack()) && isInteractable)
         {
+            animator.SetBool("isRunning", true);
             rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
             if (currentDirection != MoveDir.Forward)
             {
                 currentDirection = MoveDir.Forward;
-                animations.Play("SwitchSide");
+                animations.Play("SwitchSideBackwards");
             }
         }
         else if (Input.GetKey(rand.GetForward()) && isInteractable)
         {
+            animator.SetBool("isRunning", true);
             rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
             if (currentDirection != MoveDir.Backward)
             {
                 currentDirection = MoveDir.Backward;
-                animations.Play("SwitchSideBackwards");
+                animations.Play("SwitchSide");
             }
         }
-        else rb.linearVelocity = new Vector3(rb.linearVelocity.x*airMomentumModifier/100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
-
+        else
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
+            animator.SetBool("isRunning", false);
+        }
 
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))

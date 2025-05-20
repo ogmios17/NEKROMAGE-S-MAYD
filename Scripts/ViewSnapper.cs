@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class ViewSnapper : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ViewSnapper : MonoBehaviour
     public float zOffsetModifier;
     public Vector3 front;
     public Vector3 back;
+    public Vector3 animStart;
     public float movex;
     public float movez;
     public Animation cameraSnapAnim;
@@ -46,4 +48,6 @@ public class ViewSnapper : MonoBehaviour
             cameraHandler.enabled = true;
         }
     }
+
+    
 }

@@ -100,4 +100,16 @@ public class CameraHandler : MonoBehaviour
         playerController.setInteractableState(true);
     }
 
+    void MoveCameraInPlacex(float x)
+    {
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(x,transform.position.y,transform.position.z), ref velocity, 1000f);
+    }
+    void MoveCameraInPlacez(float z)
+    {
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, transform.position.y, z), ref velocity, 1000f);
+    }
+    void MoveCameraInPlacey(float y)
+    {
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, y, transform.position.z), ref velocity, 1000f);
+    }
 }
