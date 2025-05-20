@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Retopo_Cylinder_007.003
     second: {fileID: 2100000, guid: 6ac102a4eb5315c44942f2c0e1d4cb75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mETAL
+    second: {fileID: 2100000, guid: 6ac102a4eb5315c44942f2c0e1d4cb75, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

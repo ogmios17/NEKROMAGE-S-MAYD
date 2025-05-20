@@ -3,7 +3,12 @@ guid: 32bb54309df2f884a81ed867893c06c4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lowpoly
+    second: {fileID: 2100000, guid: e1376196703d3f44789caf3db8c546c6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
