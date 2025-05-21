@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Dialogue1 : MonoBehaviour
 {
-
+    private bool hasAlreadyTriggered = false;
     public PlayerController player;
     public Dialogue dialogue;
     private CanvasGroup canvasGroup;
@@ -23,7 +23,7 @@ public class Dialogue1 : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift) && !trigger)
         {
             
-            player.setInteractableState(true);
+            player.setInteractableState(false);
 
             dialogue.setSpeeds(speeds);
             dialogue.setLines(lines);
@@ -37,8 +37,9 @@ public class Dialogue1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && trigger)
+        if (other.CompareTag("Player") && trigger &&!hasAlreadyTriggered)
         {
+            hasAlreadyTriggered = true;
             player.setInteractableState(false);
 
             dialogue.setSpeeds(speeds);

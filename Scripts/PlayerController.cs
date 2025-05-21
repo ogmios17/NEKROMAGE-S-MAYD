@@ -8,47 +8,64 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+
     private Animator animator;
     private enum MoveDir { None, Forward, Backward }
     private MoveDir currentDirection = MoveDir.Forward;
     private Vector3 frontDirection;
     private Vector3 backDirection;
+    [Tooltip("How fast the player will move")]
+    public float force;
+    [Tooltip("The value is subtracted form the horizontal force when not grounded")]
     public float airFriction;
     [Range(0f,100f)]
+    [Tooltip("The percentage of momentum carried from the previous movement")]
     public float airMomentumModifier;
-    private float previousVelocity=0;
+    [Tooltip("Defines the max velocity at which the player can fall. To avoid too big accelerations")]
+    [Min(0f)]
     public float maxFallingSpeed;
+    [Tooltip("The player will be boosted downwards at the apex of the jump by this value")]
     public float peakBoostY;
+    [Tooltip("The player will be boosted horizontally at the apex of the jump by this value")]
     public float peakBoostZ;
-    private bool isInteractable = true;
-    public float force;
+    [Tooltip("How high the player will jump")]
     public float jumpForce;
+    [Tooltip("Friction on the ground")]
     public float drag;
-    private bool jumpRegistered;
-    private Rigidbody rb;
-    private bool isGrounded = false;
-    public InputRandomizer rand; 
+    [Tooltip("The script that randomizes the input")]
+    public InputRandomizer rand;
+    [Tooltip("Max speed on the ground")]
     public float maxSpeed = 5;
     public GameObject victory;
     private RaycastHit hit;
-    private float raycastSpread = 1;
+    [Tooltip("How long the raycast for the ground check is")]
     public float ray;
     private float coyoteTimer;
+    [Tooltip("This is the coyoteTime. Players will be able to jump even when not grounded if they are falling by this specific time")]
     public float floatingTime;
     private float groundCheckCooldown;
     private float groundCheckDelay = 0.1f;
-    private bool boosted;
+    [Tooltip("Players will be able to jump if they become grounded after this time and are currently airborne")]
     public float jumpBufferTime;
     private float jumpBufferTimer = 0;
     private bool buffered;
     private float actualForce;
-    public Animation animations;
+    private Animation animations;
+    private float previousVelocity = 0;
+    [Tooltip("Determines how abruptly the jump is interrupted if the player stops pressing the input. A value of 1 disables the modular jump feature")]
+    [Min(1f)]
+    public float modularJumpModifier;
+    private bool isInteractable = true;
+    private bool jumpRegistered;
+    private Rigidbody rb;
+    private bool isGrounded = false;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
     private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
 
     void Start()
     {
+        animations = gameObject.GetComponent<Animation>();
         animator = gameObject.GetComponent<Animator>();
         backDirection = Vector3.back;
         frontDirection = Vector3.forward;
@@ -78,6 +95,11 @@ public class PlayerController : MonoBehaviour
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else buffered = true;
 
+        if(Input.GetKeyUp(rand.GetJump()))
+        {
+           rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y/modularJumpModifier, rb.linearVelocity.z);
+        }
+
         if (buffered) jumpBufferTimer += Time.deltaTime;
 
         if (gameObject.transform.position.y < 5)
@@ -98,48 +120,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (isGrounded)
-        {
-            rb.linearDamping = drag;
-        }
-        else
-        {
-            rb.linearDamping = 0;
-            actualForce -= airFriction;
-        }
-        if (Input.GetKey(rand.GetBack()) && isInteractable)
-        {
-            animator.SetBool("isRunning", true);
-            rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
-            if (currentDirection != MoveDir.Forward)
-            {
-                currentDirection = MoveDir.Forward;
-                animations.Play("SwitchSideBackwards");
-            }
-        }
-        else if (Input.GetKey(rand.GetForward()) && isInteractable)
-        {
-            animator.SetBool("isRunning", true);
-            rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
-            if (currentDirection != MoveDir.Backward)
-            {
-                currentDirection = MoveDir.Backward;
-                animations.Play("SwitchSide");
-            }
-        }
-        else
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
-            animator.SetBool("isRunning", false);
-        }
-
-
-        if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
-            Jump();
-            
-            
-
         HandleVelocity();
+        HandleControls();
+               
+        
         if (groundCheckCooldown <= 0)
         {
             GroundCheck();
@@ -160,7 +144,6 @@ public class PlayerController : MonoBehaviour
             {
                 isGrounded = true;
                 coyoteTimer = 0;
-                boosted = false;
                 if(jumpBufferTimer>0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
                 {
                     Jump();
@@ -188,13 +171,40 @@ public class PlayerController : MonoBehaviour
         groundCheckCooldown = groundCheckDelay;
     }
 
+    void HandleControls()
+    {
+        if (Input.GetKey(rand.GetBack()) && isInteractable)
+        {
+            animator.SetBool("isRunning", true);
+            rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
+            if (currentDirection != MoveDir.Forward)
+            {
+                currentDirection = MoveDir.Forward;
+                animations.Play("SwitchSideBackwards");
+            }
+        }
+        else if (Input.GetKey(rand.GetForward()) && isInteractable)
+        {
+            animator.SetBool("isRunning", true);
+            rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
+            if (currentDirection != MoveDir.Backward)
+            {
+                currentDirection = MoveDir.Backward;
+                animations.Play("SwitchSide");
+            }
+        }
+        else
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
+            animator.SetBool("isRunning", false);
+        }
+
+        if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
+            Jump();
+    }
     void HandleVelocity()
     {
 
-        if (!isGrounded)
-        {
-            //rb.AddForce(new Vector3(0, 0, Mathf.Sign(rb.linearVelocity.z)*airForce),ForceMode.Impulse);
-        }
         if (Mathf.Abs(rb.linearVelocity.z) > maxSpeed)
         {            
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, Mathf.Sign(rb.linearVelocity.z) * maxSpeed);
@@ -203,14 +213,22 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y, 0);
         }
-        if ((Mathf.Abs(rb.linearVelocity.y) > maxFallingSpeed))
+        if (rb.linearVelocity.y <- maxFallingSpeed)                 //handles max falling speed
         {
             rb.linearVelocity = new Vector3(0, Mathf.Sign(rb.linearVelocity.y) * maxFallingSpeed, rb.linearVelocity.z);
         }
-        if(previousVelocity>0 && rb.linearVelocity.y<0 && coyoteTimer <0)
+        if(previousVelocity>0 && rb.linearVelocity.y<0 && coyoteTimer <0)              //handles peak boost
         {
-            rb.AddForce(new Vector3(rb.linearVelocity.x, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
-            boosted = true;
+            rb.AddForce(new Vector3(rb.linearVelocity.x * peakBoostZ, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
+        }
+        if (isGrounded)
+        {
+            rb.linearDamping = drag;
+        }
+        else
+        {
+            rb.linearDamping = 0;
+            actualForce = force - airFriction;
         }
         previousVelocity = rb.linearVelocity.y;
     }

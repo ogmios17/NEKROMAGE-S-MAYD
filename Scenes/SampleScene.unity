@@ -1895,7 +1895,7 @@ Transform:
   m_GameObject: {fileID: 535937372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.6987896, y: -9.228973, z: -67.097015}
+  m_LocalPosition: {x: 3.6987896, y: -9.228973, z: -67.4}
   m_LocalScale: {x: 1.8178929, y: 1.8178929, z: 1.8178929}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4316,13 +4316,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311514480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.8, y: 16, z: -111.52798}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 220790993}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!54 &1311514483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4417,12 +4417,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force: 30
   airFriction: 20
   airMomentumModifier: 90
   maxFallingSpeed: 500
   peakBoostY: 500
   peakBoostZ: 30
-  force: 30
   jumpForce: 80
   drag: 7
   rand: {fileID: 768143007}
@@ -4431,7 +4431,7 @@ MonoBehaviour:
   ray: 2
   floatingTime: 0.1
   jumpBufferTime: 0.1
-  animations: {fileID: 1311514491}
+  modularJumpModifier: 2
   timer: {fileID: 290495523}
 --- !u!136 &1311514488
 CapsuleCollider:
@@ -5361,8 +5361,8 @@ Transform:
   m_GameObject: {fileID: 1527611133}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -262.65616, y: 28, z: 129.95027}
-  m_LocalScale: {x: 2.5666242, y: 5.184132, z: 2.6353123}
+  m_LocalPosition: {x: -262.6562, y: 28, z: 128.9296}
+  m_LocalScale: {x: 0.52538794, y: 5.184132, z: 2.6353123}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2006961117}
@@ -5390,9 +5390,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20c4d873a38093d4bb32810454e9ddf2, type: 3}
   - {fileID: 21300000, guid: 6a74bf48ee5f2664fb9ba7973a8ab6c1, type: 3}
   speeds:
-  - 5
-  - 5
-  - 5
+  - 0.1
+  - 0.1
+  - 0.1
   trigger: 1
 --- !u!1001 &1556018409
 PrefabInstance:

@@ -4,6 +4,7 @@ using static UnityEditor.PlayerSettings;
 
 public class ViewSnapper : MonoBehaviour
 {
+    private bool hasAlreadyTriggered = false;
     public Camera camera;
     public CameraHandler cameraHandler;
     public PlayerController playerController;
@@ -31,12 +32,13 @@ public class ViewSnapper : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") &&!hasAlreadyTriggered)
         {
             cameraHandler.enabled = false;
-
+            hasAlreadyTriggered = true;
             player.transform.rotation = Quaternion.Euler(0, angle, 0);
             player.transform.position = new Vector3(player.transform.position.x + movex, player.transform.position.y, player.transform.position.z + movez);
+            hasAlreadyTriggered = false;
             playerController.setBackDirection(back);
             playerController.setFrontDirection(front);
             playerController.setInteractableState(false);
