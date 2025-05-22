@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Dialogue1 : MonoBehaviour
+public class TriggeredDialogue : MonoBehaviour
 {
     private bool hasAlreadyTriggered = false;
     public PlayerController player;

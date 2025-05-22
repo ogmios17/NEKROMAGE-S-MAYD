@@ -7,6 +7,7 @@ public class InputRandomizer : MonoBehaviour
 {
     private bool timerActive = true;
     public InputVisualizer inputVisualizer;
+    public Image interactSprite;
     public Image backSprite;
     public Image forwardSprite;
     public Image jumpSprite;
@@ -23,22 +24,35 @@ public class InputRandomizer : MonoBehaviour
             KeyCode.Space, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
     };
     private int index;
+    private Queue<KeyCode> interactQueue;
     private Queue<KeyCode> backQueue;
     private Queue<KeyCode> forwardQueue;
     private Queue<KeyCode> jumpQueue;
+    private KeyCode interactInput;
     private KeyCode backInput;
     private KeyCode forwardInput;
     private KeyCode jumpInput;
+    private float timeSpanInteract;
     private float timeSpanBack;
     private float timeSpanForward;
     private float timeSpanJump;
     private KeyCode[] currentKeys = new KeyCode[6];
     private int currentKeyIndex;
+    public float minInteract = 2;
+    public float minBack= 10;
+    public float minForward = 10;
+    public float minJump = 10;
+    public float maxInteract = 5;
+    public float maxBack = 30;
+    public float maxForward = 30;
+    public float maxJump = 30;
     void Start()
     {
+        timeSpanInteract = 0;
         timeSpanBack = 0;
         timeSpanForward = 0;
         timeSpanJump = 0;
+        interactQueue = new Queue<KeyCode>();
         backQueue = new Queue<KeyCode>();
         forwardQueue = new Queue<KeyCode>();
         jumpQueue = new Queue<KeyCode>();
@@ -51,36 +65,42 @@ public class InputRandomizer : MonoBehaviour
     {
         if (timerActive)
         {
+            timeSpanInteract -= Time.deltaTime;
             timeSpanBack -= Time.deltaTime;
             timeSpanForward -= Time.deltaTime;
             timeSpanJump -= Time.deltaTime;
         }
-        
+
         /*backText.text = timeSpanBack.ToString()+"/////////"+backQueue.Peek();
         forwardText.text = timeSpanForward.ToString() + "/////////" + forwardQueue.Peek();
         jumpText.text = timeSpanJump.ToString() + "/////////" + jumpQueue.Peek();*/
+        if (timeSpanInteract <= 0)
+        {
+            interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
+            interactSprite.sprite = inputVisualizer.getSprite(interactInput);
+        }
         if (timeSpanBack <= 0)
         {
-            backInput = Randomize(ref timeSpanBack, ref backQueue);
+            backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
             backSprite.sprite = inputVisualizer.getSprite(backInput);
         }
         if (timeSpanForward <= 0)
         {
-            forwardInput = Randomize(ref timeSpanForward, ref forwardQueue);
+            forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
             forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
         }
         if (timeSpanJump <= 0)
         {
-            jumpInput = Randomize(ref timeSpanJump, ref jumpQueue);
+            jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
             jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
         }
     }
 
-    KeyCode Randomize(ref float timeSpan, ref Queue<KeyCode> queue)
+    KeyCode Randomize(ref float timeSpan, ref Queue<KeyCode> queue, float min, float max)
     {
-        timeSpan = Random.Range(10, 30);
+        timeSpan = Random.Range(min,max);
         index = Random.Range(0, keys.Length);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
             while (keys[index] == currentKeys[i])
             {
@@ -89,10 +109,28 @@ public class InputRandomizer : MonoBehaviour
             }
 
         }
-        currentKeys[currentKeyIndex % 6] = keys[index];
+        currentKeys[currentKeyIndex % 7] = keys[index];
         currentKeyIndex++;
         queue.Enqueue(keys[index]);
         return queue.Dequeue();
+    }
+
+    KeyCode Randomize(ref float timeSpan, float min, float max)
+    {
+        timeSpan = Random.Range(min,max);
+        index = Random.Range(0, keys.Length);
+        for (int i = 0; i < 7; i++)
+        {
+            while (keys[index] == currentKeys[i])
+            {
+                index = Random.Range(0, keys.Length);
+                i = 0;
+            }
+
+        }
+        currentKeys[currentKeyIndex % 7] = keys[index];
+        currentKeyIndex++;
+        return keys[index];
     }
 
     void Randomize(ref Queue<KeyCode> queue)

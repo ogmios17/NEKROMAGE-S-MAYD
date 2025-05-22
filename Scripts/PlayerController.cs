@@ -60,8 +60,6 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
-    
-
     void Start()
     {
         animations = gameObject.GetComponent<Animation>();
@@ -72,7 +70,6 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
 
     }
-
 
     void Update()
     {
@@ -122,20 +119,19 @@ public class PlayerController : MonoBehaviour
 
     void GroundCheck()
     {
-        
-        if (Physics.BoxCast(transform.position-new Vector3(0,4,0), new Vector3(0.25f,0.1f,0.25f),Vector3.down, out hit, Quaternion.identity, 1f)) { 
-         
-            
+
+        if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f))
+        {
             isGrounded = true;
             coyoteTimer = 0;
-            if(jumpBufferTimer>0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
+            if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
             {
                 Jump();
                 jumpBufferTimer = 0;
                 buffered = false;
             }
-       
         }
+        else isGrounded = false;
     }
     void Jump()
     {
