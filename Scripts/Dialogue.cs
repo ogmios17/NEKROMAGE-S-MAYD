@@ -26,7 +26,7 @@ public class Dialogue : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canvasGroup.interactable && !parameters[index].endsAutomatically)
+        if (Input.anyKeyDown && canvasGroup.interactable && !parameters[index].endsAutomatically)
         {
             if (text.text == cumulativeDialogue)
             {
@@ -38,7 +38,7 @@ public class Dialogue : MonoBehaviour
                 text.text = cumulativeDialogue;
             }
         }
-        if(parameters[index].endsAutomatically && typedAll)
+        if(index< parameters.Length-1 && parameters[index].endsAutomatically && typedAll)
         {
             typedAll = false;
             NextLine();
@@ -46,7 +46,7 @@ public class Dialogue : MonoBehaviour
     }
     public void StartDialogue()
     {
-        cumulativeDialogue = parameters[index].line;
+        cumulativeDialogue = parameters[0].line;
         UI.SetActive(false);
         inputRandomizer.setTimer(false);
         index = 0;

@@ -7,7 +7,7 @@ public class InputRandomizer : MonoBehaviour
 {
     private bool timerActive = true;
     public InputVisualizer inputVisualizer;
-    public Image interactSprite;
+    private GameObject interactButton;
     public Image backSprite;
     public Image forwardSprite;
     public Image jumpSprite;
@@ -36,7 +36,7 @@ public class InputRandomizer : MonoBehaviour
     private float timeSpanBack;
     private float timeSpanForward;
     private float timeSpanJump;
-    private KeyCode[] currentKeys = new KeyCode[6];
+    private KeyCode[] currentKeys = new KeyCode[7];
     private int currentKeyIndex;
     public float minInteract = 2;
     public float minBack= 10;
@@ -48,6 +48,7 @@ public class InputRandomizer : MonoBehaviour
     public float maxJump = 30;
     void Start()
     {
+        interactButton = GameObject.FindWithTag("InteractButton");
         timeSpanInteract = 0;
         timeSpanBack = 0;
         timeSpanForward = 0;
@@ -76,8 +77,10 @@ public class InputRandomizer : MonoBehaviour
         jumpText.text = timeSpanJump.ToString() + "/////////" + jumpQueue.Peek();*/
         if (timeSpanInteract <= 0)
         {
+
             interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
-            interactSprite.sprite = inputVisualizer.getSprite(interactInput);
+            interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
+         
         }
         if (timeSpanBack <= 0)
         {
@@ -162,6 +165,10 @@ public class InputRandomizer : MonoBehaviour
     public KeyCode GetJump()
     {
         return randomize ? jumpInput : KeyCode.Space;
+    }
+    public KeyCode GetInteract()
+    {
+        return randomize ? interactInput : KeyCode.E;
     }
 
     public void setTimer(bool timer)

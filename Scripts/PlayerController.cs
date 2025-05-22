@@ -220,7 +220,11 @@ public class PlayerController : MonoBehaviour
     {
         isInteractable = value;
         if(value == false)
-            rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionX| RigidbodyConstraints.FreezeRotation;
+    }
+    public bool IsInteractable()
+    {
+        return isInteractable;
     }
     public void HandleCoyote()
     {
