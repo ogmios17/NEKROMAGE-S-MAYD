@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
     private Animator animator;
     private enum MoveDir { None, Forward, Backward }
     private MoveDir currentDirection = MoveDir.Forward;
@@ -61,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
 
-    private List<LineRenderer> rayLines = new List<LineRenderer>();  //DFELETE AFTER DEBUG
+    
 
     void Start()
     {
@@ -72,24 +71,12 @@ public class PlayerController : MonoBehaviour
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
 
-        for (int i = 0; i < 5; i++)     //DELETE AFTER DEBUG
-        {
-            GameObject lineObj = new GameObject("RayLine_" + i);
-            lineObj.transform.parent = this.transform;
-            LineRenderer lr = lineObj.AddComponent<LineRenderer>();
-            lr.startWidth = 0.05f;
-            lr.endWidth = 0.05f;
-            lr.positionCount = 2;
-            lr.startColor = Color.green;
-            lr.endColor = Color.red;
-
-            rayLines.Add(lr);
-        }
     }
 
 
     void Update()
     {
+
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
@@ -135,30 +122,19 @@ public class PlayerController : MonoBehaviour
 
     void GroundCheck()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            Vector3 origin = new Vector3(transform.position.x, transform.position.y - 4, transform.position.z + (i - 2) - 1);
-            rayLines[i].SetPosition(0, origin);
-            rayLines[i].SetPosition(1, origin + Vector3.down * ray);
-            if (Physics.Raycast(origin, Vector3.down, out hit, ray))
+        
+        if (Physics.BoxCast(transform.position-new Vector3(0,4,0), new Vector3(0.25f,0.1f,0.25f),Vector3.down, out hit, Quaternion.identity, 1f)) { 
+         
+            
+            isGrounded = true;
+            coyoteTimer = 0;
+            if(jumpBufferTimer>0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
             {
-                isGrounded = true;
-                coyoteTimer = 0;
-                if(jumpBufferTimer>0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
-                {
-                    Jump();
-                    jumpBufferTimer = 0;
-                    buffered = false;
-                }
-                if(rb.linearVelocity.y == 0)
-                {
-                    jumpBufferTimer = 0;
-                    buffered = false;
-                }
-                
-                break;
+                Jump();
+                jumpBufferTimer = 0;
+                buffered = false;
             }
-            if (i == 4) isGrounded = false;
+       
         }
     }
     void Jump()
@@ -282,4 +258,7 @@ public class PlayerController : MonoBehaviour
     {
         return backDirection;
     }
+
+
 }
+

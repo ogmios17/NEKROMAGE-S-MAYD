@@ -3537,8 +3537,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -363}
-  m_SizeDelta: {x: 1820, y: 980}
+  m_AnchoredPosition: {x: 344.93518, y: -363}
+  m_SizeDelta: {x: 1130.1296, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &924744853
 MonoBehaviour:
@@ -4935,10 +4935,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 1416325829}
   text: {fileID: 1887327908}
   imagePlaceholder: {fileID: 1522484941}
-  speeds:
-  - 0.5
-  - 1
-  - 0.1
+  parameters: []
 --- !u!1 &1475978721
 GameObject:
   m_ObjectHideFlags: 0
@@ -5255,8 +5252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -794.49, y: -371.2353}
-  m_SizeDelta: {x: 93.376, y: 95.2747}
+  m_AnchoredPosition: {x: -612, y: -180}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1522596648
 PrefabInstance:
@@ -5450,19 +5447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1311514487}
   dialogue: {fileID: 1416325831}
-  lines:
-  - hello
-  - KILL YOURSELF
-  - tosta fra...
-  images:
-  - {fileID: 21300000, guid: 2fb70910d7385e54893fd484c3222686, type: 3}
-  - {fileID: 21300000, guid: 20c4d873a38093d4bb32810454e9ddf2, type: 3}
-  - {fileID: 21300000, guid: 6a74bf48ee5f2664fb9ba7973a8ab6c1, type: 3}
-  speeds:
-  - 0.1
-  - 0.1
-  - 0.1
-  trigger: 1
+  parameters: []
 --- !u!1001 &1556018409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6155,8 +6140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -369}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 161.03491, y: -391.0097}
+  m_SizeDelta: {x: -122.0698, y: 5.9806}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1887327908
 MonoBehaviour:
@@ -6243,7 +6228,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -435.6292, y: -149.5267, z: -852.3169, w: -141.02298}
+  m_margin: {x: -389.9558, y: -149.5267, z: -755.694, w: -101.541016}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

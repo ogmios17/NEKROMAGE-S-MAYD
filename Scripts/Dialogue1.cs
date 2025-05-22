@@ -7,10 +7,8 @@ public class Dialogue1 : MonoBehaviour
     public PlayerController player;
     public Dialogue dialogue;
     private CanvasGroup canvasGroup;
-    public string[] lines;
-    public Sprite[] images;
-    public float[] speeds;
-    public bool trigger;
+    public DialogueParameters[] parameters;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,31 +18,17 @@ public class Dialogue1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift) && !trigger)
-        {
-            
-            player.setInteractableState(false);
-
-            dialogue.setSpeeds(speeds);
-            dialogue.setLines(lines);
-            dialogue.setImages(images);
-            canvasGroup.alpha = 1f;
-            canvasGroup.interactable = true;
-            dialogue.StartDialogue();
-            
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && trigger &&!hasAlreadyTriggered)
+        if (other.CompareTag("Player") &&!hasAlreadyTriggered)
         {
             hasAlreadyTriggered = true;
             player.setInteractableState(false);
 
-            dialogue.setSpeeds(speeds);
-            dialogue.setLines(lines);
-            dialogue.setImages(images);
+            dialogue.SetParameters(parameters);
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
             dialogue.StartDialogue();
@@ -52,9 +36,11 @@ public class Dialogue1 : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && trigger)
+        if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
     }
 }
+
+

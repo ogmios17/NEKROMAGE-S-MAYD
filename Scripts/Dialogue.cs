@@ -12,10 +12,11 @@ public class Dialogue : MonoBehaviour
     public TextMeshProUGUI text;
     public GameObject imagePlaceholder;
     private Image toInsert;
-    public float[] speeds;
-    private string[] lines;
-    private Sprite[] images;
+    public DialogueParameters []parameters;
     private int index;
+    private bool typedAll;
+    private string cumulativeDialogue;
+
     void Start()
     {
         toInsert = imagePlaceholder.GetComponent<Image>();
@@ -25,49 +26,61 @@ public class Dialogue : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canvasGroup.interactable)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canvasGroup.interactable && !parameters[index].endsAutomatically)
         {
-            if (text.text == lines[index])
+            if (text.text == cumulativeDialogue)
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                text.text = lines[index];
+                text.text = cumulativeDialogue;
             }
+        }
+        if(parameters[index].endsAutomatically && typedAll)
+        {
+            typedAll = false;
+            NextLine();
         }
     }
     public void StartDialogue()
     {
+        cumulativeDialogue = parameters[index].line;
         UI.SetActive(false);
         inputRandomizer.setTimer(false);
         index = 0;
-        toInsert.sprite= images[0];
+        toInsert.sprite= parameters[0].image;
         StartCoroutine(Type());
     }
 
     IEnumerator Type()
     {
-        text.text = "";
-        foreach(char c in lines[index].ToCharArray())
+        foreach(char c in parameters[index].line.ToCharArray())
         {
             text.text += c;
-            yield return new WaitForSeconds(speeds[index]);
+            yield return new WaitForSeconds(parameters[index].speed);
         }
+        typedAll = true;
     }
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (index < parameters.Length - 1)
         {
             index++;
-            text.text = "";
-            toInsert.sprite = images[index];
+            if (!parameters[index].showsInSameBox)
+            {
+                text.text = "";
+                cumulativeDialogue = parameters[index].line;
+            }
+            else cumulativeDialogue += parameters[index].line;
+            toInsert.sprite = parameters[index].image;
             StartCoroutine(Type());
         }
         else
         {
+            index = 0;
             player.setInteractableState(true);
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = false;
@@ -75,18 +88,17 @@ public class Dialogue : MonoBehaviour
             inputRandomizer.setTimer(true);
         }
     }
-    public void setLines(string[] lines)
+    public void SetParameters(DialogueParameters []parameters)
     {
-        this.lines = lines;
+        this.parameters = parameters;
     }
-
-    public void setImages(Sprite[] images)
-    {
-        this.images = images;
-    }
-
-    public void setSpeeds(float[] speeds)
-    {
-        this.speeds = speeds;
-    }
+}
+[System.Serializable]
+public class DialogueParameters
+{
+    public string line;
+    public Sprite image;
+    public float speed;
+    public bool showsInSameBox;
+    public bool endsAutomatically;
 }
