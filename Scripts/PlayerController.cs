@@ -128,17 +128,17 @@ public class PlayerController : MonoBehaviour
             coyoteTimer = 0;
             if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
             {
-                Jump();
+                Jump(jumpForce);
                 buffered = false;
             }
             jumpBufferTimer = 0;
         }
         else isGrounded = false;
     }
-    void Jump()
+    public void Jump(float jump)
     {
         rb.linearVelocity = new Vector3(0f, 0f, 0f);
-        rb.AddForce(new Vector3(0f, jumpForce, 0f), ForceMode.Impulse);
+        rb.AddForce(new Vector3(0f, jump, 0f), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
         coyoteTimer = -1;
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
-            Jump();
+            Jump(jumpForce);
     }
     void HandleVelocity()
     {

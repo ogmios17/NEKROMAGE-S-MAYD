@@ -21,7 +21,7 @@ public class Bounce : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")){
             rb = collision.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(new Vector3(0f, bounceForce, 0f), ForceMode.Impulse);
+            playerController.Jump(bounceForce);
         }
     }
 }
