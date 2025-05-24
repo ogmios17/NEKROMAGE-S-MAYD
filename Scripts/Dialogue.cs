@@ -38,14 +38,14 @@ public class Dialogue : MonoBehaviour
                 text.text = cumulativeDialogue;
             }
         }
-        if(index< parameters.Length-1 && parameters[index].endsAutomatically && typedAll)
+        if(index< parameters.Length && parameters[index].endsAutomatically && typedAll)
         {
-            typedAll = false;
             NextLine();
         }
     }
     public void StartDialogue()
     {
+        text.text = "";
         cumulativeDialogue = parameters[0].line;
         UI.SetActive(false);
         inputRandomizer.setTimer(false);
@@ -66,6 +66,7 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
+        typedAll = false;
         if (index < parameters.Length - 1)
         {
             index++;

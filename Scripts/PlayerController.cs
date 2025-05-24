@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
+        Debug.Log(isInteractable);
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
     {
         isInteractable = value;
         if(value == false)
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionX| RigidbodyConstraints.FreezeRotation;
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX| RigidbodyConstraints.FreezeRotation;
     }
     public bool IsInteractable()
     {
