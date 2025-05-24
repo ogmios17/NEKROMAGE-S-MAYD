@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public float force;
     [Tooltip("The value is subtracted form the horizontal force when not grounded")]
     public float airFriction;
-    [Range(0f,100f)]
+    [Range(0f, 100f)]
     [Tooltip("The percentage of momentum carried from the previous movement")]
     public float airMomentumModifier;
     [Tooltip("Defines the max velocity at which the player can fall. To avoid too big accelerations")]
@@ -78,15 +79,15 @@ public class PlayerController : MonoBehaviour
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else buffered = true;
 
-        if(Input.GetKeyUp(rand.GetJump()))
+        if (Input.GetKeyUp(rand.GetJump()))
         {
-           rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y/modularJumpModifier, rb.linearVelocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
         }
 
         if (buffered) jumpBufferTimer += Time.deltaTime;
 
         if (gameObject.transform.position.y < 5)
-                SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("SampleScene");
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
@@ -95,8 +96,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         }
-        else if(isInteractable){ 
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation; 
+        else if (isInteractable)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -105,8 +107,8 @@ public class PlayerController : MonoBehaviour
 
         HandleVelocity();
         HandleControls();
-               
-        
+
+
         if (groundCheckCooldown <= 0)
         {
             GroundCheck();
@@ -135,7 +137,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rb.linearVelocity = new Vector3(0f, 0f, 0f);
-        rb.AddForce(new Vector3(0f, jumpForce,0f), ForceMode.Impulse);
+        rb.AddForce(new Vector3(0f, jumpForce, 0f), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
         coyoteTimer = -1;
@@ -151,7 +153,7 @@ public class PlayerController : MonoBehaviour
             if (currentDirection != MoveDir.Forward)
             {
                 currentDirection = MoveDir.Forward;
-                animations.Play("SwitchSideBackwards");
+                transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
             }
         }
         else if (Input.GetKey(rand.GetForward()) && isInteractable)
@@ -161,7 +163,7 @@ public class PlayerController : MonoBehaviour
             if (currentDirection != MoveDir.Backward)
             {
                 currentDirection = MoveDir.Backward;
-                animations.Play("SwitchSide");
+                transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
             }
         }
         else
@@ -177,18 +179,18 @@ public class PlayerController : MonoBehaviour
     {
 
         if (Mathf.Abs(rb.linearVelocity.z) > maxSpeed)
-        {            
+        {
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, Mathf.Sign(rb.linearVelocity.z) * maxSpeed);
         }
         if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
         {
             rb.linearVelocity = new Vector3(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y, 0);
         }
-        if (rb.linearVelocity.y <- maxFallingSpeed)                 //handles max falling speed
+        if (rb.linearVelocity.y < -maxFallingSpeed)                 //handles max falling speed
         {
             rb.linearVelocity = new Vector3(0, Mathf.Sign(rb.linearVelocity.y) * maxFallingSpeed, rb.linearVelocity.z);
         }
-        if(previousVelocity>0 && rb.linearVelocity.y<0 && coyoteTimer <0)              //handles peak boost
+        if (previousVelocity > 0 && rb.linearVelocity.y < 0 && coyoteTimer < 0)              //handles peak boost
         {
             rb.AddForce(new Vector3(rb.linearVelocity.x * peakBoostZ, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
         }
@@ -213,13 +215,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
 
     public void setInteractableState(bool value)
     {
         isInteractable = value;
-        if(value == false)
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX| RigidbodyConstraints.FreezeRotation;
+        if (value == false)
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
     }
     public bool IsInteractable()
     {
@@ -227,9 +229,9 @@ public class PlayerController : MonoBehaviour
     }
     public void HandleCoyote()
     {
-        if(!isGrounded && coyoteTimer >=0)
+        if (!isGrounded && coyoteTimer >= 0)
         {
-            coyoteTimer+= Time.deltaTime;
+            coyoteTimer += Time.deltaTime;
         }
     }
 

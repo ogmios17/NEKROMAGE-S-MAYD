@@ -18,10 +18,12 @@ public class CameraHandler : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     int layerMask;
     public float ray;
+    public float rayDown;
     private float targetY;
 
     private LineRenderer lineRendererForward; // ELIMINA DOPO IL DEBUG!
     private LineRenderer lineRendererBackward; // ELIMINA DOPO IL DEBUG!
+    private LineRenderer lineRendererUp;  // ELIMINA DOPO IL DEBUG!
 
     void Start()
     {
@@ -51,6 +53,17 @@ public class CameraHandler : MonoBehaviour
         lineRendererBackward.startColor = Color.red; // ELIMINA DOPO IL DEBUG!
         lineRendererBackward.endColor = Color.red; // ELIMINA DOPO IL DEBUG!
         lineRendererBackward.enabled = true; // ELIMINA DOPO IL DEBUG!
+
+        GameObject downObj = new GameObject("DownLine"); // ELIMINA DOPO IL DEBUG!
+        downObj.transform.parent = this.transform; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp = downObj.AddComponent<LineRenderer>(); // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.positionCount = 2; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.startWidth = 0.5f; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.endWidth = 0.5f; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.material = new Material(Shader.Find("Sprites/Default")); // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.startColor = Color.blue; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.endColor = Color.blue; // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.enabled = true; // ELIMINA DOPO IL DEBUG!
     }
 
     void Update()
@@ -68,6 +81,7 @@ public class CameraHandler : MonoBehaviour
     {
         Vector3 origindx = new Vector3(player.transform.position.x-0.1f, player.transform.position.y-downModifier , player.transform.position.z-0.1f);
         Vector3 originsx = new Vector3(player.transform.position.x+0.1f, player.transform.position.y-downModifier , player.transform.position.z+0.1f);
+        Vector3 originup = new Vector3(player.transform.position.x, player.transform.position.y - 4, player.transform.position.z);
 
         // Aggiorna sempre le linee di debug - ELIMINA DOPO IL DEBUG!
         lineRendererForward.SetPosition(0, origindx); // ELIMINA DOPO IL DEBUG!
@@ -76,17 +90,26 @@ public class CameraHandler : MonoBehaviour
         lineRendererBackward.SetPosition(0, originsx); // ELIMINA DOPO IL DEBUG!
         lineRendererBackward.SetPosition(1, originsx + playerController.getBackDirection() * ray); // ELIMINA DOPO IL DEBUG!
 
-        
+        lineRendererUp.SetPosition(0, originup); // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.SetPosition(1, originup + Vector3.down * rayDown); // ELIMINA DOPO IL DEBUG!
+
+
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
         {                
             targetY = hit.point.y + offsety;
+            Debug.Log("Oh my god i am hitting at " + hit.point.y);
             return hit.point.y + offsety;
                 
+        } else if(Physics.Raycast(originup, Vector3.down, out hit, rayDown, layerMask))
+        {
+            targetY = hit.point.y + offsety;
+            Debug.Log("Oh my god i am hitting at " + hit.point.y);
+            return hit.point.y + offsety;
         }
-           
-        
 
-        return targetY;
+
+
+            return targetY;
     }
 
     void SetOffsetx(float xmod)
