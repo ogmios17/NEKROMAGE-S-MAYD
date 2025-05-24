@@ -77,11 +77,12 @@ public class PlayerController : MonoBehaviour
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
-            else buffered = true;
+            else if(isInteractable) buffered = true;
 
         if (Input.GetKeyUp(rand.GetJump()))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
+            buffered = false;
         }
 
         if (buffered) jumpBufferTimer += Time.deltaTime;
