@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -94,6 +93,7 @@ public class PlayerController : MonoBehaviour
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
 
+        Debug.Log("is grounded? "+isGrounded);
         
     }
 
@@ -125,11 +125,11 @@ public class PlayerController : MonoBehaviour
                 coyoteTimer = 0;
                 if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
                 {
-                    Jump(jumpForce);                    
+                    Jump(jumpForce);
+                    buffered = false;
                 }
-                
+
             }
-            buffered = false;
             jumpBufferTimer = 0;
         }
         else isGrounded = false;

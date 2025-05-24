@@ -1547,7 +1547,7 @@ AnimationClip:
     floatParameter: 29.9
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
+  - time: 0.43333334
     functionName: SetOffsetx
     data: 
     objectReferenceParameter: {fileID: 0}
