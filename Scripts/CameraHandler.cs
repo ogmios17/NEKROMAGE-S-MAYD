@@ -97,13 +97,11 @@ public class CameraHandler : MonoBehaviour
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
         {                
             targetY = hit.point.y + offsety;
-            Debug.Log("Oh my god i am hitting at " + hit.point.y);
             return hit.point.y + offsety;
                 
         } else if(Physics.Raycast(originup, Vector3.down, out hit, rayDown, layerMask))
         {
             targetY = hit.point.y + offsety;
-            Debug.Log("Oh my god i am hitting at " + hit.point.y);
             return hit.point.y + offsety;
         }
 
