@@ -47,7 +47,8 @@ public class InputRandomizer : MonoBehaviour
     public float maxForward = 30;
     public float maxJump = 30;
     void Start()
-    {
+    { 
+
         interactButton = GameObject.FindWithTag("InteractButton");
         timeSpanInteract = 0;
         timeSpanBack = 0;
@@ -75,28 +76,44 @@ public class InputRandomizer : MonoBehaviour
         /*backText.text = timeSpanBack.ToString()+"/////////"+backQueue.Peek();
         forwardText.text = timeSpanForward.ToString() + "/////////" + forwardQueue.Peek();
         jumpText.text = timeSpanJump.ToString() + "/////////" + jumpQueue.Peek();*/
-        if (timeSpanInteract <= 0)
+        if (randomize)
         {
-
-            interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
+            if (timeSpanInteract <= 0)
+            {
+                interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
+                interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
+            }
+            if (timeSpanBack <= 0)
+            {
+                backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
+                backSprite.sprite = inputVisualizer.getSprite(backInput);
+            }
+            if (timeSpanForward <= 0)
+            {
+                forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
+                forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
+            }
+            if (timeSpanJump <= 0)
+            {
+                jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
+                jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
+            }
+        }
+        else
+        {
+            interactInput = KeyCode.E;
             interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
-         
-        }
-        if (timeSpanBack <= 0)
-        {
-            backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
+
+            backInput = KeyCode.A;
             backSprite.sprite = inputVisualizer.getSprite(backInput);
-        }
-        if (timeSpanForward <= 0)
-        {
-            forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
+
+            forwardInput = KeyCode.D;
             forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
-        }
-        if (timeSpanJump <= 0)
-        {
-            jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
+
+            jumpInput = KeyCode.Space;
             jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
         }
+        
     }
 
     KeyCode Randomize(ref float timeSpan, ref Queue<KeyCode> queue, float min, float max)
@@ -156,19 +173,19 @@ public class InputRandomizer : MonoBehaviour
 
     public KeyCode GetBack()
     {
-        return randomize ? backInput : KeyCode.A;
+        return  backInput ;
     }
     public KeyCode GetForward()
     {
-        return randomize ? forwardInput : KeyCode.D;
+        return forwardInput ;
     }
     public KeyCode GetJump()
     {
-        return randomize ? jumpInput : KeyCode.Space;
+        return jumpInput ;
     }
     public KeyCode GetInteract()
     {
-        return randomize ? interactInput : KeyCode.E;
+        return interactInput;
     }
 
     public void setTimer(bool timer)
