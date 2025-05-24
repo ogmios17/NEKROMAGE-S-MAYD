@@ -73,7 +73,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(isInteractable);
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;

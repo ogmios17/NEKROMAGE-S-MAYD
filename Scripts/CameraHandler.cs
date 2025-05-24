@@ -66,8 +66,8 @@ public class CameraHandler : MonoBehaviour
 
     float CheckForPlatforms()
     {
-        Vector3 origindx = new Vector3(player.transform.position.x-0.1f, player.transform.position.y-5 , player.transform.position.z-0.1f);
-        Vector3 originsx = new Vector3(player.transform.position.x+0.1f, player.transform.position.y-5 , player.transform.position.z+0.1f);
+        Vector3 origindx = new Vector3(player.transform.position.x-0.1f, player.transform.position.y-downModifier , player.transform.position.z-0.1f);
+        Vector3 originsx = new Vector3(player.transform.position.x+0.1f, player.transform.position.y-downModifier , player.transform.position.z+0.1f);
 
         // Aggiorna sempre le linee di debug - ELIMINA DOPO IL DEBUG!
         lineRendererForward.SetPosition(0, origindx); // ELIMINA DOPO IL DEBUG!
