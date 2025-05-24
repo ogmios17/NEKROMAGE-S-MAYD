@@ -127,9 +127,9 @@ public class PlayerController : MonoBehaviour
             if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
             {
                 Jump();
-                jumpBufferTimer = 0;
                 buffered = false;
             }
+            jumpBufferTimer = 0;
         }
         else isGrounded = false;
     }
