@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +16,6 @@ public class InteractDialogue : MonoBehaviour
     private bool inRange;
     public Vector3 imagePosition;
     private bool AlreadyInteracted = false;
-    Randomizer random;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
