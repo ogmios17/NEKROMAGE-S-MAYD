@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded = false;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
+    private bool bouncing = false;
 
     void Start()
     {
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else if(isInteractable) buffered = true;
 
-        if (Input.GetKeyUp(rand.GetJump()))
+        if (Input.GetKeyUp(rand.GetJump())&&!bouncing)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
             buffered = false;
@@ -93,14 +94,7 @@ public class PlayerController : MonoBehaviour
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
 
-        if (frontDirection.z > 0 && isInteractable)
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
-        }
-        else if (isInteractable)
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-        }
+        
     }
 
     void FixedUpdate()
@@ -122,15 +116,20 @@ public class PlayerController : MonoBehaviour
     void GroundCheck()
     {
 
-        if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f))
+        if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f) )
         {
-            isGrounded = true;
-            coyoteTimer = 0;
-            if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
+            if (!hit.collider.CompareTag("Bounce"))
             {
-                Jump(jumpForce);
-                buffered = false;
+                isGrounded = true;
+                bouncing = false;
+                coyoteTimer = 0;
+                if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
+                {
+                    Jump(jumpForce);                    
+                }
+                
             }
+            buffered = false;
             jumpBufferTimer = 0;
         }
         else isGrounded = false;
@@ -223,6 +222,14 @@ public class PlayerController : MonoBehaviour
         isInteractable = value;
         if (value == false)
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+        else if (frontDirection.z > 0)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        }
     }
     public bool IsInteractable()
     {
@@ -259,6 +266,11 @@ public class PlayerController : MonoBehaviour
     public Vector3 getBackDirection()
     {
         return backDirection;
+    }
+
+    public void SetBouncing(bool bouncing)
+    {
+        this.bouncing = bouncing;
     }
 
 
