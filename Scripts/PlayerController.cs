@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
     private bool bouncing = false;
+    private bool groundJustTouched = false;
+    private float bufferJumpDelay = 0.1f;
 
     void Start()
     {
@@ -77,12 +79,15 @@ public class PlayerController : MonoBehaviour
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
-            else if(isInteractable) buffered = true;
+            else if (isInteractable)
+            {
+                buffered = true;
+                jumpBufferTimer = 0;
+            }
 
         if (Input.GetKeyUp(rand.GetJump())&&!bouncing)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
-            buffered = false;
         }
 
         if (buffered) jumpBufferTimer += Time.deltaTime;
@@ -103,6 +108,10 @@ public class PlayerController : MonoBehaviour
         HandleVelocity();
         HandleControls();
 
+        if (groundJustTouched)
+        {
+            bufferJumpDelay -= Time.deltaTime;
+        }
 
         if (groundCheckCooldown <= 0)
         {
@@ -116,23 +125,29 @@ public class PlayerController : MonoBehaviour
     void GroundCheck()
     {
 
-        if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f) )
+        if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f))
         {
+            groundJustTouched = true;
             if (!hit.collider.CompareTag("Bounce"))
             {
                 isGrounded = true;
                 bouncing = false;
                 coyoteTimer = 0;
-                if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && rb.linearVelocity.y == 0)
+                if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && bufferJumpDelay < 0)
                 {
                     Jump(jumpForce);
                     buffered = false;
+                    jumpBufferTimer = 0;
                 }
 
             }
-            jumpBufferTimer = 0;
         }
-        else isGrounded = false;
+        else
+        {
+            isGrounded = false;
+            groundJustTouched = false;
+            bufferJumpDelay = 0;
+        }
     }
     public void Jump(float jump)
     {

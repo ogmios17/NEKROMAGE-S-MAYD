@@ -91,7 +91,7 @@ public class CameraHandler : MonoBehaviour
         lineRendererBackward.SetPosition(1, originsx + playerController.getBackDirection() * ray); // ELIMINA DOPO IL DEBUG!
 
         lineRendererUp.SetPosition(0, originup); // ELIMINA DOPO IL DEBUG!
-        lineRendererUp.SetPosition(1, originup + Vector3.down * rayDown); // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.SetPosition(1, originup + new Vector3(0, -1, -1) * rayDown); // ELIMINA DOPO IL DEBUG!
 
 
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
@@ -99,7 +99,7 @@ public class CameraHandler : MonoBehaviour
             targetY = hit.point.y + offsety;
             return hit.point.y + offsety;
                 
-        } else if(Physics.Raycast(originup, Vector3.down, out hit, rayDown, layerMask))
+        } else if(Physics.Raycast(originup, new Vector3(0,-1,-1), out hit, rayDown, layerMask))
         {
             targetY = hit.point.y + offsety;
             return hit.point.y + offsety;
