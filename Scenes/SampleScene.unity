@@ -1238,11 +1238,13 @@ MonoBehaviour:
   playerController: {fileID: 1311514487}
   smoothness: 0.7
   downModifier: 6
-  offsetz: -9
+  offsetz: 0
   offsety: 10
   offsetx: -35
   ray: 20
-  rayDown: 1
+  rayDown: 20
+  horizontalOffsetMoving: 10
+  turningSmoothness: 1
 --- !u!111 &330585549
 Animation:
   m_ObjectHideFlags: 0
@@ -5157,6 +5159,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   modularJumpModifier: 2
   timer: {fileID: 290495523}
+  cameraHandler: {fileID: 330585548}
 --- !u!136 &1311514488
 CapsuleCollider:
   m_ObjectHideFlags: 0

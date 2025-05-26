@@ -14,19 +14,32 @@ public class CameraHandler : MonoBehaviour
     public float offsetz = -9;
     public float offsety = 12;
     public float offsetx = -30;
+    private float currentOffsetx;
+    private float currentOffsetz;
     private float previousPosition;
     private Vector3 velocity = Vector3.zero;
     int layerMask;
     public float ray;
     public float rayDown;
     private float targetY;
+    public float horizontalOffsetMoving;
+    public float turningSmoothness;
+    private float targetOffsetx;
+    private float targetOffsetz;
+    private float xOffsetVelocity;
+    private float zOffsetVelocity;
 
     private LineRenderer lineRendererForward; // ELIMINA DOPO IL DEBUG!
     private LineRenderer lineRendererBackward; // ELIMINA DOPO IL DEBUG!
     private LineRenderer lineRendererUp;  // ELIMINA DOPO IL DEBUG!
+    private LineRenderer lineRendererUpsx;  // ELIMINA DOPO IL DEBUG!
 
     void Start()
     {
+        currentOffsetx = offsetx;
+        currentOffsetz = offsetz;
+        targetOffsetx = offsetx;
+        targetOffsetz = offsetz;
         layerMask = ~(1 << LayerMask.NameToLayer("Player"));
         targetY = transform.position.y;
         pos = player.transform.position;
@@ -64,17 +77,33 @@ public class CameraHandler : MonoBehaviour
         lineRendererUp.startColor = Color.blue; // ELIMINA DOPO IL DEBUG!
         lineRendererUp.endColor = Color.blue; // ELIMINA DOPO IL DEBUG!
         lineRendererUp.enabled = true; // ELIMINA DOPO IL DEBUG!
+
+        GameObject downObjsx = new GameObject("DownLine"); // ELIMINA DOPO IL DEBUG!
+        downObjsx.transform.parent = this.transform; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx = downObjsx.AddComponent<LineRenderer>(); // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.positionCount = 2; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.startWidth = 0.5f; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.endWidth = 0.5f; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.material = new Material(Shader.Find("Sprites/Default")); // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.startColor = Color.blue; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.endColor = Color.blue; // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.enabled = true; // ELIMINA DOPO IL DEBUG!
     }
 
     void Update()
     {
         currentPos = transform.position;
-        pos.z = player.transform.position.z + offsetz;
-        pos.x = player.transform.position.x + offsetx;      
+        currentOffsetx = Mathf.SmoothDamp(currentOffsetx, targetOffsetx, ref xOffsetVelocity, turningSmoothness);
+        currentOffsetz = Mathf.SmoothDamp(currentOffsetz, targetOffsetz, ref zOffsetVelocity, turningSmoothness);
+        pos.z = player.transform.position.z + currentOffsetz;
+        pos.x = player.transform.position.x + currentOffsetx;      
         pos.y = CheckForPlatforms();
-
+        Vector3 targetPos = new Vector3(player.transform.position.x + currentOffsetx, pos.y, player.transform.position.z + currentOffsetz);
+        
         transform.position = new Vector3(pos.x, currentPos.y, pos.z);
-        transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothness);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothness);
+        
+        
     }
 
     float CheckForPlatforms()
@@ -82,6 +111,7 @@ public class CameraHandler : MonoBehaviour
         Vector3 origindx = new Vector3(player.transform.position.x-0.1f, player.transform.position.y-downModifier , player.transform.position.z-0.1f);
         Vector3 originsx = new Vector3(player.transform.position.x+0.1f, player.transform.position.y-downModifier , player.transform.position.z+0.1f);
         Vector3 originup = new Vector3(player.transform.position.x, player.transform.position.y - 4, player.transform.position.z);
+        Vector3 originupsx = new Vector3(player.transform.position.x, player.transform.position.y - 4, player.transform.position.z);
 
         // Aggiorna sempre le linee di debug - ELIMINA DOPO IL DEBUG!
         lineRendererForward.SetPosition(0, origindx); // ELIMINA DOPO IL DEBUG!
@@ -91,7 +121,10 @@ public class CameraHandler : MonoBehaviour
         lineRendererBackward.SetPosition(1, originsx + playerController.getBackDirection() * ray); // ELIMINA DOPO IL DEBUG!
 
         lineRendererUp.SetPosition(0, originup); // ELIMINA DOPO IL DEBUG!
-        lineRendererUp.SetPosition(1, originup + new Vector3(0, -1, -1) * rayDown); // ELIMINA DOPO IL DEBUG!
+        lineRendererUp.SetPosition(1, originup + (playerController.getFrontDirection()+Vector3.down) * rayDown); // ELIMINA DOPO IL DEBUG!
+
+        lineRendererUpsx.SetPosition(0, originupsx); // ELIMINA DOPO IL DEBUG!
+        lineRendererUpsx.SetPosition(1, originupsx + (playerController.getBackDirection() + Vector3.down) * rayDown); // ELIMINA DOPO IL DEBUG!
 
 
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
@@ -99,7 +132,7 @@ public class CameraHandler : MonoBehaviour
             targetY = hit.point.y + offsety;
             return hit.point.y + offsety;
                 
-        } else if(Physics.Raycast(originup, new Vector3(0,-1,-1), out hit, rayDown, layerMask))
+        } else if(Physics.Raycast(originup, playerController.getFrontDirection() + Vector3.down, out hit, rayDown, layerMask) || Physics.Raycast(originupsx, playerController.getBackDirection() + Vector3.down, out hit, rayDown, layerMask))
         {
             targetY = hit.point.y + offsety;
             return hit.point.y + offsety;
@@ -108,6 +141,25 @@ public class CameraHandler : MonoBehaviour
 
 
             return targetY;
+    }
+
+    public void AdjustFront()
+    {
+        targetOffsetz = offsetz + playerController.getFrontDirection().z * horizontalOffsetMoving;
+        targetOffsetx = offsetx + playerController.getFrontDirection().x * horizontalOffsetMoving;
+        
+    }
+
+    public void AdjustBack()
+    {
+        targetOffsetz = offsetz + playerController.getBackDirection().z * horizontalOffsetMoving;
+        targetOffsetx = offsetx + playerController.getBackDirection().x * horizontalOffsetMoving;
+        
+    }
+    public void ResetOffsets()
+    {
+        targetOffsetz = offsetz;
+        targetOffsetx = offsetx;
     }
 
     void SetOffsetx(float xmod)

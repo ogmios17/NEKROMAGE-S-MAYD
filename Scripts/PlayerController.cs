@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     private bool bouncing = false;
     private bool groundJustTouched = false;
     private float bufferJumpDelay = 0.1f;
-
+    public CameraHandler cameraHandler;
     void Start()
     {
         animations = gameObject.GetComponent<Animation>();
@@ -98,7 +98,6 @@ public class PlayerController : MonoBehaviour
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
 
-        Debug.Log("is grounded? "+isGrounded);
         
     }
 
@@ -151,7 +150,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Jump(float jump)
     {
-        rb.linearVelocity = new Vector3(0f, 0f, 0f);
+        rb.linearVelocity = new Vector3(0f, Mathf.Min(0,rb.linearVelocity.y), 0f);
         rb.AddForce(new Vector3(0f, jump, 0f), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
@@ -170,6 +169,7 @@ public class PlayerController : MonoBehaviour
                 currentDirection = MoveDir.Forward;
                 transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
             }
+            cameraHandler.AdjustFront();
         }
         else if (Input.GetKey(rand.GetForward()) && isInteractable)
         {
@@ -180,12 +180,14 @@ public class PlayerController : MonoBehaviour
                 currentDirection = MoveDir.Backward;
                 transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
             }
+            cameraHandler.AdjustBack();
         }
-        else
+        else if (Mathf.Abs(rb.linearVelocity.z) > 0.5 || Mathf.Abs(rb.linearVelocity.x) > 0.5)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
             animator.SetBool("isRunning", false);
         }
+        else cameraHandler.ResetOffsets();
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
             Jump(jumpForce);
