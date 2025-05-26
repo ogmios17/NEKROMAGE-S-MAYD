@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Finish"))
         {
             victory.SetActive(true);
-            Time.timeScale = 0;
+            
         }
     }
 
