@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40ca5722da00ab841a681c0c1a6ceaad
+guid: c1eafb3e57419f044b3dbdfb6e61de4d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mattoni blu
-    second: {fileID: 2100000, guid: 06d914368c994bd4db6f669233a1a871, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blu scuro
-    second: {fileID: 2100000, guid: bc659ee49952ed14a8c374c00695edf1, type: 2}
+      name: gargoyle
+    second: {fileID: 2100000, guid: d927db451f76b324f963f58b969f8a08, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
