@@ -1176,13 +1176,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030825058, y: 0.7064346, z: -0.030825058, w: 0.7064346}
-  m_LocalPosition: {x: -42.26131, y: 36.011402, z: 224}
+  m_LocalRotation: {x: 0.030843573, y: 0.7064338, z: -0.030843573, w: 0.7064338}
+  m_LocalPosition: {x: -42, y: 36.011402, z: -39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 4.997, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 5, y: 90, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5452,7 +5452,7 @@ Transform:
   m_GameObject: {fileID: 1311514480}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.7999961, y: 16, z: -83.52798}
+  m_LocalPosition: {x: 2.8, y: 16, z: -89.1}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8731,14 +8731,20 @@ MonoBehaviour:
   playerController: {fileID: 1311514487}
   player: {fileID: 1311514480}
   angle: 0
-  xOffsetModifier: 9
+  xOffsetModifier: 0
   zOffsetModifier: 35
   front: {x: 1, y: 0, z: 0}
   back: {x: -1, y: 0, z: 0}
   animStart: {x: 0, y: 0, z: 0}
   movex: 0
   movez: 2
-  cameraSnapAnim: {fileID: 330585549}
+  xRotation: 0
+  yRotation: 90
+  zRotation: 0
+  rotationSmoothness: 0.2
+  turningSmoothness: 0.2
+  playerActiveTimer: 3
+  playerAnimator: {fileID: 1311514492}
 --- !u!65 &2106748871
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8814,8 +8820,8 @@ Transform:
   m_GameObject: {fileID: 2106748869}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7, y: 53.5, z: 223.99998}
-  m_LocalScale: {x: 7, y: 15, z: 1}
+  m_LocalPosition: {x: -7, y: 57.7, z: 224.3}
+  m_LocalScale: {x: 7, y: 30, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
