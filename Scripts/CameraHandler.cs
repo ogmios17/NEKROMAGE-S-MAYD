@@ -28,6 +28,15 @@ public class CameraHandler : MonoBehaviour
     private float targetOffsetz;
     private float xOffsetVelocity;
     private float zOffsetVelocity;
+    private float xRotationVelocity;
+    private float yRotationVelocity;
+    private float zRotationVelocity;
+    private Quaternion targetRotation;
+    private float currentRotationx;
+    private float currentRotationy;
+    private float currentRotationz;
+    private float rotationSmoothness;
+
 
     private LineRenderer lineRendererForward; // ELIMINA DOPO IL DEBUG!
     private LineRenderer lineRendererBackward; // ELIMINA DOPO IL DEBUG!
@@ -36,6 +45,12 @@ public class CameraHandler : MonoBehaviour
 
     void Start()
     {
+
+        targetRotation = transform.rotation;
+        Vector3 targetEuler = transform.rotation.eulerAngles;
+        currentRotationx = targetEuler.x;
+        currentRotationy = targetEuler.y;
+        currentRotationz = targetEuler.z;
         currentOffsetx = offsetx;
         currentOffsetz = offsetz;
         targetOffsetx = offsetx;
@@ -95,6 +110,11 @@ public class CameraHandler : MonoBehaviour
         currentPos = transform.position;
         currentOffsetx = Mathf.SmoothDamp(currentOffsetx, targetOffsetx, ref xOffsetVelocity, turningSmoothness);
         currentOffsetz = Mathf.SmoothDamp(currentOffsetz, targetOffsetz, ref zOffsetVelocity, turningSmoothness);
+        Vector3 targetEuler = targetRotation.eulerAngles;
+        currentRotationx = Mathf.SmoothDamp(currentRotationx, targetEuler.x, ref xRotationVelocity, rotationSmoothness);
+        currentRotationy = Mathf.SmoothDamp(currentRotationy, targetEuler.y, ref yRotationVelocity, rotationSmoothness);
+        currentRotationz = Mathf.SmoothDamp(currentRotationz, targetEuler.z, ref zRotationVelocity, rotationSmoothness);
+
         pos.z = player.transform.position.z + currentOffsetz;
         pos.x = player.transform.position.x + currentOffsetx;      
         pos.y = CheckForPlatforms();
@@ -102,6 +122,7 @@ public class CameraHandler : MonoBehaviour
         
         transform.position = new Vector3(pos.x, currentPos.y, pos.z);
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothness);
+        transform.rotation = Quaternion.Euler(currentRotationx, currentRotationy, currentRotationz);
         
         
     }
@@ -161,6 +182,11 @@ public class CameraHandler : MonoBehaviour
         targetOffsetz = offsetz;
         targetOffsetx = offsetx;
     }
+    public void AdjustRotation(Quaternion rotation, float smoothness)
+    {
+        targetRotation = rotation;
+        rotationSmoothness = smoothness;
+    }
 
     void SetOffsetx(float xmod)
     {
@@ -184,5 +210,25 @@ public class CameraHandler : MonoBehaviour
     void MoveCameraInPlacey(float y)
     {
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, y, transform.position.z), ref velocity, 1000f);
+    }
+
+    public void SetTargetOffset(float targetx, float targetz)
+    {
+        targetOffsetx = targetx;
+        targetOffsetz = targetz;
+    }
+    public Vector3 GetCurrentOffset()
+    {
+        return new Vector3(currentOffsetx, offsety,currentOffsetz);   
+    }
+
+    public void setTurningSmoothness(float turningSmoothness)
+    {
+        this.turningSmoothness = turningSmoothness;
+        Debug.Log("Set turningSmoothness to: " + turningSmoothness);
+    }
+    public float getTurningSmoothness()
+    {
+        return turningSmoothness;
     }
 }

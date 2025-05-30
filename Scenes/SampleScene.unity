@@ -4266,7 +4266,7 @@ Transform:
   m_GameObject: {fileID: 931872325}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.484158, y: 45, z: 225.88123}
+  m_LocalPosition: {x: 43.484158, y: 51.5, z: 225.88123}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5564,9 +5564,9 @@ MonoBehaviour:
   maxSpeed: 20
   victory: {fileID: 1678310812}
   ray: 2
-  floatingTime: 0.3
+  floatingTime: 0.1
   jumpBufferTime: 0.2
-  modularJumpModifier: 2
+  modularJumpModifier: 1.5
   timer: {fileID: 290495523}
   cameraHandler: {fileID: 330585548}
 --- !u!136 &1311514488
@@ -8254,11 +8254,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 61.02271
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 65
+      value: 69
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
       propertyPath: m_LocalPosition.z

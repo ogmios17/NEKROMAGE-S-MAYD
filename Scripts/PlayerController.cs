@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!isInteractable)
+        {
+            animator.SetBool("isRunning", false);
+        }
         timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
@@ -85,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 jumpBufferTimer = 0;
             }
 
-        if (Input.GetKeyUp(rand.GetJump())&&!bouncing)
+        if (Input.GetKeyUp(rand.GetJump()) && !bouncing && rb.linearVelocity.y > 0)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
         }
@@ -182,12 +186,14 @@ public class PlayerController : MonoBehaviour
             }
             cameraHandler.AdjustBack();
         }
-        else if (Mathf.Abs(rb.linearVelocity.z) > 0.5 || Mathf.Abs(rb.linearVelocity.x) > 0.5)
+        else 
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
+            if (Mathf.Abs(rb.linearVelocity.z) > 0.5 || Mathf.Abs(rb.linearVelocity.x) > 0.5)
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
             animator.SetBool("isRunning", false);
+            cameraHandler.ResetOffsets();
         }
-        else cameraHandler.ResetOffsets();
+        
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
             Jump(jumpForce);
@@ -210,6 +216,7 @@ public class PlayerController : MonoBehaviour
         if (previousVelocity > 0 && rb.linearVelocity.y < 0 && coyoteTimer < 0)              //handles peak boost
         {
             rb.AddForce(new Vector3(rb.linearVelocity.x * peakBoostZ, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
+  
         }
         if (isGrounded)
         {
