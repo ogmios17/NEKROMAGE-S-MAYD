@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ViewSnapper : MonoBehaviour
 {
+    public TurnSprite turnSpriteScript;
     private bool hasAlreadyTriggered = false;
     public Camera camera;
     public CameraHandler cameraHandler;
@@ -54,6 +55,10 @@ public class ViewSnapper : MonoBehaviour
             playerController.enabled = false;
             hasAlreadyTriggered = true;
             player.transform.rotation = Quaternion.Euler(0, angle, 0);
+            if (turnSpriteScript != null)
+            {
+                turnSpriteScript.SetBaseRotation(new Vector3(0, angle, 0));
+            }
             player.transform.position = new Vector3(player.transform.position.x + movex, player.transform.position.y, player.transform.position.z + movez);
             playerController.setBackDirection(back);
             playerController.setFrontDirection(front);

@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    public TurnSprite turnSpriteScript;
     private Animator animator;
     private enum MoveDir { None, Forward, Backward }
     private MoveDir currentDirection = MoveDir.Forward;
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
-        timer.text = jumpBufferTimer.ToString();    //DELETE AFTER DEBUG
+        timer.text = coyoteTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump()))
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else if (isInteractable)
@@ -172,6 +173,10 @@ public class PlayerController : MonoBehaviour
             {
                 currentDirection = MoveDir.Forward;
                 transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                if (turnSpriteScript != null)
+                {
+                    turnSpriteScript.SetBaseRotation(transform.rotation.eulerAngles);
+                }
             }
             cameraHandler.AdjustFront();
         }
@@ -183,7 +188,12 @@ public class PlayerController : MonoBehaviour
             {
                 currentDirection = MoveDir.Backward;
                 transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                if (turnSpriteScript != null)
+                {
+                    turnSpriteScript.SetBaseRotation(transform.rotation.eulerAngles);
+                }
             }
+
             cameraHandler.AdjustBack();
         }
         else 

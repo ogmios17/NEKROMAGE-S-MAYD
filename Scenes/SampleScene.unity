@@ -6066,6 +6066,7 @@ GameObject:
   - component: {fileID: 1311514489}
   - component: {fileID: 1311514491}
   - component: {fileID: 1311514492}
+  - component: {fileID: 1311514494}
   m_Layer: 3
   m_Name: Maid
   m_TagString: Player
@@ -6182,6 +6183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68db49cfaaf08043b7ea7504325d323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnSpriteScript: {fileID: 1311514494}
   force: 35
   airFriction: 20
   airMomentumModifier: 90
@@ -6321,6 +6323,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24fff1ac251a1624a82e6f6c83dc74d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1311514494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311514480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b9b5df027009149b80452cb5599c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1311514487}
+  smoothness: 0.05
 --- !u!1001 &1320222004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9493,6 +9509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d7eebf57505364da5880c5bb33e278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnSpriteScript: {fileID: 1311514494}
   camera: {fileID: 330585545}
   cameraHandler: {fileID: 330585548}
   playerController: {fileID: 1311514487}
