@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
     private bool groundJustTouched = false;
     private float bufferJumpDelay = 0.1f;
     public CameraHandler cameraHandler;
+    private bool isTalking = false;
+    private Vector3 gravity;
     void Start()
     {
         animations = gameObject.GetComponent<Animation>();
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
         frontDirection = Vector3.forward;
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
+        gravity = Physics.gravity;
 
     }
 
@@ -131,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f))
         {
+            Physics.gravity = gravity;
             groundJustTouched = true;
             if (!hit.collider.CompareTag("Bounce"))
             {
@@ -219,14 +223,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y, 0);
         }
+        
+        if (previousVelocity > 0 && rb.linearVelocity.y < 0 && coyoteTimer < 0)              //handles peak boost
+        {
+            Physics.gravity = new Vector3(0, peakBoostY, 0);
+  
+        }
         if (rb.linearVelocity.y < -maxFallingSpeed)                 //handles max falling speed
         {
             rb.linearVelocity = new Vector3(0, Mathf.Sign(rb.linearVelocity.y) * maxFallingSpeed, rb.linearVelocity.z);
-        }
-        if (previousVelocity > 0 && rb.linearVelocity.y < 0 && coyoteTimer < 0)              //handles peak boost
-        {
-            rb.AddForce(new Vector3(rb.linearVelocity.x * peakBoostZ, rb.linearVelocity.y * peakBoostY, rb.linearVelocity.z * peakBoostZ));
-  
         }
         if (isGrounded)
         {
@@ -264,6 +269,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
         }
+        Debug.Log(value);
     }
     public bool IsInteractable()
     {
@@ -307,6 +313,15 @@ public class PlayerController : MonoBehaviour
         this.bouncing = bouncing;
     }
 
+    public void setTalkingState(bool value)
+    {
+        this.isTalking = value;
+    }
+
+    public bool IsTalking()
+    {
+        return isTalking;
+    }
 
 }
 

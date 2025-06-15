@@ -6188,7 +6188,7 @@ MonoBehaviour:
   airFriction: 20
   airMomentumModifier: 90
   maxFallingSpeed: 100
-  peakBoostY: 500
+  peakBoostY: -500
   peakBoostZ: 40
   jumpForce: 75
   drag: 7
@@ -6337,6 +6337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 1311514487}
   smoothness: 0.05
+  randomizer: {fileID: 0}
 --- !u!1001 &1320222004
 PrefabInstance:
   m_ObjectHideFlags: 0

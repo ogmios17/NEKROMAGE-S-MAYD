@@ -47,6 +47,7 @@ public class Dialogue : MonoBehaviour
     {
         text.text = "";
         cumulativeDialogue = parameters[0].line;
+        player.setTalkingState(true);
         UI.SetActive(false);
         inputRandomizer.setTimer(false);
         index = 0;
@@ -87,6 +88,7 @@ public class Dialogue : MonoBehaviour
             canvasGroup.interactable = false;
             UI.SetActive(true);
             inputRandomizer.setTimer(true);
+            player.setTalkingState(false);
         }
     }
     public void SetParameters(DialogueParameters []parameters)

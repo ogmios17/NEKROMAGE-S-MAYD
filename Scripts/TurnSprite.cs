@@ -11,6 +11,7 @@ public class TurnSprite : MonoBehaviour
     public InputRandomizer randomizer;
     private Vector3 velocity;
     private bool isTurning = false;
+    private bool alreadySet;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,11 +23,12 @@ public class TurnSprite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && playerController.IsInteractable())
         {
             target.y = initialRotation.y + 90;
             isTurning = true;
             playerController.setInteractableState(false);
+            alreadySet = false;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
@@ -42,9 +44,10 @@ public class TurnSprite : MonoBehaviour
         {
             //be invisible
         }
-        if (Mathf.Abs(transform.rotation.eulerAngles.y - initialRotation.y) < 0.5f)  //If the animation is close to completion
+        if (Mathf.Abs(transform.rotation.eulerAngles.y - initialRotation.y) < 0.5f && !playerController.IsTalking() &&!alreadySet)  //If the animation is close to completion
         {
             playerController.setInteractableState(true);//regain control
+            alreadySet = true;
         }
     }
 
