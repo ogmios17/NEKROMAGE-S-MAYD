@@ -6201,6 +6201,10 @@ MonoBehaviour:
   modularJumpModifier: 1.5
   timer: {fileID: 290495523}
   cameraHandler: {fileID: 330585548}
+  dashForce: 150
+  canDash: 1
+  dashingDuration: 0.1
+  dashCooldown: 0.5
 --- !u!136 &1311514488
 CapsuleCollider:
   m_ObjectHideFlags: 0
