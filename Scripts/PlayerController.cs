@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
@@ -66,8 +67,18 @@ public class PlayerController : MonoBehaviour
     public CameraHandler cameraHandler;
     private bool isTalking = false;
     private Vector3 gravity;
+    public float dashForce;
+    public bool canDash;
+    private bool hasDashed = false;
+    private bool isDashing = false;
+    public float dashingDuration;
+    private bool dashRegistered;
+    public float dashCooldown;
+    private float dashCooldownTimer;
+    [Tooltip("Determines how much the player has to wait before dashing again on the ground")]
     void Start()
     {
+        dashCooldownTimer = dashCooldown;
         animations = gameObject.GetComponent<Animation>();
         animator = gameObject.GetComponent<Animator>();
         backDirection = Vector3.back;
@@ -85,13 +96,17 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
         timer.text = coyoteTimer.ToString();    //DELETE AFTER DEBUG
-        if (Input.GetKeyDown(rand.GetJump()))
+        if (Input.GetKeyDown(rand.GetJump())) //jumping
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else if (isInteractable)
             {
                 buffered = true;
                 jumpBufferTimer = 0;
             }
+        if (Input.GetKeyDown(KeyCode.S) && canDash && !hasDashed) //dashing
+        {
+            dashRegistered = true;
+        }
 
         if (Input.GetKeyUp(rand.GetJump()) && !bouncing && rb.linearVelocity.y > 0)
         {
@@ -105,14 +120,19 @@ public class PlayerController : MonoBehaviour
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
-
+        if (hasDashed)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+        }
+        
+        
         
     }
 
     void FixedUpdate()
     {
 
-        HandleVelocity();
+        if(!isDashing) HandleVelocity();
         HandleControls();
 
         if (groundJustTouched)
@@ -135,6 +155,11 @@ public class PlayerController : MonoBehaviour
         if (Physics.BoxCast(transform.position - new Vector3(0, 4, 0), new Vector3(0.25f, 0.1f, 0.25f), Vector3.down, out hit, Quaternion.identity, 1f))
         {
             Physics.gravity = gravity;
+            if (dashCooldownTimer <= 0)
+            {
+                hasDashed = false;
+                dashCooldownTimer = dashCooldown;
+            }
             groundJustTouched = true;
             if (!hit.collider.CompareTag("Bounce"))
             {
@@ -160,6 +185,7 @@ public class PlayerController : MonoBehaviour
     public void Jump(float jump)
     {
         rb.linearVelocity = new Vector3(0f, Mathf.Min(0,rb.linearVelocity.y), 0f);
+        hasDashed = false;
         rb.AddForce(new Vector3(0f, jump, 0f), ForceMode.Impulse);
         jumpRegistered = false;
         isGrounded = false;
@@ -167,9 +193,26 @@ public class PlayerController : MonoBehaviour
         groundCheckCooldown = groundCheckDelay;
     }
 
+    IEnumerator Dash()
+    {
+        
+        if (currentDirection == MoveDir.Forward)
+        {
+            rb.linearVelocity = frontDirection*dashForce;
+        }
+        else rb.linearVelocity = backDirection * dashForce;
+
+        yield return new WaitForSeconds(dashingDuration);
+
+        Physics.gravity = gravity;
+        isDashing = false;
+
+    }
+
     void HandleControls()
     {
-        if (Input.GetKey(rand.GetBack()) && isInteractable)
+        if (isDashing || !isInteractable) return;
+        if (Input.GetKey(rand.GetBack()))
         {
             animator.SetBool("isRunning", true);
             rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
@@ -184,7 +227,7 @@ public class PlayerController : MonoBehaviour
             }
             cameraHandler.AdjustFront();
         }
-        else if (Input.GetKey(rand.GetForward()) && isInteractable)
+        else if (Input.GetKey(rand.GetForward()))
         {
             animator.SetBool("isRunning", true);
             rb.AddForce(backDirection * actualForce, ForceMode.Impulse);
@@ -199,15 +242,24 @@ public class PlayerController : MonoBehaviour
             }
 
             cameraHandler.AdjustBack();
-        }
-        else 
+        }else
         {
             if (Mathf.Abs(rb.linearVelocity.z) > 0.5 || Mathf.Abs(rb.linearVelocity.x) > 0.5)
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x * airMomentumModifier / 100, rb.linearVelocity.y, rb.linearVelocity.z * airMomentumModifier / 100);
             animator.SetBool("isRunning", false);
             cameraHandler.ResetOffsets();
         }
-        
+
+
+        if (dashRegistered)
+        {
+            dashRegistered = false;
+            isDashing = true;
+            hasDashed = true;
+            Physics.gravity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
+            StartCoroutine(Dash());
+        }
 
         if (jumpRegistered && (isGrounded || (coyoteTimer < floatingTime && coyoteTimer > 0)))
             Jump(jumpForce);
