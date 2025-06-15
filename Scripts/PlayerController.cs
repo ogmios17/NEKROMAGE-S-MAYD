@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         frontDirection = Vector3.forward;
         victory.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
-        gravity = Physics.gravity;
+        gravity = new Vector3(0, -150, 0);
 
     }
 
