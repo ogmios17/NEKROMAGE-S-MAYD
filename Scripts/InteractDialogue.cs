@@ -45,7 +45,10 @@ public class InteractDialogue : MonoBehaviour
         if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
             
             playerController.setInteractableState(false);
-            randomizer.randomize = true;
+            randomizer.randomizeJump = true;
+            randomizer.randomizeInteract = true;
+            randomizer.randomizeForward = true;
+            randomizer.randomizeBack = true;
             AlreadyInteracted = true;
 
             dialogue.SetParameters(parameters);

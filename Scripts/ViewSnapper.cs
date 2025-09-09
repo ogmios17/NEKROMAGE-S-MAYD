@@ -14,7 +14,6 @@ public class ViewSnapper : MonoBehaviour
     public float zOffsetModifier;
     public Vector3 front;
     public Vector3 back;
-    public Vector3 animStart;
     public float movex;
     public float movez;
     public float xRotation;
@@ -42,6 +41,7 @@ public class ViewSnapper : MonoBehaviour
             playerController.setInteractableState(true);
             cameraHandler.offsetx = xOffsetModifier;
             cameraHandler.offsetz = zOffsetModifier;
+            //cameraHandler.transform.rotation = new Quaternion(xRotation, yRotation, zRotation, 1);
             cameraHandler.setTurningSmoothness(cameraNormalSmoothness);
         }
     }

@@ -11,7 +11,10 @@ public class InputRandomizer : MonoBehaviour
     public Image backSprite;
     public Image forwardSprite;
     public Image jumpSprite;
-    public bool randomize = true;
+    public bool randomizeBack = true;
+    public bool randomizeForward = true;
+    public bool randomizeJump = true;
+    public bool randomizeInteract = true;
 
     private KeyCode[] keys = {
             KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
@@ -28,10 +31,10 @@ public class InputRandomizer : MonoBehaviour
     private Queue<KeyCode> backQueue;
     private Queue<KeyCode> forwardQueue;
     private Queue<KeyCode> jumpQueue;
-    private KeyCode interactInput;
-    private KeyCode backInput;
-    private KeyCode forwardInput;
-    private KeyCode jumpInput;
+    public KeyCode interactInput;
+    public KeyCode backInput;
+    public KeyCode forwardInput;
+    public KeyCode jumpInput;
     private float timeSpanInteract;
     private float timeSpanBack;
     private float timeSpanForward;
@@ -58,9 +61,35 @@ public class InputRandomizer : MonoBehaviour
         backQueue = new Queue<KeyCode>();
         forwardQueue = new Queue<KeyCode>();
         jumpQueue = new Queue<KeyCode>();
-        Randomize(ref backQueue);
-        Randomize(ref forwardQueue);
-        Randomize(ref jumpQueue);
+
+        if(randomizeBack)
+            Randomize(backQueue, true);
+        else
+        {
+            backInput = KeyCode.A;
+            backSprite.sprite = inputVisualizer.getSprite(backInput);
+        }
+        if(randomizeForward)
+            Randomize(forwardQueue, true);
+        else
+        {
+            forwardInput = KeyCode.D;
+            forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
+        }
+        if(randomizeJump)
+            Randomize(jumpQueue, true);
+        else
+        {
+            jumpInput = KeyCode.Space;
+            jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
+        }
+        if (randomizeInteract)
+            Randomize(interactQueue, true);
+        else
+        {
+            interactInput = KeyCode.E;
+            interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
+        }
     }
 
     void Update()
@@ -76,44 +105,27 @@ public class InputRandomizer : MonoBehaviour
         /*backText.text = timeSpanBack.ToString()+"/////////"+backQueue.Peek();
         forwardText.text = timeSpanForward.ToString() + "/////////" + forwardQueue.Peek();
         jumpText.text = timeSpanJump.ToString() + "/////////" + jumpQueue.Peek();*/
-        if (randomize)
-        {
-            if (timeSpanInteract <= 0)
-            {
-                interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
-                interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
-            }
-            if (timeSpanBack <= 0)
-            {
-                backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
-                backSprite.sprite = inputVisualizer.getSprite(backInput);
-            }
-            if (timeSpanForward <= 0)
-            {
-                forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
-                forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
-            }
-            if (timeSpanJump <= 0)
-            {
-                jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
-                jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
-            }
-        }
-        else
-        {
-            interactInput = KeyCode.E;
-            interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
-
-            backInput = KeyCode.A;
-            backSprite.sprite = inputVisualizer.getSprite(backInput);
-
-            forwardInput = KeyCode.D;
-            forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
-
-            jumpInput = KeyCode.Space;
-            jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
-        }
         
+        if (randomizeInteract && timeSpanInteract <= 0)
+        {
+            interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
+            UpdateInteractSprite();
+        }
+        if (randomizeBack && timeSpanBack <= 0)
+        {
+            backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
+            UpdateBackSprite();
+        }
+        if (randomizeForward && timeSpanForward <= 0)
+        {
+            forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
+            UpdateForwardSprite();
+        }
+        if (randomizeJump && timeSpanJump <= 0)
+        {
+            jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
+            UpdateJumpSprite();
+        }   
     }
 
     KeyCode Randomize(ref float timeSpan, ref Queue<KeyCode> queue, float min, float max)
@@ -153,7 +165,7 @@ public class InputRandomizer : MonoBehaviour
         return keys[index];
     }
 
-    void Randomize(ref Queue<KeyCode> queue)
+    public KeyCode Randomize(Queue<KeyCode> queue, bool addToQueue)
     {
         index = Random.Range(0, keys.Length);
         for (int i = 0; i < 6; i++)
@@ -167,7 +179,11 @@ public class InputRandomizer : MonoBehaviour
         }
         currentKeys[currentKeyIndex % 6] = keys[index];
         currentKeyIndex++;
-        queue.Enqueue(keys[index]);
+        if(addToQueue)
+            queue.Enqueue(keys[index]);
+
+        return keys[index];
+        
         
     }
 
@@ -191,5 +207,45 @@ public class InputRandomizer : MonoBehaviour
     public void setTimer(bool timer)
     {
         timerActive = timer;
+    }
+
+    public Queue<KeyCode> GetInteractQueue()
+    {
+        return interactQueue;
+    }
+
+    public Queue<KeyCode> GetJumpQueue()
+    {
+        return jumpQueue;
+    }
+
+    public Queue<KeyCode> GetForwardQueue()
+    {
+        return forwardQueue;
+    }
+
+    public Queue<KeyCode> GetBackQueue()
+    {
+        return backQueue;
+    }
+
+    public void UpdateBackSprite()
+    {
+        backSprite.sprite = inputVisualizer.getSprite(backInput);
+    }
+
+    public void UpdateForwardSprite()
+    {
+        forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
+    }
+
+    public void UpdateJumpSprite()
+    {
+        jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
+    }
+
+    public void UpdateInteractSprite()
+    {
+        interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
     }
 }
