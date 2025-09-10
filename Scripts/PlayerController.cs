@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     private bool jumpRegistered;
     private Rigidbody rb;
     private bool isGrounded = false;
-    public TextMeshProUGUI timer = null;    //DELETE AFTER DEBUG
     private bool bouncing = false;
     private bool groundJustTouched = false;
     private float bufferJumpDelay = 0.1f;
@@ -95,7 +94,6 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
-        timer.text = coyoteTimer.ToString();    //DELETE AFTER DEBUG
         if (Input.GetKeyDown(rand.GetJump())) //jumping
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else if (isInteractable)

@@ -2917,6 +2917,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16389574, y: 0.14, z: 0.01}
   m_Center: {x: 0.017315412, y: 0, z: 0.01}
+--- !u!114 &612336974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612336969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a2af1f9d4df66489ef1e70ac4fc615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomizer: {fileID: 768143007}
+  changeJump: 1
+  changeForward: 1
+  changeBack: 1
 --- !u!1 &628696021
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,7 +3825,7 @@ GameObject:
   - component: {fileID: 768143008}
   m_Layer: 0
   m_Name: SceneHandler
-  m_TagString: Untagged
+  m_TagString: SceneHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3942,7 +3958,14 @@ MonoBehaviour:
   backSprite: {fileID: 688089681}
   forwardSprite: {fileID: 759901514}
   jumpSprite: {fileID: 1382452125}
-  randomize: 0
+  randomizeBack: 0
+  randomizeForward: 0
+  randomizeJump: 0
+  randomizeInteract: 0
+  interactInput: 0
+  backInput: 0
+  forwardInput: 0
+  jumpInput: 0
   minInteract: 1
   minBack: 10
   minForward: 10
@@ -5001,6 +5024,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 612336970}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 612336974}
   m_SourcePrefab: {fileID: 100100000, guid: 24359569a0358bd4ea8267807bf19b5f, type: 3}
 --- !u!1001 &1084882281
 PrefabInstance:
@@ -9524,7 +9550,6 @@ MonoBehaviour:
   zOffsetModifier: 35
   front: {x: 1, y: 0, z: 0}
   back: {x: -1, y: 0, z: 0}
-  animStart: {x: 0, y: 0, z: 0}
   movex: 0
   movez: 2
   xRotation: 0
