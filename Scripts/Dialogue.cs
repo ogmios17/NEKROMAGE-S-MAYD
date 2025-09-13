@@ -48,8 +48,25 @@ public class Dialogue : MonoBehaviour
 
         if (Input.anyKeyDown) ignoreNextInput = false;
     }
+    public void StartDialogue(int index)
+    {
+        Debug.Log("Dialogue started");
+        this.index = index;
+        text.text = "";
+        cumulativeDialogue = parameters[index].line;
+        player.setTalkingState(true);
+        if (blockPlayer)
+        {
+            UI.SetActive(false);
+            inputRandomizer.setTimer(false);
+        }
+        toInsert.sprite= parameters[index].image;
+        StartCoroutine(Type());
+    }
+
     public void StartDialogue()
     {
+        index = 0;
         text.text = "";
         cumulativeDialogue = parameters[0].line;
         player.setTalkingState(true);
@@ -58,8 +75,8 @@ public class Dialogue : MonoBehaviour
             UI.SetActive(false);
             inputRandomizer.setTimer(false);
         }
-        index = 0;
-        toInsert.sprite= parameters[0].image;
+        
+        toInsert.sprite = parameters[0].image;
         StartCoroutine(Type());
     }
 
@@ -82,7 +99,13 @@ public class Dialogue : MonoBehaviour
         typedAll = false;
         if (index < parameters.Length - 1)
         {
-            index++;
+            index++; 
+
+            if (parameters[index].stop)
+            {
+                EndDialogue(); 
+                return;
+            }
             if (!parameters[index].showsInSameBox)
             {
                 text.text = "";
@@ -94,14 +117,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            index = 0;
-            blockPlayer = true;
-            player.setInteractableState(true);
-            canvasGroup.alpha = 0f;
-            canvasGroup.interactable = false;
-            UI.SetActive(true);
-            inputRandomizer.setTimer(true);
-            player.setTalkingState(false);
+            EndDialogue();
         }
     }
     public void SetParameters(DialogueParameters []parameters)
@@ -112,7 +128,18 @@ public class Dialogue : MonoBehaviour
     public void NotInterrupeted()
     {
         blockPlayer = false;
-}
+    }
+
+    public void EndDialogue()
+    {
+        blockPlayer = true;
+        player.setInteractableState(true);
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        UI.SetActive(true);
+        inputRandomizer.setTimer(true);
+        player.setTalkingState(false);
+    }
 
 }
 [System.Serializable]
@@ -124,5 +151,6 @@ public class DialogueParameters
     public bool showsInSameBox;
     public bool endsAutomatically;
     public float waitTime;
+    public bool stop;
 }
 

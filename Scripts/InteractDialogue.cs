@@ -17,6 +17,10 @@ public class InteractDialogue : MonoBehaviour
     public Vector3 imagePosition;
     private bool AlreadyInteracted = false;
     private float distance;
+    public bool deleteAfter;
+    private int iteration=0;
+    private int lastStop = 0;
+    private bool completed = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,7 +36,6 @@ public class InteractDialogue : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-        Debug.Log(distance);
         if (Mathf.Abs(distance) < 15)
         {
             image.SetActive(true);
@@ -44,7 +47,7 @@ public class InteractDialogue : MonoBehaviour
             image.SetActive(false);
             inRange = false;
         }
-
+        Debug.Log(lastStop + " " + parameters[lastStop].stop);
         if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
             
             playerController.setInteractableState(false);
@@ -53,9 +56,30 @@ public class InteractDialogue : MonoBehaviour
             dialogue.SetParameters(parameters);
             uiCanvas.alpha = 1f;
             uiCanvas.interactable = true;
-            dialogue.StartDialogue();
+            int length = parameters.Length;
+            parameters[lastStop].stop = false;
+            if (iteration > 0 && !completed)
+            {
+                for (int i = lastStop; i < length; i++)
+                {
+                    if (parameters[i].stop)
+                    {
+                        iteration++;
+                        lastStop = i;
+                        dialogue.StartDialogue(i);
+                        return;
+                    }
+                }
+                dialogue.StartDialogue(lastStop);
+                completed = true;
+            }
+            else
+            {
+                dialogue.StartDialogue(lastStop);
+                iteration++;
+            }
         }
-        if (playerController.IsInteractable()) {
+        if (playerController.IsInteractable()){
             AlreadyInteracted = false;
         }
     }

@@ -149,13 +149,44 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: help
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
     speed: 0.2
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
+  - line: '*You only hear faint cries in the distance*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: '*Now the cries have stopped,too...*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: '*Oh, nevermind, they got louder...*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: Give him some space, would you?
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
   imagePosition: {x: -11.78374, y: 65.44608, z: -72.06401}
+  deleteAfter: 1
 --- !u!1001 &38974008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5647,7 +5678,7 @@ GameObject:
   - component: {fileID: 395647801}
   - component: {fileID: 395647800}
   - component: {fileID: 395647799}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Maid
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6019,12 +6050,14 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 1
     waitTime: 0
+    stop: 0
   - line: Where am I?
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 1
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: This is an automated message. You have been selected to participate in
       the contest to become the mighty Nekromage's new Mayd.
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
@@ -6032,12 +6065,14 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: Wait, I don't think that is the correct pronunciation...
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: And before you say something dumb like "That is not the correct pronunciation",
       I will inform you that Mayd is an acronym.
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
@@ -6045,30 +6080,35 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: It stands for "Maid at your disposal"
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: A bit redundant... But how did I end up here?
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: Kidnap.
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
     speed: 0.1
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: Wait, you said that this message was automated...
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: Ehmm. Argh... Damn you. Fine, go take a stroll or something... I need to
       calm down.
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
@@ -6076,18 +6116,21 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: Are you alright?
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   - line: NO! I. AM. NOT. Listen, jut go, ok?
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
     speed: 0.01
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
+    stop: 0
   interruptPlayer: 1
 --- !u!65 &397184662
 BoxCollider:
@@ -6164,7 +6207,7 @@ Transform:
   m_GameObject: {fileID: 397184660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 58.9, z: -73.1}
+  m_LocalPosition: {x: -21.693832, y: 58.9, z: -114.6}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6471,6 +6514,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
       propertyPath: m_Name
       value: Platform_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7480,12 +7527,14 @@ MonoBehaviour:
     showsInSameBox: 0
     endsAutomatically: 1
     waitTime: 2
+    stop: 0
   - line: Where am I?
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 1
     waitTime: 2
+    stop: 0
   interruptPlayer: 0
 --- !u!65 &978717032
 BoxCollider:
@@ -8265,6 +8314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform_B
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 88f34822225b9c24d86a38c4cff8e4a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8549,7 +8602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 47.192657
+      value: 47.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8770,6 +8823,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7cc451a73e21f64987e1fbb0427ac6c, type: 3}
+--- !u!1001 &1844026006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -30.330036
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 33.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -37.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_Name
+      value: Platform_A (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
 --- !u!1 &1845285881
 GameObject:
   m_ObjectHideFlags: 0
@@ -9371,6 +9485,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform_A (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 305f4cccd9e1c314e8c56bd324572f0a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9503,6 +9621,7 @@ SceneRoots:
   - {fileID: 288003806}
   - {fileID: 1135040277}
   - {fileID: 616583121}
+  - {fileID: 1844026006}
   - {fileID: 1484938355}
   - {fileID: 780761637}
   - {fileID: 962448452}

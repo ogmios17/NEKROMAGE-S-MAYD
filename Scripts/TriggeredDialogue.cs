@@ -39,13 +39,7 @@ public class TriggeredDialogue : MonoBehaviour
             dialogue.StartDialogue();
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-    }
+    
 }
 
 
