@@ -8,6 +8,7 @@ public class TriggeredDialogue : MonoBehaviour
     public Dialogue dialogue;
     private CanvasGroup canvasGroup;
     public DialogueParameters[] parameters;
+    public bool interruptPlayer = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,11 +27,15 @@ public class TriggeredDialogue : MonoBehaviour
         if (other.CompareTag("Player") &&!hasAlreadyTriggered)
         {
             hasAlreadyTriggered = true;
-            player.setInteractableState(false);
-
+            if (interruptPlayer)
+            {
+                player.setInteractableState(false);
+                dialogue.NotInterrupetd();
+            }
             dialogue.SetParameters(parameters);
             canvasGroup.alpha = 1f;
-            canvasGroup.interactable = true;
+            if(interruptPlayer)
+                canvasGroup.interactable = true;
             dialogue.StartDialogue();
         }
     }

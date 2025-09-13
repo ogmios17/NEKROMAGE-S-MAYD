@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    public ParticleSystem jumpingParticles;
+    private ParticleSystem jumpingParticlesInstance;
     public TurnSprite turnSpriteScript;
     private Animator animator;
     private enum MoveDir { None, Forward, Backward }
@@ -182,6 +184,9 @@ public class PlayerController : MonoBehaviour
     }
     public void Jump(float jump)
     {
+        animator.SetTrigger("HasJumped");
+        jumpingParticlesInstance = Instantiate(jumpingParticles, new Vector3(transform.position.x,transform.position.y-1,transform.position.z), Quaternion.identity);
+        Destroy(jumpingParticlesInstance.gameObject, jumpingParticlesInstance.main.duration);
         rb.linearVelocity = new Vector3(0f, Mathf.Min(0,rb.linearVelocity.y), 0f);
         hasDashed = false;
         rb.AddForce(new Vector3(0f, jump, 0f), ForceMode.Impulse);

@@ -16,10 +16,11 @@ public class InteractDialogue : MonoBehaviour
     private bool inRange;
     public Vector3 imagePosition;
     private bool AlreadyInteracted = false;
+    private float distance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(imagePosition == null)
+        if(imagePosition == null || imagePosition == Vector3.zero)
         {
             imagePosition = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
         }
@@ -30,8 +31,9 @@ public class InteractDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Mathf.Abs(gameObject.transform.position.z-player.transform.position.z) < 5)
+        distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
+        Debug.Log(distance);
+        if (Mathf.Abs(distance) < 15)
         {
             image.SetActive(true);
             inRange = true;
@@ -45,10 +47,6 @@ public class InteractDialogue : MonoBehaviour
         if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
             
             playerController.setInteractableState(false);
-            randomizer.randomizeJump = true;
-            randomizer.randomizeInteract = true;
-            randomizer.randomizeForward = true;
-            randomizer.randomizeBack = true;
             AlreadyInteracted = true;
 
             dialogue.SetParameters(parameters);
