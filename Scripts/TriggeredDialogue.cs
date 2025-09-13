@@ -30,8 +30,8 @@ public class TriggeredDialogue : MonoBehaviour
             if (interruptPlayer)
             {
                 player.setInteractableState(false);
-                dialogue.NotInterrupetd();
             }
+            else dialogue.NotInterrupeted();
             dialogue.SetParameters(parameters);
             canvasGroup.alpha = 1f;
             if(interruptPlayer)

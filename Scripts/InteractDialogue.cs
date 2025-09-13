@@ -36,7 +36,8 @@ public class InteractDialogue : MonoBehaviour
         if (Mathf.Abs(distance) < 15)
         {
             image.SetActive(true);
-            inRange = true;
+            if(!playerController.IsTalking())
+                inRange = true;
         }
         else
         {
@@ -48,7 +49,7 @@ public class InteractDialogue : MonoBehaviour
             
             playerController.setInteractableState(false);
             AlreadyInteracted = true;
-
+            dialogue.ignoreNextInput = true;
             dialogue.SetParameters(parameters);
             uiCanvas.alpha = 1f;
             uiCanvas.interactable = true;

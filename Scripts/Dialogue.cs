@@ -17,6 +17,7 @@ public class Dialogue : MonoBehaviour
     private bool typedAll;
     private string cumulativeDialogue;
     private bool blockPlayer = true;
+    public bool ignoreNextInput = false;
 
     void Start()
     {
@@ -26,9 +27,10 @@ public class Dialogue : MonoBehaviour
         text.text = "";
     }
     void Update()
-    {
-        if (Input.anyKeyDown && canvasGroup.interactable && !parameters[index].endsAutomatically)
+    {        
+        if (Input.anyKeyDown && canvasGroup.interactable && !parameters[index].endsAutomatically && !ignoreNextInput)
         {
+            
             if (text.text == cumulativeDialogue)
             {
                 NextLine();
@@ -43,18 +45,19 @@ public class Dialogue : MonoBehaviour
         {
             NextLine();
         }
+
+        if (Input.anyKeyDown) ignoreNextInput = false;
     }
     public void StartDialogue()
     {
         text.text = "";
         cumulativeDialogue = parameters[0].line;
+        player.setTalkingState(true);
         if (blockPlayer)
         {
-            player.setTalkingState(true);
             UI.SetActive(false);
             inputRandomizer.setTimer(false);
         }
-        else canvasGroup.transform.position = new Vector3(canvasGroup.transform.position.x, -canvasGroup.transform.position.y, canvasGroup.transform.position.z);
         index = 0;
         toInsert.sprite= parameters[0].image;
         StartCoroutine(Type());
@@ -106,7 +109,7 @@ public class Dialogue : MonoBehaviour
         this.parameters = parameters;
     }
 
-    public void NotInterrupetd()
+    public void NotInterrupeted()
     {
         blockPlayer = false;
 }
