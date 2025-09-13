@@ -145,7 +145,13 @@ MonoBehaviour:
   parameters:
   - line: He is gonna beat me up now...
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
-    speed: 0
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+  - line: help
+    image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
+    speed: 0.2
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
@@ -6158,7 +6164,7 @@ Transform:
   m_GameObject: {fileID: 397184660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 58.9, z: -40}
+  m_LocalPosition: {x: -21.693832, y: 58.9, z: -73.1}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6852,6 +6858,7 @@ MonoBehaviour:
   text: {fileID: 661452642}
   imagePlaceholder: {fileID: 2117399397}
   parameters: []
+  ignoreNextInput: 0
 --- !u!224 &643504956
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7476,7 +7483,7 @@ MonoBehaviour:
   - line: Where am I?
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
-    showsInSameBox: 1
+    showsInSameBox: 0
     endsAutomatically: 1
     waitTime: 2
   interruptPlayer: 0
@@ -8322,6 +8329,7 @@ MonoBehaviour:
   text: {fileID: 1969229326}
   imagePlaceholder: {fileID: 1053787688}
   parameters: []
+  ignoreNextInput: 0
 --- !u!225 &1500205672
 CanvasGroup:
   m_ObjectHideFlags: 0
