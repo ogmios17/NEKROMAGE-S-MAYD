@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fac35da33278cb94480c2313b5eb24d9
+guid: c8b6dccd68333db40ad7fa4128c4eb99
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Retopo_Cylinder_007.003
-    second: {fileID: 2100000, guid: 6ac102a4eb5315c44942f2c0e1d4cb75, type: 2}
+      name: Mattoni blu
+    second: {fileID: 2100000, guid: 06d914368c994bd4db6f669233a1a871, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

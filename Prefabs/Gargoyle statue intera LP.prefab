@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &93937607826660980
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.312462
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 47.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -71.67803
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_Name
+      value: Gargoyle statue intera LP
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7736531139274766584}
+  m_SourcePrefab: {fileID: 100100000, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+--- !u!1 &976386186828571429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c1eafb3e57419f044b3dbdfb6e61de4d, type: 3}
+  m_PrefabInstance: {fileID: 93937607826660980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7736531139274766584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976386186828571429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7144a666de52a794e8625814c2e5de95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  player: {fileID: 0}
+  playerController: {fileID: 0}
+  dialogue: {fileID: 0}
+  uiCanvas: {fileID: 0}
+  randomizer: {fileID: 0}
+  parameters:
+  - line: He is gonna beat me up now...
+    image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 0
+  - line: help
+    image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 0
+  - line: '*You only hear faint cries in the distance*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: '*Now the cries have stopped,too...*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: '*Oh, nevermind, they got louder...*'
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  - line: Give him some space, would you?
+    image: {fileID: 0}
+    speed: 0.2
+    showsInSameBox: 0
+    endsAutomatically: 0
+    waitTime: 0
+    stop: 1
+  imagePosition: {x: -11.78374, y: 65.44608, z: -72.06401}
+  deleteAfter: 1
