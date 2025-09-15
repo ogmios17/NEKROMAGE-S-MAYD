@@ -72,11 +72,13 @@ public class PlayerController : MonoBehaviour
     public bool canDash;
     private bool hasDashed = false;
     private bool isDashing = false;
+    private bool boostGravity = false;
     public float dashingDuration;
     private bool dashRegistered;
     public float dashCooldown;
     private float dashCooldownTimer;
     [Tooltip("Determines how much the player has to wait before dashing again on the ground")]
+    
     void Start()
     {
         dashCooldownTimer = dashCooldown;
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (!isInteractable)
         {
             animator.SetBool("isRunning", false);
@@ -181,6 +184,7 @@ public class PlayerController : MonoBehaviour
             groundJustTouched = false;
             bufferJumpDelay = 0;
         }
+        boostGravity = false;
     }
     public void Jump(float jump)
     {
@@ -281,8 +285,7 @@ public class PlayerController : MonoBehaviour
         
         if (previousVelocity > 0 && rb.linearVelocity.y < 0 && coyoteTimer < 0)              //handles peak boost
         {
-            Physics.gravity = new Vector3(0, peakBoostY, 0);
-  
+            boostGravity = true;           
         }
         if (rb.linearVelocity.y < -maxFallingSpeed)                 //handles max falling speed
         {
@@ -298,6 +301,9 @@ public class PlayerController : MonoBehaviour
             actualForce = force - airFriction;
         }
         previousVelocity = rb.linearVelocity.y;
+        if (boostGravity){
+            Physics.gravity = new Vector3(0, Physics.gravity.y-peakBoostY, Physics.gravity.z);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -324,7 +330,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
         }
-        Debug.Log(value);
     }
     public bool IsInteractable()
     {

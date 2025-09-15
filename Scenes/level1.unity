@@ -6209,7 +6209,7 @@ MonoBehaviour:
   airFriction: 20
   airMomentumModifier: 90
   maxFallingSpeed: 100
-  peakBoostY: -500
+  peakBoostY: 200
   peakBoostZ: 40
   jumpForce: 75
   drag: 7
@@ -6263,7 +6263,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!212 &395647808
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6573,7 +6573,7 @@ Transform:
   m_GameObject: {fileID: 397184660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 58.9, z: -114.6}
+  m_LocalPosition: {x: -21.693832, y: 98.1, z: -114.6}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8693,7 +8693,7 @@ Transform:
   m_GameObject: {fileID: 978717029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 58.9, z: -126.8}
+  m_LocalPosition: {x: -21.693832, y: 93, z: -128.6}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9508,7 +9508,7 @@ MonoBehaviour:
   smoothness: 0.7
   downModifier: 6
   offsetz: 0
-  offsety: 5
+  offsety: 13
   offsetx: -35
   ray: 20
   rayDown: 20
@@ -12257,6 +12257,10 @@ PrefabInstance:
     - target: {fileID: 976386186828571429, guid: 611c04c071ff549499493c43c69ccb6c, type: 3}
       propertyPath: m_Name
       value: Gargoyle statue intera LP
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736531139274766584, guid: 611c04c071ff549499493c43c69ccb6c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

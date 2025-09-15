@@ -47,7 +47,6 @@ public class InteractDialogue : MonoBehaviour
             image.SetActive(false);
             inRange = false;
         }
-        Debug.Log(lastStop + " " + parameters[lastStop].stop);
         if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
             
             playerController.setInteractableState(false);
