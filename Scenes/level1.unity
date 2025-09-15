@@ -6432,14 +6432,14 @@ MonoBehaviour:
     endsAutomatically: 0
     waitTime: 0
     stop: 0
-  - line: Wait, I don't think that is the correct pronunciation...
+  - line: Wait, I don't think that is the correct spelling...
     image: {fileID: 21300000, guid: c99bbe7de29507c468f569b21dec89e2, type: 3}
     speed: 0.03
     showsInSameBox: 0
     endsAutomatically: 0
     waitTime: 0
     stop: 0
-  - line: And before you say something dumb like "That is not the correct pronunciation",
+  - line: And before you say something dumb like "That is not the correct spelling",
       I will inform you that Mayd is an acronym.
     image: {fileID: 21300000, guid: 047ca072feba97649a8e9dfb89d2540a, type: 3}
     speed: 0.03
@@ -6573,7 +6573,7 @@ Transform:
   m_GameObject: {fileID: 397184660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 98.1, z: -114.6}
+  m_LocalPosition: {x: -21.693832, y: 58.1, z: -76.5}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8693,7 +8693,7 @@ Transform:
   m_GameObject: {fileID: 978717029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.693832, y: 93, z: -128.6}
+  m_LocalPosition: {x: -21.693832, y: 54.7, z: -128.6}
   m_LocalScale: {x: 20, y: 20, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
