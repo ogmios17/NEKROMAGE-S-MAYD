@@ -48,7 +48,8 @@ public class InteractDialogue : MonoBehaviour
             inRange = false;
         }
         if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
-            
+
+            dialogue.EndDialogue();
             playerController.setInteractableState(false);
             AlreadyInteracted = true;
             dialogue.ignoreNextInput = true;

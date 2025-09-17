@@ -18,6 +18,7 @@ public class Dialogue : MonoBehaviour
     private string cumulativeDialogue;
     private bool blockPlayer = true;
     public bool ignoreNextInput = false;
+    private bool typing = false;
 
     void Start()
     {
@@ -50,7 +51,8 @@ public class Dialogue : MonoBehaviour
     }
     public void StartDialogue(int index)
     {
-        Debug.Log("Dialogue started");
+        if (typing) StopAllCoroutines();
+        typing = true;
         this.index = index;
         text.text = "";
         cumulativeDialogue = parameters[index].line;
@@ -66,6 +68,8 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue()
     {
+        if (typing) StopAllCoroutines();
+        typing = true;
         index = 0;
         text.text = "";
         cumulativeDialogue = parameters[0].line;
@@ -87,6 +91,9 @@ public class Dialogue : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(parameters[index].speed);
         }
+
+        parameters[index].onLineReached?.Invoke();
+
         if (parameters[index].endsAutomatically)
         {
             yield return new WaitForSeconds(parameters[index].waitTime);
@@ -132,6 +139,7 @@ public class Dialogue : MonoBehaviour
 
     public void EndDialogue()
     {
+        typing = false;
         blockPlayer = true;
         player.setInteractableState(true);
         canvasGroup.alpha = 0f;
@@ -152,5 +160,6 @@ public class DialogueParameters
     public bool endsAutomatically;
     public float waitTime;
     public bool stop;
+    public UnityEngine.Events.UnityEvent onLineReached;
 }
 
