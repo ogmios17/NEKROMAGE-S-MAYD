@@ -41,7 +41,7 @@ public class ViewSnapper : MonoBehaviour
             playerController.setInteractableState(true);
             cameraHandler.offsetx = xOffsetModifier;
             cameraHandler.offsetz = zOffsetModifier;
-            //cameraHandler.transform.rotation = new Quaternion(xRotation, yRotation, zRotation, 1);
+            cameraHandler.transform.rotation = new Quaternion(xRotation, yRotation, zRotation, 1);
             cameraHandler.setTurningSmoothness(cameraNormalSmoothness);
         }
     }
@@ -59,12 +59,15 @@ public class ViewSnapper : MonoBehaviour
             {
                 turnSpriteScript.SetBaseRotation(new Vector3(0, angle, 0));
             }
+            cameraHandler.offsetx = xOffsetModifier;
+            cameraHandler.offsetz = zOffsetModifier;
+            
             player.transform.position = new Vector3(player.transform.position.x + movex, player.transform.position.y, player.transform.position.z + movez);
             playerController.setBackDirection(back);
             playerController.setFrontDirection(front);
             cameraHandler.setTurningSmoothness(turningSmoothness);
             cameraHandler.SetTargetOffset(xOffsetModifier, zOffsetModifier);
-            cameraHandler.AdjustRotation(new Quaternion(xRotation, yRotation, zRotation, 1), rotationSmoothness);
+            cameraHandler.AdjustRotation(Quaternion.Euler(xRotation, yRotation, zRotation), rotationSmoothness);
             
         }
     }

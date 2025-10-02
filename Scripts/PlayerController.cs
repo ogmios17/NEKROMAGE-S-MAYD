@@ -77,8 +77,14 @@ public class PlayerController : MonoBehaviour
     private bool dashRegistered;
     public float dashCooldown;
     private float dashCooldownTimer;
+    StateMachine stateMachine;
     [Tooltip("Determines how much the player has to wait before dashing again on the ground")]
-    
+    private void Awake()
+    {
+        stateMachine = new StateMachine();
+
+        //var runningState = new RunningState(this, animator);
+    }
     void Start()
     {
         dashCooldownTimer = dashCooldown;
@@ -119,7 +125,7 @@ public class PlayerController : MonoBehaviour
         if (buffered) jumpBufferTimer += Time.deltaTime;
 
         if (gameObject.transform.position.y < 5)
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Level1");
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
@@ -177,6 +183,8 @@ public class PlayerController : MonoBehaviour
                 }
 
             }
+            if(rb.collisionDetectionMode == CollisionDetectionMode.ContinuousSpeculative)
+                rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
         else
         {
@@ -198,6 +206,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         coyoteTimer = -1;
         groundCheckCooldown = groundCheckDelay;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
     }
 
     IEnumerator Dash()
@@ -301,9 +310,11 @@ public class PlayerController : MonoBehaviour
             actualForce = force - airFriction;
         }
         previousVelocity = rb.linearVelocity.y;
-        if (boostGravity){
-            Physics.gravity = new Vector3(0, Physics.gravity.y-peakBoostY, Physics.gravity.z);
+        if (boostGravity)
+        {
+            rb.AddForce(Vector3.down * peakBoostY, ForceMode.Acceleration);
         }
+
     }
 
     void OnCollisionEnter(Collision collision)

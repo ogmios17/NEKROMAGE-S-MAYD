@@ -10,6 +10,7 @@ public class TouchRandomizer : MonoBehaviour
     private Queue<KeyCode> backQueue;
     private Queue<KeyCode> forwardQueue;
     private Queue<KeyCode> jumpQueue;
+    private bool charged = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +29,7 @@ public class TouchRandomizer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && charged)
         {
             if (changeBack)
             {
@@ -45,6 +46,13 @@ public class TouchRandomizer : MonoBehaviour
                 randomizer.jumpInput=randomizer.Randomize(randomizer.GetJumpQueue(), false);
                 randomizer.UpdateJumpSprite();
             }
+
+            charged = false;
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) charged = true;
     }
 }
