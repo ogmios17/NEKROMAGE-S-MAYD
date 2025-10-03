@@ -4,7 +4,7 @@ using UnityEngine;
 public class ViewSnapper : MonoBehaviour
 {
     public TurnSprite turnSpriteScript;
-    private bool hasAlreadyTriggered = false;
+    private bool hasTriggered = false;
     public Camera camera;
     public CameraHandler cameraHandler;
     public PlayerController playerController;
@@ -35,8 +35,9 @@ public class ViewSnapper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(xOffsetModifier-cameraHandler.GetCurrentOffset().x)<0.5 && Mathf.Abs(zOffsetModifier - cameraHandler.GetCurrentOffset().z) < 0.5)
+        if (hasTriggered && Mathf.Abs(xOffsetModifier-cameraHandler.GetCurrentOffset().x)<0.5 && Mathf.Abs(zOffsetModifier - cameraHandler.GetCurrentOffset().z) < 0.5)
         {
+            hasTriggered = false;
             playerController.enabled = true;
             playerController.setInteractableState(true);
             cameraHandler.offsetx = xOffsetModifier;
@@ -48,12 +49,12 @@ public class ViewSnapper : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") &&!hasAlreadyTriggered)
+        if (other.CompareTag("Player"))
         {
             playerController.setInteractableState(false);
             playerAnimator.SetBool("isRunning", false);
             playerController.enabled = false;
-            hasAlreadyTriggered = true;
+            hasTriggered = true;
             player.transform.rotation = Quaternion.Euler(0, angle, 0);
             if (turnSpriteScript != null)
             {

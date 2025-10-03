@@ -2,12 +2,12 @@ using UnityEngine;
 
 public abstract class BaseState:StateInterface
 {
-    protected readonly PlayerController player;
+    protected readonly Controller controller;
     protected readonly Animator animator;
 
-    protected BaseState(PlayerController player, Animator animator)
+    protected BaseState(Controller controller, Animator animator)
     {
-        this.player = player;
+        this.controller = controller;
         this.animator = animator;
     }
     public virtual void OnEnter() { }

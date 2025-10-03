@@ -248,4 +248,22 @@ public class InputRandomizer : MonoBehaviour
     {
         interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
     }
+
+    public void setJump(KeyCode jump)
+    {
+        jumpInput = jump;
+        UpdateJumpSprite();
+    }
+
+    public void setForward(KeyCode forward)
+    {
+        forwardInput = forward;
+        UpdateForwardSprite();
+    }
+
+    public void setBack(KeyCode back)
+    {
+        backInput = back;
+        UpdateBackSprite();
+    }
 }

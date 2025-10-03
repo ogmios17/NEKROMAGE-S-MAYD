@@ -124,7 +124,6 @@ public class CameraHandler : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothness);
         transform.rotation = Quaternion.Euler(currentRotationx, currentRotationy, currentRotationz);
 
-        Debug.Log("offsetx: " + currentOffsetx + " Offsetz: " + currentOffsetz + "\nTargetoffsetx: " + targetOffsetx + " Targteffsetz: " + targetOffsetz);
         
         
     }

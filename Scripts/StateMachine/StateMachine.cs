@@ -24,6 +24,11 @@ public class StateMachine
         current.state?.FixedUpdate();
     }
 
+    public void SetState(StateInterface state)
+    {
+        current = nodes[state.GetType()];
+        current.state?.OnEnter();
+    }
 
     void ChangeState(StateInterface state)
     {

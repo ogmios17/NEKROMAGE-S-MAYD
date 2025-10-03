@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, Controller
 {
     public ParticleSystem jumpingParticles;
     private ParticleSystem jumpingParticlesInstance;
