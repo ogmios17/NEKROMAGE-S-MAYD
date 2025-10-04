@@ -42,7 +42,3 @@ public class Bounce : MonoBehaviour
         }
     }
 }
-
-
-
-// nel caso qualsuno si stesse chiedendo perchè questa meccanica sia stata implementata da qualcuno che sembra sotto effetto di sostanze, è colpa di unity <3
