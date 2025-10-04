@@ -10,6 +10,7 @@ public class CameraHandler : MonoBehaviour
     public PlayerController playerController;
     public float smoothness;
     private float usedSmoothness;
+    public float recalibrationSmoothness;
     public float downModifier;
     public float offsetz = -9;
     public float offsety = 12;
@@ -36,6 +37,7 @@ public class CameraHandler : MonoBehaviour
     private float currentRotationy;
     private float currentRotationz;
     private float rotationSmoothness;
+    public float maxOffsetY;
 
     private LineRenderer lineRendererForward; // ELIMINA DOPO IL DEBUG!
     private LineRenderer lineRendererBackward; // ELIMINA DOPO IL DEBUG!
@@ -121,10 +123,13 @@ public class CameraHandler : MonoBehaviour
         Vector3 targetPos = new Vector3(player.transform.position.x + currentOffsetx, pos.y, player.transform.position.z + currentOffsetz);
         
         transform.position = new Vector3(pos.x, currentPos.y, pos.z);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothness);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, usedSmoothness);
         transform.rotation = Quaternion.Euler(currentRotationx, currentRotationy, currentRotationz);
 
-        
+        if (Mathf.Abs(player.transform.position.y - currentPos.y) > maxOffsetY)
+        {
+            usedSmoothness = recalibrationSmoothness; ;
+        }
         
     }
 
@@ -151,17 +156,19 @@ public class CameraHandler : MonoBehaviour
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
         {                
             targetY = hit.point.y + offsety;
+            usedSmoothness = smoothness;
             return hit.point.y + offsety;
                 
         } else if(Physics.Raycast(originup, playerController.getFrontDirection() + Vector3.down, out hit, rayDown, layerMask) || Physics.Raycast(originupsx, playerController.getBackDirection() + Vector3.down, out hit, rayDown, layerMask))
         {
             targetY = hit.point.y + offsety;
+            usedSmoothness = smoothness;
             return hit.point.y + offsety;
         }
 
 
 
-            return targetY;
+        return player.transform.position.y;
     }
 
     public void AdjustFront()
