@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour, Controller
 {
+    private Checkpoint lastCheckPoint;
     public ParticleSystem jumpingParticles;
     private ParticleSystem jumpingParticlesInstance;
     public TurnSprite turnSpriteScript;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour, Controller
     }
     void Start()
     {
+        if (lastCheckPoint == null) lastCheckPoint = new Checkpoint();
         dashCooldownTimer = dashCooldown;
         animations = gameObject.GetComponent<Animation>();
         animator = gameObject.GetComponent<Animator>();
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour, Controller
         if (buffered) jumpBufferTimer += Time.deltaTime;
 
         if (gameObject.transform.position.y < 5)
-            SceneManager.LoadScene("Level1");
+            Respawn();
 
         HandleCoyote();
         groundCheckCooldown -= Time.deltaTime;
@@ -394,5 +396,14 @@ public class PlayerController : MonoBehaviour, Controller
         return isTalking;
     }
 
+    public void updateCheckpoint(Checkpoint checkpoint)
+    {
+        lastCheckPoint = checkpoint;
+    }
+
+    public void Respawn()
+    {
+        gameObject.transform.position = lastCheckPoint.transform.position;
+    }
 }
 
