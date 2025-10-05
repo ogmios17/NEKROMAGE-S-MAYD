@@ -62,15 +62,15 @@ public class RandomReset : MonoBehaviour
     {
         if (resetJump)
         {
-            randomizer.setJump(KeyCode.Space);
+            randomizer.setJump("<Keyboard>/space");
         }
         if (resetForward)
         {
-            randomizer.setForward(KeyCode.D);
+            randomizer.setForward("<Keyboard>/d");
         }
         if (resetBack)
         {
-            randomizer.setBack(KeyCode.A);
+            randomizer.setBack("<Keyboard>/a");
         }
     }
 }

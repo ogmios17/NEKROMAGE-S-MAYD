@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InteractDialogue : MonoBehaviour
 {
+    public Actions playerInput;
     public GameObject image;
     public GameObject player;
     public PlayerController playerController;
@@ -47,7 +48,7 @@ public class InteractDialogue : MonoBehaviour
             image.SetActive(false);
             inRange = false;
         }
-        if (Input.GetKeyDown(randomizer.GetInteract()) && inRange &&!AlreadyInteracted){
+        if (randomizer.playerInput.Player.Interact.triggered && inRange &&!AlreadyInteracted){
 
             dialogue.EndDialogue();
             playerController.setInteractableState(false);

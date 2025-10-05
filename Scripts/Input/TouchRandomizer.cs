@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TouchRandomizer : MonoBehaviour
 {
@@ -33,18 +34,15 @@ public class TouchRandomizer : MonoBehaviour
         {
             if (changeBack)
             {
-                randomizer.backInput = randomizer.Randomize(randomizer.GetBackQueue(), false);
-                randomizer.UpdateBackSprite();
+                randomizer.setBack(randomizer.Randomize(randomizer.GetBackQueue(), false));
             }
             if (changeForward)
             {
-                randomizer.forwardInput=randomizer.Randomize(randomizer.GetForwardQueue(), false); 
-                randomizer.UpdateForwardSprite();
+                randomizer.setForward(randomizer.Randomize(randomizer.GetForwardQueue(), false));
             }
             if (changeJump)
             {
-                randomizer.jumpInput=randomizer.Randomize(randomizer.GetJumpQueue(), false);
-                randomizer.UpdateJumpSprite();
+                randomizer.setJump(randomizer.Randomize(randomizer.GetJumpQueue(), false));
             }
 
             charged = false;

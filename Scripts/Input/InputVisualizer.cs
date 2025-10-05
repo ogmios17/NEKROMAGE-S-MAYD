@@ -4,11 +4,11 @@ public class InputVisualizer : MonoBehaviour
 {
     public InputMap[] inputSprites;
     
-    public Sprite getSprite(KeyCode key)
+    public Sprite getSprite(string key)
     {
         foreach(InputMap i in inputSprites)
         {
-            if (i.getInput() == key)
+            if (i.getInput().Equals(key))
                 return i.getSprite();
         }
         return null;
@@ -18,10 +18,10 @@ public class InputVisualizer : MonoBehaviour
 [System.Serializable]
 public class InputMap
 {
-    public KeyCode input;
+    public string input;
     public Sprite sprite;
 
-    public KeyCode getInput()
+    public string getInput()
     {
         return input;
     }

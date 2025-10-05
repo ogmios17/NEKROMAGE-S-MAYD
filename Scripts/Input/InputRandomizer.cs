@@ -1,10 +1,13 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using System.IO;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputRandomizer : MonoBehaviour
 {
+    public Actions playerInput;
     private bool timerActive = true;
     public InputVisualizer inputVisualizer;
     private GameObject interactButton;
@@ -16,30 +19,30 @@ public class InputRandomizer : MonoBehaviour
     public bool randomizeJump = true;
     public bool randomizeInteract = true;
 
-    private KeyCode[] keys = {
-            KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E,
-            KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J,
-            KeyCode.K, KeyCode.L, KeyCode.M, KeyCode.N, KeyCode.O,
-            KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T,
-            KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z,
-            KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4,
-            KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9,
-            KeyCode.Space, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow,
+    private string[] keys = {
+            "<Keyboard>/a", "<Keyboard>/b", "<Keyboard>/c", "<Keyboard>/d", "<Keyboard>/e",
+    "<Keyboard>/f", "<Keyboard>/g", "<Keyboard>/h", "<Keyboard>/i", "<Keyboard>/j",
+    "<Keyboard>/k", "<Keyboard>/l", "<Keyboard>/m", "<Keyboard>/n", "<Keyboard>/o",
+    "<Keyboard>/p", "<Keyboard>/q", "<Keyboard>/r", "<Keyboard>/s", "<Keyboard>/t",
+    "<Keyboard>/u", "<Keyboard>/v", "<Keyboard>/w", "<Keyboard>/x", "<Keyboard>/y", "<Keyboard>/z",
+    "<Keyboard>/1", "<Keyboard>/2", "<Keyboard>/3", "<Keyboard>/4", "<Keyboard>/5",
+    "<Keyboard>/6", "<Keyboard>/7", "<Keyboard>/8", "<Keyboard>/9", "<Keyboard>/0",
+    "<Keyboard>/space", "<Keyboard>/up", "<Keyboard>/down", "<Keyboard>/left", "<Keyboard>/right"
     };
     private int index;
-    private Queue<KeyCode> interactQueue;
-    private Queue<KeyCode> backQueue;
-    private Queue<KeyCode> forwardQueue;
-    private Queue<KeyCode> jumpQueue;
-    public KeyCode interactInput;
-    public KeyCode backInput;
-    public KeyCode forwardInput;
-    public KeyCode jumpInput;
+    private string backInput;
+    private string forwardInput;
+    private string jumpInput;
+    private string interactInput;
+    private Queue<string> interactQueue;
+    private Queue<string> backQueue;
+    private Queue<string> forwardQueue;
+    private Queue<string> jumpQueue;
     private float timeSpanInteract;
     private float timeSpanBack;
     private float timeSpanForward;
     private float timeSpanJump;
-    private KeyCode[] currentKeys = new KeyCode[7];
+    private string[] currentKeys = new string[7];
     private int currentKeyIndex;
     public float minInteract = 2;
     public float minBack= 10;
@@ -49,6 +52,14 @@ public class InputRandomizer : MonoBehaviour
     public float maxBack = 30;
     public float maxForward = 30;
     public float maxJump = 30;
+
+    private void Awake()
+    {
+        if (playerInput == null)
+            playerInput = new Actions();
+
+        playerInput.Player.Enable();
+    }
     void Start()
     { 
 
@@ -57,37 +68,41 @@ public class InputRandomizer : MonoBehaviour
         timeSpanBack = 0;
         timeSpanForward = 0;
         timeSpanJump = 0;
-        interactQueue = new Queue<KeyCode>();
-        backQueue = new Queue<KeyCode>();
-        forwardQueue = new Queue<KeyCode>();
-        jumpQueue = new Queue<KeyCode>();
+        interactQueue = new Queue<string>();
+        backQueue = new Queue<string>();
+        forwardQueue = new Queue<string>();
+        jumpQueue = new Queue<string>();
 
         if(randomizeBack)
             Randomize(backQueue, true);
         else
         {
-            backInput = KeyCode.A;
+            backInput = "<Keyboard>/a";
+            playerInput.Player.Back.ApplyBindingOverride(backInput);
             backSprite.sprite = inputVisualizer.getSprite(backInput);
         }
         if(randomizeForward)
             Randomize(forwardQueue, true);
         else
         {
-            forwardInput = KeyCode.D;
+            forwardInput = "<Keyboard>/d";
+            playerInput.Player.Forward.ApplyBindingOverride(forwardInput);
             forwardSprite.sprite = inputVisualizer.getSprite(forwardInput);
         }
         if(randomizeJump)
             Randomize(jumpQueue, true);
         else
         {
-            jumpInput = KeyCode.Space;
+            jumpInput = "<Keyboard>/space";
+            playerInput.Player.Jump.ApplyBindingOverride(jumpInput);
             jumpSprite.sprite = inputVisualizer.getSprite(jumpInput);
         }
         if (randomizeInteract)
             Randomize(interactQueue, true);
         else
         {
-            interactInput = KeyCode.E;
+            interactInput = "<Keyboard>/e";
+            playerInput.Player.Interact.ApplyBindingOverride(interactInput);
             interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
         }
     }
@@ -109,27 +124,32 @@ public class InputRandomizer : MonoBehaviour
         if (randomizeInteract && timeSpanInteract <= 0)
         {
             interactInput = Randomize(ref timeSpanInteract, minInteract, maxInteract);
+            playerInput.Player.Interact.ApplyBindingOverride(interactInput);
             UpdateInteractSprite();
         }
         if (randomizeBack && timeSpanBack <= 0)
         {
             backInput = Randomize(ref timeSpanBack, ref backQueue, minBack, maxBack);
+            playerInput.Player.Back.ApplyBindingOverride(backInput);
             UpdateBackSprite();
         }
         if (randomizeForward && timeSpanForward <= 0)
         {
             forwardInput = Randomize(ref timeSpanForward, ref forwardQueue, minForward, maxForward);
+            playerInput.Player.Forward.ApplyBindingOverride(forwardInput);
             UpdateForwardSprite();
         }
         if (randomizeJump && timeSpanJump <= 0)
         {
             jumpInput = Randomize(ref timeSpanJump, ref jumpQueue, minJump, maxJump);
+            playerInput.Player.Jump.ApplyBindingOverride(jumpInput);
             UpdateJumpSprite();
         }   
     }
 
-    KeyCode Randomize(ref float timeSpan, ref Queue<KeyCode> queue, float min, float max)
+    string Randomize(ref float timeSpan, ref Queue<string> queue, float min, float max)
     {
+        string newInput;
         timeSpan = Random.Range(min,max);
         index = Random.Range(0, keys.Length);
         for (int i = 0; i < 7; i++)
@@ -147,7 +167,7 @@ public class InputRandomizer : MonoBehaviour
         return queue.Dequeue();
     }
 
-    KeyCode Randomize(ref float timeSpan, float min, float max)
+    string Randomize(ref float timeSpan, float min, float max)
     {
         timeSpan = Random.Range(min,max);
         index = Random.Range(0, keys.Length);
@@ -165,7 +185,7 @@ public class InputRandomizer : MonoBehaviour
         return keys[index];
     }
 
-    public KeyCode Randomize(Queue<KeyCode> queue, bool addToQueue)
+    public string Randomize(Queue<string> queue, bool addToQueue)
     {
         index = Random.Range(0, keys.Length);
         for (int i = 0; i < 6; i++)
@@ -187,19 +207,19 @@ public class InputRandomizer : MonoBehaviour
         
     }
 
-    public KeyCode GetBack()
+    public string GetBack()
     {
         return  backInput ;
     }
-    public KeyCode GetForward()
+    public string GetForward()
     {
         return forwardInput ;
     }
-    public KeyCode GetJump()
+    public string GetJump()
     {
         return jumpInput ;
     }
-    public KeyCode GetInteract()
+    public string GetInteract()
     {
         return interactInput;
     }
@@ -209,22 +229,22 @@ public class InputRandomizer : MonoBehaviour
         timerActive = timer;
     }
 
-    public Queue<KeyCode> GetInteractQueue()
+    public Queue<string> GetInteractQueue()
     {
         return interactQueue;
     }
 
-    public Queue<KeyCode> GetJumpQueue()
+    public Queue<string> GetJumpQueue()
     {
         return jumpQueue;
     }
 
-    public Queue<KeyCode> GetForwardQueue()
+    public Queue<string> GetForwardQueue()
     {
         return forwardQueue;
     }
 
-    public Queue<KeyCode> GetBackQueue()
+    public Queue<string> GetBackQueue()
     {
         return backQueue;
     }
@@ -249,21 +269,24 @@ public class InputRandomizer : MonoBehaviour
         interactButton.GetComponent<SpriteRenderer>().sprite = inputVisualizer.getSprite(interactInput);
     }
 
-    public void setJump(KeyCode jump)
+    public void setJump(string jump)
     {
         jumpInput = jump;
+        playerInput.Player.Jump.ApplyBindingOverride(jump);
         UpdateJumpSprite();
     }
 
-    public void setForward(KeyCode forward)
+    public void setForward(string forward)
     {
         forwardInput = forward;
+        playerInput.Player.Forward.ApplyBindingOverride(forward);
         UpdateForwardSprite();
     }
 
-    public void setBack(KeyCode back)
+    public void setBack(string back)
     {
         backInput = back;
+        playerInput.Player.Back.ApplyBindingOverride(back);
         UpdateBackSprite();
     }
 }

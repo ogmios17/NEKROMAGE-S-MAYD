@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Net;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -107,19 +108,19 @@ public class PlayerController : MonoBehaviour, Controller
         {
             animator.SetBool("isRunning", false);
         }
-        if (Input.GetKeyDown(rand.GetJump())) //jumping
+        if (rand.playerInput.Player.Jump.triggered) //jumping
             if ((isGrounded || (coyoteTimer > 0 && coyoteTimer < floatingTime)) && isInteractable) jumpRegistered = true;
             else if (isInteractable)
             {
                 buffered = true;
                 jumpBufferTimer = 0;
             }
-        if (Input.GetKeyDown(KeyCode.S) && canDash && !hasDashed) //dashing
+        if (rand.playerInput.Player.Dash.triggered && canDash && !hasDashed) //dashing
         {
             dashRegistered = true;
         }
 
-        if (Input.GetKeyUp(rand.GetJump()) && !bouncing && rb.linearVelocity.y > 0)
+        if (rand.playerInput.Player.Jump.WasReleasedThisFrame() && !bouncing && rb.linearVelocity.y > 0)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y / modularJumpModifier, rb.linearVelocity.z);
         }
@@ -230,7 +231,7 @@ public class PlayerController : MonoBehaviour, Controller
     void HandleControls()
     {
         if (isDashing || !isInteractable) return;
-        if (Input.GetKey(rand.GetBack()))
+        if (rand.playerInput.Player.Back.ReadValue<float>() > 0)
         {
             animator.SetBool("isRunning", true);
             rb.AddForce(frontDirection * actualForce, ForceMode.Impulse);
@@ -245,7 +246,7 @@ public class PlayerController : MonoBehaviour, Controller
             }
             cameraHandler.AdjustFront();
         }
-        else if (Input.GetKey(rand.GetForward()))
+        else if (rand.playerInput.Player.Forward.ReadValue<float>() > 0)
         {
             animator.SetBool("isRunning", true);
             rb.AddForce(backDirection * actualForce, ForceMode.Impulse);

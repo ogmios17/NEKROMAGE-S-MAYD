@@ -30,8 +30,8 @@ public class JumpTutorial : MonoBehaviour
 
     public void RandomizeJump()
     {
-        randomizer.jumpInput = randomizer.Randomize(randomizer.GetJumpQueue(), false);
-        randomizer.UpdateJumpSprite();
+        randomizer.setJump(randomizer.Randomize(randomizer.GetJumpQueue(), false));
+
     }
 
 
