@@ -35,10 +35,7 @@ public class Bounce : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-
-                activateTimer = true;
-                
-            
+                activateTimer = true;                 
         }
     }
 }

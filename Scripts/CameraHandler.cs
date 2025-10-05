@@ -153,6 +153,11 @@ public class CameraHandler : MonoBehaviour
         lineRendererUpsx.SetPosition(0, originupsx); // ELIMINA DOPO IL DEBUG!
         lineRendererUpsx.SetPosition(1, originupsx + (playerController.getBackDirection() + Vector3.down) * rayDown); // ELIMINA DOPO IL DEBUG!
 
+        if (Mathf.Abs(player.transform.position.y - currentPos.y) > maxOffsetY)
+        {
+            return player.transform.position.y;
+        }
+
         if (Physics.Raycast(origindx, playerController.getFrontDirection(), out hit, ray,layerMask) || Physics.Raycast(originsx, playerController.getBackDirection(), out hit, ray, layerMask))
         {                
             targetY = hit.point.y + offsety;

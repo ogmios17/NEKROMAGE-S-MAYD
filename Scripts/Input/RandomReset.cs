@@ -9,6 +9,7 @@ public class RandomReset : MonoBehaviour
     private Vector3 position;
     private float respawnTime;
     private float respawnTimer;
+    public float rallentyTime;
     private bool timerActive = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +33,10 @@ public class RandomReset : MonoBehaviour
             GameObject.Instantiate(gameObject, position, Quaternion.identity);
             Destroy(gameObject);
         }
+        if (respawnTimer < respawnTime - rallentyTime)
+        {
+            Time.timeScale = 1;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,6 +52,7 @@ public class RandomReset : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Reset();
+            Time.timeScale = 0.3f;
         }
         gameObject.transform.position = new Vector3(10000, 10000, 10000);
         timerActive = true;
