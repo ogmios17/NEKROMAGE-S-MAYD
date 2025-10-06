@@ -20867,9 +20867,138 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f863e1ca86c63c947bb6fc73eba3831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomizer: {fileID: 1848777921}
   inputSprites:
+  - input: <Keyboard>/a
+    sprite: {fileID: 0}
+  - input: <Keyboard>/b
+    sprite: {fileID: 0}
+  - input: <Keyboard>/c
+    sprite: {fileID: 0}
+  - input: <Keyboard>/d
+    sprite: {fileID: 0}
+  - input: <Keyboard>/e
+    sprite: {fileID: 0}
+  - input: <Keyboard>/f
+    sprite: {fileID: 0}
+  - input: <Keyboard>/g
+    sprite: {fileID: 0}
+  - input: <Keyboard>/h
+    sprite: {fileID: 0}
+  - input: <Keyboard>/i
+    sprite: {fileID: 0}
+  - input: <Keyboard>/j
+    sprite: {fileID: 0}
+  - input: <Keyboard>/k
+    sprite: {fileID: 0}
+  - input: <Keyboard>/l
+    sprite: {fileID: 0}
+  - input: <Keyboard>/m
+    sprite: {fileID: 0}
+  - input: <Keyboard>/n
+    sprite: {fileID: 0}
+  - input: <Keyboard>/o
+    sprite: {fileID: 0}
+  - input: <Keyboard>/p
+    sprite: {fileID: 0}
+  - input: <Keyboard>/q
+    sprite: {fileID: 0}
+  - input: <Keyboard>/r
+    sprite: {fileID: 0}
+  - input: <Keyboard>/s
+    sprite: {fileID: 0}
+  - input: <Keyboard>/t
+    sprite: {fileID: 0}
+  - input: <Keyboard>/u
+    sprite: {fileID: 0}
+  - input: <Keyboard>/v
+    sprite: {fileID: 0}
+  - input: <Keyboard>/w
+    sprite: {fileID: 0}
+  - input: <Keyboard>/x
+    sprite: {fileID: 0}
+  - input: <Keyboard>/y
+    sprite: {fileID: 0}
+  - input: <Keyboard>/z
+    sprite: {fileID: 0}
+  - input: <Keyboard>/1
+    sprite: {fileID: 0}
+  - input: <Keyboard>/2
+    sprite: {fileID: 0}
+  - input: <Keyboard>/3
+    sprite: {fileID: 0}
+  - input: <Keyboard>/4
+    sprite: {fileID: 0}
+  - input: <Keyboard>/5
+    sprite: {fileID: 0}
+  - input: <Keyboard>/6
+    sprite: {fileID: 0}
+  - input: <Keyboard>/7
+    sprite: {fileID: 0}
+  - input: <Keyboard>/8
+    sprite: {fileID: 0}
+  - input: <Keyboard>/9
+    sprite: {fileID: 0}
+  - input: <Keyboard>/0
+    sprite: {fileID: 0}
+  - input: <Keyboard>/space
+    sprite: {fileID: 0}
+  - input: <Keyboard>/up
+    sprite: {fileID: 0}
+  - input: <Keyboard>/down
+    sprite: {fileID: 0}
+  - input: <Keyboard>/left
+    sprite: {fileID: 0}
+  - input: <Keyboard>/right
+    sprite: {fileID: 0}
+  - input: <Gamepad>/buttonSouth
+    sprite: {fileID: 0}
+  - input: <Gamepad>/buttonEast
+    sprite: {fileID: 0}
+  - input: <Gamepad>/buttonWest
+    sprite: {fileID: 0}
+  - input: <Gamepad>/buttonNorth
+    sprite: {fileID: 0}
+  - input: <Gamepad>/dpad/up
+    sprite: {fileID: 0}
+  - input: <Gamepad>/dpad/down
+    sprite: {fileID: 0}
+  - input: <Gamepad>/dpad/left
+    sprite: {fileID: 0}
+  - input: <Gamepad>/dpad/right
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftStick/up
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftStick/down
+    sprite: {fileID: 0}
   - input: <Gamepad>/leftStick/left
-    sprite: {fileID: 21300000, guid: 7403dfe12736cde4aa2b18663ee8f493, type: 3}
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftStick/right
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightStick/up
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightStick/down
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightStick/left
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightStick/right
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftTrigger
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightTrigger
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftShoulder
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightShoulder
+    sprite: {fileID: 0}
+  - input: <Gamepad>/start
+    sprite: {fileID: 0}
+  - input: <Gamepad>/select
+    sprite: {fileID: 0}
+  - input: <Gamepad>/leftStickPress
+    sprite: {fileID: 0}
+  - input: <Gamepad>/rightStickPress
+    sprite: {fileID: 0}
 --- !u!114 &1848777921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20891,6 +21020,72 @@ MonoBehaviour:
   randomizeForward: 0
   randomizeJump: 0
   randomizeInteract: 0
+  inputPool:
+  - <Keyboard>/a
+  - <Keyboard>/b
+  - <Keyboard>/c
+  - <Keyboard>/d
+  - <Keyboard>/e
+  - <Keyboard>/f
+  - <Keyboard>/g
+  - <Keyboard>/h
+  - <Keyboard>/i
+  - <Keyboard>/j
+  - <Keyboard>/k
+  - <Keyboard>/l
+  - <Keyboard>/m
+  - <Keyboard>/n
+  - <Keyboard>/o
+  - <Keyboard>/p
+  - <Keyboard>/q
+  - <Keyboard>/r
+  - <Keyboard>/s
+  - <Keyboard>/t
+  - <Keyboard>/u
+  - <Keyboard>/v
+  - <Keyboard>/w
+  - <Keyboard>/x
+  - <Keyboard>/y
+  - <Keyboard>/z
+  - <Keyboard>/1
+  - <Keyboard>/2
+  - <Keyboard>/3
+  - <Keyboard>/4
+  - <Keyboard>/5
+  - <Keyboard>/6
+  - <Keyboard>/7
+  - <Keyboard>/8
+  - <Keyboard>/9
+  - <Keyboard>/0
+  - <Keyboard>/space
+  - <Keyboard>/up
+  - <Keyboard>/down
+  - <Keyboard>/left
+  - <Keyboard>/right
+  - <Gamepad>/buttonSouth
+  - <Gamepad>/buttonEast
+  - <Gamepad>/buttonWest
+  - <Gamepad>/buttonNorth
+  - <Gamepad>/dpad/up
+  - <Gamepad>/dpad/down
+  - <Gamepad>/dpad/left
+  - <Gamepad>/dpad/right
+  - <Gamepad>/leftStick/up
+  - <Gamepad>/leftStick/down
+  - <Gamepad>/leftStick/left
+  - <Gamepad>/leftStick/right
+  - <Gamepad>/rightStick/up
+  - <Gamepad>/rightStick/down
+  - <Gamepad>/rightStick/left
+  - <Gamepad>/rightStick/right
+  - <Gamepad>/leftTrigger
+  - <Gamepad>/rightTrigger
+  - <Gamepad>/leftShoulder
+  - <Gamepad>/rightShoulder
+  - <Gamepad>/start
+  - <Gamepad>/select
+  - <Gamepad>/leftStickPress
+  - <Gamepad>/rightStickPress
   minInteract: 1
   minBack: 10
   minForward: 10

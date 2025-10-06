@@ -20,6 +20,42 @@ public class InputRandomizer : MonoBehaviour
     public bool randomizeForward = true;
     public bool randomizeJump = true;
     public bool randomizeInteract = true;
+    [HideInInspector]
+    public string[] inputPool =
+    {
+        "<Keyboard>/a", "<Keyboard>/b", "<Keyboard>/c", "<Keyboard>/d", "<Keyboard>/e",
+                    "<Keyboard>/f", "<Keyboard>/g", "<Keyboard>/h", "<Keyboard>/i", "<Keyboard>/j",
+                    "<Keyboard>/k", "<Keyboard>/l", "<Keyboard>/m", "<Keyboard>/n", "<Keyboard>/o",
+                    "<Keyboard>/p", "<Keyboard>/q", "<Keyboard>/r", "<Keyboard>/s", "<Keyboard>/t",
+                    "<Keyboard>/u", "<Keyboard>/v", "<Keyboard>/w", "<Keyboard>/x", "<Keyboard>/y", "<Keyboard>/z",
+                    "<Keyboard>/1", "<Keyboard>/2", "<Keyboard>/3", "<Keyboard>/4", "<Keyboard>/5",
+                    "<Keyboard>/6", "<Keyboard>/7", "<Keyboard>/8", "<Keyboard>/9", "<Keyboard>/0",
+                    "<Keyboard>/space", "<Keyboard>/up", "<Keyboard>/down", "<Keyboard>/left", "<Keyboard>/right",
+                    "<Gamepad>/buttonSouth",
+                    "<Gamepad>/buttonEast",
+                    "<Gamepad>/buttonWest",
+                    "<Gamepad>/buttonNorth",
+                    "<Gamepad>/dpad/up",
+                    "<Gamepad>/dpad/down",
+                    "<Gamepad>/dpad/left",
+                    "<Gamepad>/dpad/right",
+                    "<Gamepad>/leftStick/up",
+                    "<Gamepad>/leftStick/down",
+                    "<Gamepad>/leftStick/left",
+                    "<Gamepad>/leftStick/right",
+                    "<Gamepad>/rightStick/up",
+                    "<Gamepad>/rightStick/down",
+                    "<Gamepad>/rightStick/left",
+                    "<Gamepad>/rightStick/right",
+                    "<Gamepad>/leftTrigger",
+                    "<Gamepad>/rightTrigger",
+                    "<Gamepad>/leftShoulder",
+                    "<Gamepad>/rightShoulder",
+                    "<Gamepad>/start",
+                    "<Gamepad>/select",
+                    "<Gamepad>/leftStickPress",
+                    "<Gamepad>/rightStickPress"
+    };
 
     private string[] keys;
     private int index;
