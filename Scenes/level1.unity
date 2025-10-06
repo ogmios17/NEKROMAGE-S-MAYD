@@ -20867,7 +20867,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f863e1ca86c63c947bb6fc73eba3831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputSprites: []
+  inputSprites:
+  - input: <Gamepad>/leftStick/left
+    sprite: {fileID: 21300000, guid: 7403dfe12736cde4aa2b18663ee8f493, type: 3}
 --- !u!114 &1848777921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20880,6 +20882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526a4142d08e70347a4c14c0e324fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDevice: 1
   inputVisualizer: {fileID: 1848777920}
   backSprite: {fileID: 214838837}
   forwardSprite: {fileID: 877533507}
