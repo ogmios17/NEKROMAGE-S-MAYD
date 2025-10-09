@@ -16,14 +16,14 @@ public class InputVisualizer : MonoBehaviour
         return null;
     }
 
-    private void OnValidate()
+    /*private void OnValidate()
     {
         inputSprites= new InputMap[randomizer.inputPool.Length];
         for(int i =0; i<inputSprites.Length; i++)
         {
             inputSprites[i]= new InputMap(randomizer.inputPool[i]);
         }
-    }
+    }*/
 }
 
 [System.Serializable]

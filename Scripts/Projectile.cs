@@ -3,7 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
-    public Shooter shooter;
+    public ProjectileShooter shooter;
     private float timeToLive = 20;
     private float theReaper = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
