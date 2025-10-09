@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour, Controller
                 coyoteTimer = 0;
                 if (jumpBufferTimer > 0 && jumpBufferTimer < jumpBufferTime && bufferJumpDelay < 0)
                 {
-                    Jump(jumpForce);
+
+                    jumpRegistered = true;
                     buffered = false;
                     jumpBufferTimer = 0;
                 }
