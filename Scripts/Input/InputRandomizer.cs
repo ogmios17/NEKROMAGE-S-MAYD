@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class InputRandomizer : MonoBehaviour
 {
     public enum devices{keyboard,controller};
+    
     public devices currentDevice;
+    private int deviceIndex;
     public Actions playerInput;
     private bool timerActive = true;
     public InputVisualizer inputVisualizer;
@@ -51,7 +53,6 @@ public class InputRandomizer : MonoBehaviour
                     "<Gamepad>/rightTrigger",
                     "<Gamepad>/leftShoulder",
                     "<Gamepad>/rightShoulder",
-                    "<Gamepad>/start",
                     "<Gamepad>/select",
                     "<Gamepad>/leftStickPress",
                     "<Gamepad>/rightStickPress"
@@ -90,6 +91,8 @@ public class InputRandomizer : MonoBehaviour
         playerInput.Player.Enable();
         if (currentDevice == devices.controller) ChangeInputDevice(devices.controller);
         else ChangeInputDevice(devices.keyboard);
+
+        playerInput.FindAction("Rebind").Disable();
         
     }
     void Start()
@@ -292,61 +295,29 @@ public class InputRandomizer : MonoBehaviour
     }
 
     public void setDefaultJump()
-    {
-        switch (currentDevice)
-        {
-            case devices.keyboard:
-                jumpInput = "<Keyboard>/space";
-                break;
-            case devices.controller:
-                jumpInput = "<Gamepad>/buttonSouth";
-                break;
-        }        
+    { 
+        jumpInput = playerInput.Player.Jump.bindings[deviceIndex].effectivePath;
         playerInput.Player.Jump.ApplyBindingOverride(jumpInput);
         UpdateJumpSprite();
     }
 
     public void setDefaultForward()
     {
-        switch (currentDevice)
-        {
-            case devices.keyboard:
-                forwardInput = "<Keyboard>/d";
-                break;
-            case devices.controller:
-                forwardInput = "<Gamepad>/leftStick/right";
-                break;
-        }
+        forwardInput = playerInput.Player.Forward.bindings[deviceIndex].effectivePath;
         playerInput.Player.Forward.ApplyBindingOverride(forwardInput);
         UpdateForwardSprite();
     }
 
     public void setDefaultBack()
     {
-        switch (currentDevice)
-        {
-            case devices.keyboard:
-                backInput = "<Keyboard>/a";
-                break;
-            case devices.controller:
-                backInput = "<Gamepad>/leftStick/left";
-                break;
-        }
+        backInput = playerInput.Player.Back.bindings[deviceIndex].effectivePath;
         playerInput.Player.Back.ApplyBindingOverride(backInput);
         UpdateBackSprite();
     }
 
     public void setDefaultInteract()
     {
-        switch (currentDevice)
-        {
-            case devices.keyboard:
-                backInput = "<Keyboard>/e";
-                break;
-            case devices.controller:
-                backInput = "<Gamepad>/buttonNorth";
-                break;
-        }
+        interactInput = playerInput.Player.Interact.bindings[deviceIndex].effectivePath;
         playerInput.Player.Interact.ApplyBindingOverride(interactInput);
         UpdateInteractSprite();
     }
@@ -368,6 +339,7 @@ public class InputRandomizer : MonoBehaviour
                     "<Keyboard>/space", "<Keyboard>/up", "<Keyboard>/down", "<Keyboard>/left", "<Keyboard>/right"
                 };               
                 currentDevice = devices.keyboard;
+                deviceIndex = 1;
                 break;
             case devices.controller:
                 keys = new string[]
@@ -391,14 +363,14 @@ public class InputRandomizer : MonoBehaviour
                     "<Gamepad>/leftTrigger",
                     "<Gamepad>/rightTrigger",
                     "<Gamepad>/leftShoulder",
-                    "<Gamepad>/rightShoulder",
-                    "<Gamepad>/start",          
+                    "<Gamepad>/rightShoulder",         
                     "<Gamepad>/select",         
                     "<Gamepad>/leftStickPress",
                     "<Gamepad>/rightStickPress"
                 };
                 
                 currentDevice = devices.controller;
+                deviceIndex = 0;
                 break;
         }
         if (randomizeBack)

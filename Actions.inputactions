@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "Actions",
     "maps": [
         {
@@ -58,13 +59,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenMenu",
+                    "type": "Button",
+                    "id": "ac182fbe-af05-4bd6-a387-5abb2b90d9f9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "2b2db192-4e9f-472e-9bd8-ea56e5d3e91a",
-                    "path": "",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -75,7 +85,7 @@
                 {
                     "name": "",
                     "id": "54334b66-3e10-4a5c-ba9f-10fbfb2bd04c",
-                    "path": "",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -86,7 +96,18 @@
                 {
                     "name": "",
                     "id": "1fdf3f80-4848-4e95-95ff-2faf35989e97",
-                    "path": "",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3c10984-90f6-4918-b363-c44c57d7c22a",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -97,7 +118,18 @@
                 {
                     "name": "",
                     "id": "2e04f467-c6ab-4a56-890e-c2d888f8fc54",
-                    "path": "",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1cfcc5d3-ddb4-491b-9452-92c1ae0b351b",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -108,7 +140,18 @@
                 {
                     "name": "",
                     "id": "0493a18f-4823-43b5-b402-ca39d80bbf45",
-                    "path": "",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c20b0821-6182-4cee-8602-334b861f36ba",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -137,8 +180,36 @@
                     "action": "Flip",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e662c83-ab18-4c8e-830f-19e905162a47",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6895c50c-f4ee-4762-bc82-967acd46c408",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Menu",
+            "id": "eecb2c35-90e5-4f7f-8c92-ac3ab61a0d8d",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
